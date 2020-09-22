@@ -3,12 +3,12 @@ __all__ = ["load", "from_markup", "collect_elements", "PageSection"]
 
 import re
 from copy import copy
-from typing import TypeVar, Mapping, Dict, Union, Iterator
+from typing import TypeVar, Mapping, Dict, Union, Optional, Iterator
 
 import requests
 from bs4 import BeautifulSoup, Tag, PageElement
 
-from .extractor import Extractor
+from .extractor import Extractor, ExtractResult
 from .utils import normalize_string
 
 
@@ -24,6 +24,10 @@ def load(page: str) -> "PageSection":
 def from_markup(markup: str) -> "PageSection":
     html = BeautifulSoup(markup, "html.parser")
     content = html.find("div", "mw-parser-output").extract()
+
+    for element in content.select("sup, sub"):
+        element.decompose()
+
     return PageSection(content)
 
 
@@ -45,17 +49,20 @@ class PageSection(Mapping[str, "PageSection"]):
     def __init__(self, html: BeautifulSoup):
         self.html = html
         self.subsections = {
-            heading.text: heading.parent
+            heading.text.lower(): heading.parent
             for heading in html.find_all("span", "mw-headline")
         }
 
     def __getitem__(self, heading) -> "PageSection":
+        heading = heading.lower()
         section = self.subsections[heading]
+
         if not isinstance(section, PageSection):
             content = BeautifulSoup(features="html.parser")
             content.extend(map(copy, collect_elements(section)))
             section = PageSection(content)
             self.subsections[heading] = section
+
         return section
 
     def __iter__(self) -> Iterator[str]:
@@ -68,8 +75,14 @@ class PageSection(Mapping[str, "PageSection"]):
     def text(self):
         return normalize_string(self.html.text)
 
-    def extract(self, extractor: Extractor[T]) -> T:
-        return extractor.extract_from_html(self.html)
+    def extract_all(
+        self, extractor: Extractor[T], limit: int = None
+    ) -> ExtractResult[Extractor[T], T]:
+        return extractor.extract_all(self.html, limit=limit)
+
+    def extract(self, extractor: Extractor[T], index: int = 0) -> Optional[T]:
+        items = self.extract_all(extractor, limit=index + 1)
+        return items[index] if index < len(items) else None
 
     def __repr__(self) -> str:
         return f"<{self.__class__.__name__} {list(self)}>"

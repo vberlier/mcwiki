@@ -1,8 +1,8 @@
-__all__ = ["Extractor"]
+__all__ = ["Extractor", "ExtractResult"]
 
 
-from dataclasses import dataclass, field, replace
-from typing import Generic, TypeVar
+from dataclasses import dataclass, field
+from typing import Generic, TypeVar, List, Sequence, Union, overload
 
 from bs4 import BeautifulSoup, Tag
 
@@ -12,17 +12,42 @@ ExtractorType = TypeVar("ExtractorType", bound="Extractor")
 
 
 @dataclass(frozen=True)
+class ExtractResult(Generic[ExtractorType, T], Sequence[T]):
+    extractor: ExtractorType
+    elements: List[Union[Tag, T]] = field(repr=False)
+
+    @overload
+    def __getitem__(self, index: int) -> T:
+        pass
+
+    @overload
+    def __getitem__(self, index: slice) -> Sequence[T]:
+        pass
+
+    def __getitem__(self, index: Union[int, slice]) -> Union[T, Sequence[T]]:
+        if index < 0:
+            index %= len(self)
+        index_slice = slice(index, index + 1) if isinstance(index, int) else index
+
+        self.elements[index_slice] = [
+            self.extractor.transform(item) if isinstance(item, Tag) else item
+            for item in self.elements[index_slice]
+        ]
+
+        return self.elements[index]
+
+    def __len__(self) -> int:
+        return len(self.elements)
+
+
+@dataclass(frozen=True)
 class Extractor(Generic[T]):
-    nth: int = field(default=1, compare=False)
+    selector: str
 
-    def extract_from_html(self, html: BeautifulSoup) -> T:
-        return self.extract(html)
+    def extract_all(
+        self: ExtractorType, html: BeautifulSoup, limit: int = None
+    ) -> ExtractResult[ExtractorType, T]:
+        return ExtractResult(self, html.select(self.selector, limit=limit))
 
-    def extract(self, element: Tag) -> T:
+    def transform(self, element: Tag) -> T:
         raise NotImplementedError()
-
-    def __matmul__(self: ExtractorType, nth: int) -> ExtractorType:
-        return replace(self, nth=nth)
-
-    def __repr__(self) -> str:
-        return f"<{self.__class__.__name__} @ {self.nth}>"

@@ -1,11 +1,11 @@
-__all__ = ["Tree", "TreeEntry", "TreeNode", "TreeExtractor", "TreeExtractorState"]
+__all__ = ["Tree", "TreeEntry", "TreeNode", "TreeExtractor"]
 
 
 import textwrap
 from dataclasses import dataclass, field
 from typing import TypeVar, NamedTuple, Tuple, Dict, List, Set, Iterator, Union
 
-from bs4 import BeautifulSoup, Tag
+from bs4 import Tag
 
 from .extractor import Extractor
 from .page import load
@@ -24,12 +24,12 @@ class Tree(NamedTuple):
     def children(self) -> Iterator[Tuple[str, "TreeNode"]]:
         for key, ref in self.entries:
             if isinstance(ref, str):
-                if not (tree := self.extractor.state.templates.get(ref)):
-                    tree = self.extractor.extract(load(ref).html.li.ul)
-                    self.extractor.state.templates[ref] = tree
+                if not (tree := self.extractor.templates.get(ref)):
+                    tree = self.extractor.transform(load(ref).html.li.ul)
+                    self.extractor.templates[ref] = tree
                 yield from tree.children
             elif key is not None:
-                yield key, self.extractor.state.nodes[ref]
+                yield key, self.extractor.nodes[ref]
 
     def as_dict(self) -> Dict[str, "TreeNode"]:
         return dict(self.children)
@@ -74,30 +74,19 @@ class TreeNode(NamedTuple):
     content: Tree
 
 
-@dataclass(frozen=True)
-class TreeExtractorState:
-    nodes: List[TreeNode] = field(default_factory=list)
-    references: Dict[TreeNode, int] = field(default_factory=dict)
-    templates: Dict[str, Tree] = field(default_factory=dict)
-
-    def __hash__(self):
-        return hash(id(self))
-
-
-@dataclass(frozen=True, repr=False)
+@dataclass(frozen=True, eq=False)
 class TreeExtractor(Extractor[Tree]):
-    state: TreeExtractorState = field(default_factory=TreeExtractorState)
+    selector: str = "div.treeview > ul"
+
+    nodes: List[TreeNode] = field(default_factory=list, repr=False)
+    references: Dict[TreeNode, int] = field(default_factory=dict, repr=False)
+    templates: Dict[str, Tree] = field(default_factory=dict, repr=False)
 
     def __post_init__(self):
-        if not self.state.nodes:
-            self.state.nodes.append(TreeNode("", (), Tree(self, ())))
+        if not self.nodes:
+            self.nodes.append(TreeNode("", (), Tree(self, ())))
 
-    def extract_from_html(self, html: BeautifulSoup) -> Tree:
-        if elements := html.select("div.treeview > ul", limit=self.nth):
-            return self.extract(elements[-1])
-        return Tree(self, ())
-
-    def extract(self, element: Tag) -> Tree:
+    def transform(self, element: Tag) -> Tree:
         nodes: Dict[str, TreeNode] = {}
         inherit: Dict[None, str] = {}
 
@@ -118,11 +107,11 @@ class TreeExtractor(Extractor[Tree]):
         entries: Dict[str, int] = {}
 
         for key, node in nodes.items():
-            if not (ref := self.state.references.get(node)):
+            if not (ref := self.references.get(node)):
                 node = nodes[key]
-                ref = len(self.state.nodes)
-                self.state.nodes.append(node)
-                self.state.references[node] = ref
+                ref = len(self.nodes)
+                self.nodes.append(node)
+                self.references[node] = ref
             entries[key] = ref
 
         return Tree(self, tuple(entries.items()) + tuple(inherit.items()))
@@ -136,7 +125,6 @@ class TreeExtractor(Extractor[Tree]):
                 yield None, list_item.span.a.text
                 continue
 
-            name = ""
             text = ""
             icons: List[str] = []
             children: List[TreeEntry[int]] = []
@@ -147,20 +135,20 @@ class TreeExtractor(Extractor[Tree]):
                 elif child.span and "sprite" in child.span.get("class", ""):
                     icons.append(child["title"])
                 elif child.name == "ul" or child.ul and (child := child.ul):
-                    children.extend(self.extract(child).entries)
-                elif not name and child.name == "span":
-                    name = child.text
+                    children.extend(self.transform(child).entries)
                 else:
                     text += child.text
 
-            name, text = map(normalize_string, [name, text])
+            name, _, text = map(normalize_string, text.partition(":"))
 
-            if name or text or children:
-                if not (name or icons):
-                    name = text
-                    text = ""
+            if name or children:
+                if not text and icons:
+                    name, text = text, name
                 yield name, TreeNode(
                     text,
                     tuple(icons),
                     Tree(self, tuple(children)),
                 )
+
+    def __hash__(self):
+        return hash(id(self))
