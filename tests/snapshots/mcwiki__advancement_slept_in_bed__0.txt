@@ -1,0 +1,1 @@
+Triggers when the player enters a bed. Available conditions:

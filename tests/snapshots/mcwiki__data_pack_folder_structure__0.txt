@@ -1,0 +1,49 @@
+(data pack name)
+├─ pack.mcmeta
+├─ pack.png
+└─ data
+   └─ (namespace)
+      ├─ advancements
+      │  └─ (advancement).json
+      ├─ functions
+      │  └─ (function).mcfunction
+      ├─ loot_tables
+      │  └─ (loot_table).json
+      ├─ predicates
+      │  └─ (predicate).json
+      ├─ recipes
+      │  └─ (recipe).json
+      ├─ structures
+      │  └─ (structure).nbt
+      ├─ tags
+      │  ├─ blocks
+      │  │  └─ (tag).json
+      │  ├─ entity_types
+      │  │  └─ (tag).json
+      │  ├─ fluids
+      │  │  └─ (tag).json
+      │  ├─ functions
+      │  │  └─ (tag).json
+      │  └─ items
+      │     └─ (tag).json
+      ├─ dimension_type
+      │  └─ (dimension type).json
+      ├─ dimension
+      │  └─ (dimension).json
+      └─ worldgen
+         ├─ biome
+         │  └─ (biome).json
+         ├─ configured_carver
+         │  └─ (carver).json
+         ├─ configured_feature
+         │  └─ (feature).json
+         ├─ configured_structure_feature
+         │  └─ (structure_feature).json
+         ├─ configured_surface_builder
+         │  └─ (surface_builder).json
+         ├─ noise_settings
+         │  └─ (noise_settings).json
+         ├─ processor_list
+         │  └─ (block_processor).json
+         └─ template_pool
+            └─ (jigsaw_pool).json

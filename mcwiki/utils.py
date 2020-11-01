@@ -1,9 +1,12 @@
-__all__ = ["normalize_string"]
+__all__ = ["FileSystemPath", "normalize_string"]
 
 
-import re
+import os
 import unicodedata
+from typing import Union
+
+FileSystemPath = Union[str, os.PathLike]
 
 
 def normalize_string(string: str) -> str:
-    return re.sub(r"^[\s:]+|\s+$", "", unicodedata.normalize("NFKD", string))
+    return unicodedata.normalize("NFKD", string).strip()

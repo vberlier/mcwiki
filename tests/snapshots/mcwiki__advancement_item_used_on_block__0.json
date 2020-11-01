@@ -1,0 +1,18 @@
+{
+  "criteria": {
+    "example": {
+      "trigger": "minecraft:item_used_on_block",
+      "conditions": {
+        "location": {
+          "biome": "minecraft:modified_gravelly_mountains",
+          "block": {
+            "tag": "minecraft:campfires"
+          }
+        },
+        "item": {
+          "item": "minecraft:porkchop"
+        }
+      }
+    }
+  }
+}

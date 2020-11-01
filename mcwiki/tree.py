@@ -1,16 +1,16 @@
 __all__ = ["Tree", "TreeEntry", "TreeNode", "TreeExtractor"]
 
 
+import re
 import textwrap
 from dataclasses import dataclass, field
-from typing import TypeVar, NamedTuple, Tuple, Dict, List, Set, Iterator, Union
+from typing import Dict, Iterator, List, NamedTuple, Set, Tuple, TypeVar, Union
 
 from bs4 import Tag
 
 from .extractor import Extractor
 from .page import load
 from .utils import normalize_string
-
 
 TreeNodeType = TypeVar("TreeNodeType", int, "TreeNode")
 TreeEntry = Union[Tuple[str, TreeNodeType], Tuple[None, str]]
@@ -139,10 +139,12 @@ class TreeExtractor(Extractor[Tree]):
                 else:
                     text += child.text
 
-            name, _, text = map(normalize_string, text.partition(":"))
+            name, text = map(
+                normalize_string, re.split(r":\s|$", text + " ", maxsplit=1)
+            )
 
             if name or children:
-                if not text and icons:
+                if not text and " " in name and name[0] not in "<([{":
                     name, text = text, name
                 yield name, TreeNode(
                     text,

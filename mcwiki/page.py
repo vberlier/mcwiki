@@ -1,16 +1,16 @@
-__all__ = ["load", "from_markup", "collect_elements", "PageSection"]
+__all__ = ["load", "load_file", "from_markup", "collect_elements", "PageSection"]
 
 
 import re
 from copy import copy
-from typing import TypeVar, Mapping, Dict, Union, Optional, Iterator
+from pathlib import Path
+from typing import Dict, Iterator, Mapping, Optional, TypeVar, Union
 
 import requests
-from bs4 import BeautifulSoup, Tag, PageElement
+from bs4 import BeautifulSoup, PageElement, Tag
 
 from .extractor import Extractor, ExtractResult
-from .utils import normalize_string
-
+from .utils import FileSystemPath, normalize_string
 
 BASE_URL = "https://minecraft.gamepedia.com/"
 
@@ -19,6 +19,10 @@ def load(page: str) -> "PageSection":
     if not page.startswith("http"):
         page = BASE_URL + re.sub(r"[\s_]+", "_", page)
     return from_markup(requests.get(page).text)
+
+
+def load_file(filepath: FileSystemPath) -> "PageSection":
+    return from_markup(Path(filepath).read_text())
 
 
 def from_markup(markup: str) -> "PageSection":

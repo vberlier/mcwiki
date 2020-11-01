@@ -2,10 +2,9 @@ __all__ = ["Extractor", "ExtractResult"]
 
 
 from dataclasses import dataclass, field
-from typing import Generic, TypeVar, List, Sequence, Union, overload
+from typing import Generic, List, Sequence, TypeVar, Union, overload
 
 from bs4 import BeautifulSoup, Tag
-
 
 T = TypeVar("T")
 ExtractorType = TypeVar("ExtractorType", bound="Extractor")
@@ -25,9 +24,11 @@ class ExtractResult(Generic[ExtractorType, T], Sequence[T]):
         pass
 
     def __getitem__(self, index: Union[int, slice]) -> Union[T, Sequence[T]]:
-        if index < 0:
-            index %= len(self)
-        index_slice = slice(index, index + 1) if isinstance(index, int) else index
+        index_slice = (
+            slice(index % len(self), (index % len(self)) + 1)
+            if isinstance(index, int)
+            else index
+        )
 
         self.elements[index_slice] = [
             self.extractor.transform(item) if isinstance(item, Tag) else item
