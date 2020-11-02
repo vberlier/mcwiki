@@ -84,11 +84,11 @@ print(page["List of triggers"])
 
 There are 3 built-in extractors. Extractors are instantiated with a CSS selector and define a `process` method that produces an item for each element returned by the selector.
 
-| Extractor    | Type                   | Extracted Item                                            |
-| ------------ | ---------------------- | --------------------------------------------------------- |
-| `PARAGRAPH`  | `TextExtractor("p")`   | String containing the text content of a paragraph         |
-| `CODE_BLOCK` | `TextExtractor("pre")` | String containing the text content of a code block        |
-| `TREE`       | `TreeExtractor()`      | An instance of `mcwiki.Tree` containing the treeview data |
+| Extractor    | Type                              | Extracted Item                                            |
+| ------------ | --------------------------------- | --------------------------------------------------------- |
+| `PARAGRAPH`  | `TextExtractor("p")`              | String containing the text content of a paragraph         |
+| `CODE_BLOCK` | `TextExtractor("pre")`            | String containing the text content of a code block        |
+| `TREE`       | `TreeExtractor(".treeview > ul")` | An instance of `mcwiki.Tree` containing the treeview data |
 
 The `extract` and `extract_all` methods can extract structured data from page sections by using a given extractor. By default, the `extract` method will return the first item in the page section or `None` if the extractor couldn't extract anything.
 

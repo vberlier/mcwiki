@@ -76,7 +76,7 @@ class TreeNode(NamedTuple):
 
 @dataclass(frozen=True, eq=False)
 class TreeExtractor(Extractor[Tree]):
-    selector: str = "div.treeview > ul"
+    selector: str = ".treeview > ul"
 
     nodes: List[TreeNode] = field(default_factory=list, repr=False)
     references: Dict[TreeNode, int] = field(default_factory=dict, repr=False)
