@@ -140,7 +140,7 @@ class TreeExtractor(Extractor[Tree]):
                     text += child.text
 
             name, text = map(
-                normalize_string, re.split(r":\s|$", text + " ", maxsplit=1)
+                normalize_string, re.split(r":\s| - |$", text + " ", maxsplit=1)
             )
 
             if name or children:

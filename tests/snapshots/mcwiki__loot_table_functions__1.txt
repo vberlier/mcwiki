@@ -1,0 +1,6 @@
+copy_name
+For loot table type 'block', copies a block entity's CustomName tag
+into the item's display.Name tag.
+└─ source
+   [TAG_String]
+   "block_entity" - Needs to be set to 'block_entity'.

@@ -53,3 +53,21 @@ def test_advancement_item_used_on_block(wiki_pages: Path, snapshot: SnapshotFixt
 def test_advancement_slept_in_bed(wiki_pages: Path, snapshot: SnapshotFixture):
     page = mcwiki.load_file(wiki_pages / "advancement.html")
     assert snapshot() == str(page["minecraft:slept_in_bed"].extract(mcwiki.PARAGRAPH))
+
+
+def test_loot_table_tags(wiki_pages: Path, snapshot: SnapshotFixture):
+    page = mcwiki.load_file(wiki_pages / "loot_table.html")
+    assert snapshot() == str(page["tags"].extract(mcwiki.TREE))
+
+
+def test_loot_table_functions(wiki_pages: Path, snapshot: SnapshotFixture):
+    page = mcwiki.load_file(wiki_pages / "loot_table.html")
+    section = page["functions"]
+    assert snapshot() == str(section.extract(mcwiki.TREE))
+    assert snapshot() == str(section.extract(mcwiki.TREE, index=1))
+
+
+def test_predicate(wiki_pages: Path, snapshot: SnapshotFixture):
+    page = mcwiki.load_file(wiki_pages / "predicate.html")
+    assert snapshot() == str(page.extract(mcwiki.TREE))
+    assert snapshot() == str(page.extract(mcwiki.TREE, index=1))

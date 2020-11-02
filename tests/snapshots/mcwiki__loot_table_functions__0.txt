@@ -1,0 +1,24 @@
+apply_bonus
+Applies a predefined bonus formula.
+├─ enchantment
+│  [TAG_String]
+│  Enchantment ID used for level calculation.
+├─ formula
+│  [TAG_String]
+│  Can be binomial_with_bonus_count for a binomial distribution (with
+│  n=level + extra, p=probability), uniform_bonus_count for uniform
+│  distribution (from 0 to level * bonusMultiplier), or ore_drops for a
+│  special function used for ore drops in the vanilla game (Count *
+│  (max(0; random(0..Level + 2) - 1)+1)).
+└─ parameters
+   [TAG_List]
+   Values required for the formula.
+   ├─ extra
+   │  [TAG_Int]
+   │  For formula 'binomial_with_bonus_count', the extra value.
+   ├─ probability
+   │  [TAG_Float]
+   │  For formula 'binomial_with_bonus_count', the probability.
+   └─ bonusMultiplier
+      [TAG_Float]
+      For formula 'uniform_bonus_count', the bonus multiplier.

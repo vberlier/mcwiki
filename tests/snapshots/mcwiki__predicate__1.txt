@@ -1,0 +1,7 @@
+alternative
+Joins conditions from parameter terms with "or".
+└─ terms
+   [TAG_List]
+   A list of conditions to join using 'or'.
+   └─ [TAG_Compound]
+      A condition.

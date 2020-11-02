@@ -1,0 +1,178 @@
+[TAG_Compound]
+The root tag
+├─ type
+│  [TAG_String]
+│  Optional type of the loot table. Must be one of empty if the loot
+│  table does not generate any loot, entity for loot an entity drops,
+│  block for loot a block drops, chest for a treasure chest, fishing for
+│  a fishing loot table, gift for a cat or villager gift,
+│  advancement_reward if it's used as a reward for an advancement, barter
+│  for loot from bartering with piglins, command for /execute (if|unless)
+│  predicate, selector for predicate= in selectors, advancement_entity
+│  for entity predicates in advancements or generic if none of the above
+│  apply.
+├─ functions
+│  [TAG_List]
+│  Applies functions to all item stacks produced by this table. Functions
+│  are applied in order, so for example looting_enchant must be after
+│  set_count to work correctly.
+│  └─ [TAG_Compound]
+│     A function.
+│     ├─ function
+│     │  [TAG_String]
+│     │  Namespaced ID of the function to apply. Valid functions are described
+│     │  below.
+│     └─ conditions
+│        [TAG_List]
+│        Determines conditions for this function to be applied. If multiple
+│        conditions are specified, all must pass.
+│        └─ [TAG_Compound]
+│           A condition.
+│           └─ condition
+│              [TAG_String]
+│              Namespaced ID of condition. Valid conditions are described below.
+└─ pools
+   [TAG_List]
+   A list of all pools for this loot table. Each pool used generates
+   items from its list of items based on the number of rolls. Pools are
+   applied in order.
+   └─ [TAG_Compound]
+      A pool.
+      ├─ conditions
+      │  [TAG_List]
+      │  Determines conditions for this pool to be used. If multiple conditions
+      │  are specified, all must pass.
+      │  └─ [TAG_Compound]
+      │     A condition.
+      │     └─ condition
+      │        [TAG_String]
+      │        Namespaced ID of condition. Valid conditions are described below.
+      ├─ functions
+      │  [TAG_List]
+      │  Applies functions to all item stacks produced by this pool. Functions
+      │  are applied in order, so for example looting_enchant must be after
+      │  set_count to work correctly.
+      │  └─ [TAG_Compound]
+      │     A function.
+      │     ├─ function
+      │     │  [TAG_String]
+      │     │  Namespaced ID of the function to apply. Valid functions are described
+      │     │  below.
+      │     └─ conditions
+      │        [TAG_List]
+      │        Determines conditions for this function to be applied. If multiple
+      │        conditions are specified, all must pass.
+      │        └─ [TAG_Compound]
+      │           A condition.
+      │           └─ condition
+      │              [TAG_String]
+      │              Namespaced ID of condition. Valid conditions are described below.
+      ├─ rolls
+      │  [TAG_Int, TAG_Compound, TAG_Compound]
+      │  Specifies the exact number of rolls on the pool. Specifies a random
+      │  number of rolls within a range. Specifies a random number of rolls
+      │  from a binomial distribution.
+      │  ├─ min
+      │  │  [TAG_Int]
+      │  │  Minimum number of rolls. Inclusive.
+      │  ├─ max
+      │  │  [TAG_Int]
+      │  │  Maximum number of rolls. Inclusive.
+      │  ├─ type
+      │  │  [TAG_String]
+      │  │  Type of uniform int. Set to "minecraft:binomial".
+      │  ├─ n
+      │  │  [TAG_Int]
+      │  │  Number of tries.
+      │  └─ p
+      │     [TAG_Int]
+      │     Probability of each try to add a roll.
+      ├─ bonus_rolls
+      │  [TAG_Float, TAG_Compound]
+      │  Specifies the exact number of bonus rolls on the pool per point of
+      │  luck. Rounded down after multiplying. Specifies a random number of
+      │  bonus rolls within a range. Rounded down after multiplying.
+      │  ├─ min
+      │  │  [TAG_Float]
+      │  │  Minimum number of bonus rolls. Inclusive.
+      │  └─ max
+      │     [TAG_Float]
+      │     Maximum number of bonus rolls. Inclusive.
+      └─ entries
+         [TAG_List]
+         A list of all things that can be produced by this pool. One entry is
+         chosen per roll as a weighted random selection from all entries
+         without failing conditions.
+         └─ [TAG_Compound]
+            An entry.
+            ├─ conditions
+            │  [TAG_List]
+            │  Determines conditions for this entry to be used. If multiple
+            │  conditions are specified, all must pass.
+            │  └─ [TAG_Compound]
+            │     A condition.
+            │     └─ condition
+            │        [TAG_String]
+            │        Namespaced ID of condition. Valid conditions are described below.
+            ├─ functions
+            │  [TAG_List]
+            │  Applies functions to the item stack or item stacks being produced.
+            │  Functions are applied in order, so for example looting_enchant must be
+            │  after set_count to work correctly.
+            │  └─ [TAG_Compound]
+            │     A function.
+            │     ├─ function
+            │     │  [TAG_String]
+            │     │  Namespaced ID of the function to apply. Valid functions are described
+            │     │  below.
+            │     └─ conditions
+            │        [TAG_List]
+            │        Determines conditions for this function to be applied. If multiple
+            │        conditions are specified, all must pass.
+            │        └─ [TAG_Compound]
+            │           A condition.
+            │           └─ condition
+            │              [TAG_String]
+            │              Namespaced ID of condition. Valid conditions are described below.
+            ├─ type
+            │  [TAG_String]
+            │  Namespaced ID type of entry. Can be item for item entries, tag for
+            │  item tags, loot_table to produce items from another loot table, group
+            │  for child entries, alternatives to select one sub-entry from a list,
+            │  sequence to select sub-entries until one entry cannot be granted,
+            │  dynamic to generate block specific drops, or empty for an entry that
+            │  generates nothing.
+            ├─ name
+            │  [TAG_String]
+            │  └─ []
+            │     For type 'item', ID name of the item to be produced, e.g. diamond. The
+            │     default, if not changed by functions, is a stack of 1 of the default
+            │     instance of the item. For type 'tag' item tag to be used, e.g. arrows.
+            │     For type 'loot_table', loot table to be used, e.g.
+            │     gameplay/fishing/junk. For type 'dynamic', can be contents for block
+            │     entity contents or self for banners and player skulls.
+            ├─ children
+            │  [TAG_List]
+            │  └─ []
+            │     For type 'group' a list of entries that are used to generate loot. Can
+            │     be used for convenience, e.g. if one condition applies for multiple
+            │     entries. For type 'alternatives' a list of entries of which the first,
+            │     and only the first, successful entry gets generated. For type
+            │     'sequence' a list of entries that are used until the first entry
+            │     fails. After an entry fails, no more entries of this list are
+            │     generated
+            ├─ expand
+            │  [TAG_Boolean]
+            │  For type 'tag', if set to true, it chooses one item of the tag, each
+            │  with the same weight and quality. If false, it generates one of each
+            │  of the items in the tag. Required when type is 'tag'.
+            ├─ weight
+            │  [TAG_Int]
+            │  Determines how often this entry is chosen out of all the entries in
+            │  the pool. Entries with higher weights are used more often (chance is
+            │  ⁄).
+            └─ quality
+               [TAG_Int]
+               Modifies the entry's weight based on the killing/opening/fishing
+               player's luck attribute. Formula is floor( weight + (quality *
+               generic.luck)).

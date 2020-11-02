@@ -1,0 +1,7 @@
+[TAG_Compound]
+The root tag.
+├─ condition
+│  [TAG_String]
+│  The condition's ID.
+└─ []
+   Other parts of the condition, specified below.
