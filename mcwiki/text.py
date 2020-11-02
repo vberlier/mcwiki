@@ -11,5 +11,5 @@ from .utils import normalize_string
 
 @dataclass(frozen=True)
 class TextExtractor(Extractor[str]):
-    def transform(self, element: Tag) -> str:
+    def process(self, element: Tag) -> str:
         return normalize_string(element.text)

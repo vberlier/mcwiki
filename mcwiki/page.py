@@ -9,7 +9,7 @@ from typing import Dict, Iterator, Mapping, Optional, TypeVar, Union
 import requests
 from bs4 import BeautifulSoup, PageElement, Tag
 
-from .extractor import Extractor, ExtractResult
+from .extractor import Extractor, ScanResult
 from .utils import FileSystemPath, normalize_string
 
 BASE_URL = "https://minecraft.gamepedia.com/"
@@ -81,8 +81,8 @@ class PageSection(Mapping[str, "PageSection"]):
 
     def extract_all(
         self, extractor: Extractor[T], limit: int = None
-    ) -> ExtractResult[Extractor[T], T]:
-        return extractor.extract_all(self.html, limit=limit)
+    ) -> ScanResult[Extractor[T], T]:
+        return extractor.scan(self.html, limit=limit)
 
     def extract(self, extractor: Extractor[T], index: int = 0) -> Optional[T]:
         items = self.extract_all(extractor, limit=index + 1)

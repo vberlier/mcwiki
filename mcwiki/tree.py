@@ -25,7 +25,7 @@ class Tree(NamedTuple):
         for key, ref in self.entries:
             if isinstance(ref, str):
                 if not (tree := self.extractor.templates.get(ref)):
-                    tree = self.extractor.transform(load(ref).html.li.ul)
+                    tree = self.extractor.process(load(ref).html.li.ul)
                     self.extractor.templates[ref] = tree
                 yield from tree.children
             elif key is not None:
@@ -86,11 +86,11 @@ class TreeExtractor(Extractor[Tree]):
         if not self.nodes:
             self.nodes.append(TreeNode("", (), Tree(self, ())))
 
-    def transform(self, element: Tag) -> Tree:
+    def process(self, element: Tag) -> Tree:
         nodes: Dict[str, TreeNode] = {}
         inherit: Dict[None, str] = {}
 
-        for key, node in self.collect(element):
+        for key, node in self.collect_children(element):
             if isinstance(node, str):
                 inherit[None] = node
                 continue
@@ -116,7 +116,7 @@ class TreeExtractor(Extractor[Tree]):
 
         return Tree(self, tuple(entries.items()) + tuple(inherit.items()))
 
-    def collect(self, element: Tag) -> Iterator[TreeEntry[TreeNode]]:
+    def collect_children(self, element: Tag) -> Iterator[TreeEntry[TreeNode]]:
         for list_item in element.children:
             if not list_item.name:
                 continue
@@ -135,7 +135,7 @@ class TreeExtractor(Extractor[Tree]):
                 elif child.span and "sprite" in child.span.get("class", ""):
                     icons.append(child["title"])
                 elif child.name == "ul" or child.ul and (child := child.ul):
-                    children.extend(self.transform(child).entries)
+                    children.extend(self.process(child).entries)
                 else:
                     text += child.text
 

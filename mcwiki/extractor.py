@@ -1,4 +1,4 @@
-__all__ = ["Extractor", "ExtractResult"]
+__all__ = ["Extractor", "ScanResult"]
 
 
 from dataclasses import dataclass, field
@@ -11,7 +11,7 @@ ExtractorType = TypeVar("ExtractorType", bound="Extractor")
 
 
 @dataclass(frozen=True)
-class ExtractResult(Generic[ExtractorType, T], Sequence[T]):
+class ScanResult(Generic[ExtractorType, T], Sequence[T]):
     extractor: ExtractorType
     elements: List[Union[Tag, T]] = field(repr=False)
 
@@ -31,7 +31,7 @@ class ExtractResult(Generic[ExtractorType, T], Sequence[T]):
         )
 
         self.elements[index_slice] = [
-            self.extractor.transform(item) if isinstance(item, Tag) else item
+            self.extractor.process(item) if isinstance(item, Tag) else item
             for item in self.elements[index_slice]
         ]
 
@@ -45,10 +45,10 @@ class ExtractResult(Generic[ExtractorType, T], Sequence[T]):
 class Extractor(Generic[T]):
     selector: str
 
-    def extract_all(
+    def scan(
         self: ExtractorType, html: BeautifulSoup, limit: int = None
-    ) -> ExtractResult[ExtractorType, T]:
-        return ExtractResult(self, html.select(self.selector, limit=limit))
+    ) -> ScanResult[ExtractorType, T]:
+        return ScanResult(self, html.select(self.selector, limit=limit))
 
-    def transform(self, element: Tag) -> T:
+    def process(self, element: Tag) -> T:
         raise NotImplementedError()
