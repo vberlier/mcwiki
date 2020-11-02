@@ -40,8 +40,8 @@ Minecraft-related tooling often needs to refer to the Minecraft wiki to properly
 
 ### Features
 
-- Easily navigate through pages and sections
-- Extract paragraphs, code blocks and recursive tree-like hierarchies out-of-the-box
+- Easily navigate through page sections
+- Extract paragraphs, code blocks and recursive tree-like hierarchies
 - Create custom extractors or extend the provided ones
 
 ## Installation
@@ -68,7 +68,7 @@ mcwiki.load_file("Data_Pack.html")
 mcwiki.from_markup("<!DOCTYPE html>\n<html ...")
 ```
 
-Page sections can then be manipulated like dictionaries. Each key corresponds to a subsection.
+Page sections can then be manipulated like dictionaries. Keys are case-insensitive and are associated to subsections.
 
 ```python
 page = mcwiki.load("https://minecraft.gamepedia.com/Advancement/JSON_format")
@@ -82,7 +82,7 @@ print(page["List of triggers"])
 
 ## Extracting Data
 
-There are 3 built-in extractors. Extractors are instantiated with a CSS selector and define a `transform` method that produces an item for each element returned by the selector.
+There are 3 built-in extractors. Extractors are instantiated with a CSS selector and define a `process` method that produces an item for each element returned by the selector.
 
 | Extractor    | Type                   | Extracted Item                                            |
 | ------------ | ---------------------- | --------------------------------------------------------- |
@@ -123,6 +123,35 @@ You can use the `limit` argument or slice the returned sequence to limit the num
 # Both yield exactly the same list
 paragraphs = page.extract_all(mcwiki.PARAGRAPH)[:10]
 paragraphs = list(page.extract_all(mcwiki.PARAGRAPH, limit=10))
+```
+
+## Tree Structures
+
+The `TREE` extractor returns recursive tree-like hierarchies. You can use the `children` property to iterate through the direct children of a tree.
+
+```python
+def print_nodes(tree: mcwiki.Tree):
+    for key, node in tree.children:
+        print(key, node.text, node.icons)
+        print_nodes(node.content)
+
+print_nodes(section.extract(mcwiki.TREE))
+```
+
+Make sure to handle infinite recursions where appropriate.
+
+Tree nodes have 3 attributes that can all be empty:
+
+- The `text` attribute holds the text content of the node
+- The `icons` attribute is a tuple that stores the name of all the icons associated to the node
+- The `content` attribute is a tree containing all the children of the node
+
+You can transform the tree into a shallow dictionary with the `as_dict` method.
+
+```python
+# Both yield exactly the same dictionary
+nodes = tree.as_dict()
+nodes = dict(tree.children)
 ```
 
 ## Contributing
