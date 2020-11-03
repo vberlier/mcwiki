@@ -6,7 +6,7 @@
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 [![Checked with mypy](http://www.mypy-lang.org/static/mypy_badge.svg)](http://mypy-lang.org/)
 
-> A scraping library for the [Minecraft wiki](https://minecraft.gamepedia.com/Minecraft_Wiki).
+> A scraping library for the [Minecraft Wiki](https://minecraft.gamepedia.com/Minecraft_Wiki).
 
 ```python
 import mcwiki
@@ -36,7 +36,7 @@ The root object.
 
 ## Introduction
 
-Minecraft-related tooling often needs to refer to the Minecraft wiki to properly implement all kinds of structured data. This project is an attempt to use the Minecraft wiki as a single source of truth for code generators. It allows you to locate and extract the information you're interested in as structured python objects.
+The Minecraft Wiki is a well-maintained source of information but is a bit too organic to be used as anything more than a reference. This project tries its best to make it possible to locate and extract the information you're interested in and use it as a programmatic source of truth for developing Minecraft-related tooling.
 
 ### Features
 
@@ -54,14 +54,14 @@ $ pip install mcwiki
 
 ## Getting Started
 
-The `load` function allows you to load a page from the Minecraft wiki. The page can be specified by providing a URL or simply the title of the page.
+The `load` function allows you to load a page from the Minecraft Wiki. The page can be specified by providing a URL or simply the title of the page.
 
 ```python
 mcwiki.load("https://minecraft.gamepedia.com/Data_Pack")
 mcwiki.load("Data Pack")
 ```
 
-You can use the `load_file` function to read from a page downloaded locally or the `from_markup` function if you already have the html in a string somewhere.
+You can use the `load_file` function to read from a page downloaded locally or the `from_markup` function if you already have the html loaded in a string.
 
 ```python
 mcwiki.load_file("Data_Pack.html")
@@ -84,13 +84,13 @@ print(page["List of triggers"])
 
 There are 3 built-in extractors. Extractors are instantiated with a CSS selector and define a `process` method that produces an item for each element returned by the selector.
 
-| Extractor    | Type                              | Extracted Item                                            |
-| ------------ | --------------------------------- | --------------------------------------------------------- |
-| `PARAGRAPH`  | `TextExtractor("p")`              | String containing the text content of a paragraph         |
-| `CODE_BLOCK` | `TextExtractor("pre")`            | String containing the text content of a code block        |
-| `TREE`       | `TreeExtractor(".treeview > ul")` | An instance of `mcwiki.Tree` containing the treeview data |
+| Extractor    | Type                   | Extracted Item                                            |
+| ------------ | ---------------------- | --------------------------------------------------------- |
+| `PARAGRAPH`  | `TextExtractor("p")`   | String containing the text content of a paragraph         |
+| `CODE_BLOCK` | `TextExtractor("pre")` | String containing the text content of a code block        |
+| `TREE`       | `TreeExtractor()`      | An instance of `mcwiki.Tree` containing the treeview data |
 
-The `extract` and `extract_all` methods can extract structured data from page sections by using a given extractor. By default, the `extract` method will return the first item in the page section or `None` if the extractor couldn't extract anything.
+Page sections can invoke extractors by using the `extract` and `extract_all` methods. The `extract` method will return the first item in the page section or `None` if the extractor couldn't extract anything.
 
 ```python
 print(page.extract(mcwiki.PARAGRAPH))
@@ -138,13 +138,13 @@ def print_nodes(tree: mcwiki.Tree):
 print_nodes(section.extract(mcwiki.TREE))
 ```
 
-Make sure to handle infinite recursions where appropriate.
+Folded entries are automatically fetched, inlined, and cached. This means that iterating over the `children` property can yield a node that's already been visited so make sure to handle infinite recursions where appropriate.
 
 Tree nodes have 3 attributes that can all be empty:
 
 - The `text` attribute holds the text content of the node
-- The `icons` attribute is a tuple that stores the name of all the icons associated to the node
-- The `content` attribute is a tree containing all the children of the node
+- The `icons` attribute is a tuple that stores the names of the icons associated to the node
+- The `content` attribute is a tree containing the children of the node
 
 You can transform the tree into a shallow dictionary with the `as_dict` method.
 
