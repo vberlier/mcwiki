@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "mcwiki"
 version = "0.0.0"
-description = "A scraping library for the Minecraft wiki"
+description = "A scraping library for the Minecraft Wiki"
 authors = ["Valentin Berlier <berlier.v@gmail.com>"]
 license = "MIT"
 
