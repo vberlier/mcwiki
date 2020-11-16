@@ -3,7 +3,7 @@ from .page import *
 from .text import *
 from .tree import *
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 
 PARAGRAPH = TextExtractor("p")
