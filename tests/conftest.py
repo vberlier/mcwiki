@@ -14,6 +14,7 @@ def wiki_pages(request):
         "advancement.html": "https://minecraft.gamepedia.com/Advancement/JSON_format",
         "loot_table.html": "https://minecraft.gamepedia.com/Loot_table",
         "predicate.html": "https://minecraft.gamepedia.com/Predicate",
+        "tag.html": "https://minecraft.gamepedia.com/Tag",
     }
 
     for filename, url in download.items():

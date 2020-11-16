@@ -71,3 +71,8 @@ def test_predicate(wiki_pages: Path, snapshot: SnapshotFixture):
     page = mcwiki.load_file(wiki_pages / "predicate.html")
     assert snapshot() == str(page.extract(mcwiki.TREE))
     assert snapshot() == str(page.extract(mcwiki.TREE, index=1))
+
+
+def test_data_pack_tag(wiki_pages: Path, snapshot: SnapshotFixture):
+    page = mcwiki.load_file(wiki_pages / "tag.html")
+    assert snapshot() == str(page["JSON format"].extract(mcwiki.TREE))
