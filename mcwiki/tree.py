@@ -143,7 +143,7 @@ class TreeExtractor(Extractor[Tree]):
                 normalize_string, re.split(r":\s| - |$", text + " ", maxsplit=1)
             )
 
-            if name or children:
+            if name or icons or children:
                 if not text and " " in name and name[0] not in "<([{":
                     name, text = text, name
                 yield name, TreeNode(
