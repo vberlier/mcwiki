@@ -265,7 +265,7 @@ testing = ["argcomplete", "hypothesis (>=3.56)", "mock", "nose", "requests", "xm
 
 [[package]]
 name = "pytest-insta"
-version = "0.1.1"
+version = "0.1.10"
 description = "A practical snapshot testing plugin for pytest"
 category = "dev"
 optional = false
@@ -376,7 +376,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "cfc09539006d8584c77940493dd60a7d5292ec0fa717c6cf0d96f17870a09d0f"
+content-hash = "94976377e14987ea2e305ac52f6b750636abb9fe2f3dbf4723339c12b5b80763"
 
 [metadata.files]
 appdirs = [
@@ -507,8 +507,8 @@ pytest = [
     {file = "pytest-6.1.2.tar.gz", hash = "sha256:c0a7e94a8cdbc5422a51ccdad8e6f1024795939cc89159a0ae7f0b316ad3823e"},
 ]
 pytest-insta = [
-    {file = "pytest-insta-0.1.1.tar.gz", hash = "sha256:bdd7444e928632509b2330b5d2f01f055995b8e3f949c86d6f1ce19fa3c37a19"},
-    {file = "pytest_insta-0.1.1-py3-none-any.whl", hash = "sha256:7466a0854b183e5a115be2880e9d5634836a1173a6b08909cd7bedb5a9e35035"},
+    {file = "pytest-insta-0.1.10.tar.gz", hash = "sha256:27670ed8aa63cf34726106586dadadb12137102e22372ec918e64ee524d56f1f"},
+    {file = "pytest_insta-0.1.10-py3-none-any.whl", hash = "sha256:3043c4a668224f473df3de1d60fb356e356687b6931338c42c487abd0c9a19d8"},
 ]
 regex = [
     {file = "regex-2020.7.14-cp27-cp27m-win32.whl", hash = "sha256:e46d13f38cfcbb79bfdb2964b0fe12561fe633caf964a77a5f8d4e45fe5d2ef7"},
