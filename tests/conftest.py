@@ -10,11 +10,12 @@ def wiki_pages(request):
     directory.mkdir(exist_ok=True)
 
     download = {
-        "data_pack.html": "https://minecraft.gamepedia.com/Data_Pack",
-        "advancement.html": "https://minecraft.gamepedia.com/Advancement/JSON_format",
-        "loot_table.html": "https://minecraft.gamepedia.com/Loot_table",
-        "predicate.html": "https://minecraft.gamepedia.com/Predicate",
-        "tag.html": "https://minecraft.gamepedia.com/Tag",
+        "data_pack.html": "https://minecraft.fandom.com/wiki/Data_Pack",
+        "advancement.html": "https://minecraft.fandom.com/wiki/Advancement/JSON_format",
+        "loot_table.html": "https://minecraft.fandom.com/wiki/Loot_table",
+        "predicate.html": "https://minecraft.fandom.com/wiki/Predicate",
+        "tag.html": "https://minecraft.fandom.com/wiki/Tag",
+        "item_modifier.html": "https://minecraft.fandom.com/wiki/Item_modifier"
     }
 
     for filename, url in download.items():

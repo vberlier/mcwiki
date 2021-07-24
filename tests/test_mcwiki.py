@@ -61,10 +61,10 @@ def test_loot_table_tags(wiki_pages: Path, snapshot: SnapshotFixture):
 
 
 def test_loot_table_functions(wiki_pages: Path, snapshot: SnapshotFixture):
-    page = mcwiki.load_file(wiki_pages / "loot_table.html")
-    section = page["functions"]
-    assert snapshot() == str(section.extract(mcwiki.TREE))
+    page = mcwiki.load_file(wiki_pages / "item_modifier.html")
+    section = page["json structure"]
     assert snapshot() == str(section.extract(mcwiki.TREE, index=1))
+    assert snapshot() == str(section.extract(mcwiki.TREE, index=2))
 
 
 def test_predicate(wiki_pages: Path, snapshot: SnapshotFixture):

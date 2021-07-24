@@ -10,7 +10,9 @@
           }
         },
         "item": {
-          "item": "minecraft:porkchop"
+          "items": [
+            "minecraft:porkchop"
+          ]
         }
       }
     }

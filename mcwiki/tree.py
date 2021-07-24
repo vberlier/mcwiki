@@ -122,7 +122,7 @@ class TreeExtractor(Extractor[Tree]):
                 continue
 
             if "nbttree-inherited" in list_item.get("class", ""):
-                yield None, list_item.select_one("a, strong").text
+                yield None, list_item.get("data-page")
                 continue
 
             text = ""

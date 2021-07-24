@@ -10,7 +10,7 @@ The root object.
    │  in the Create World screen.
    └─ pack_format
       [TAG_Int]
-      Pack version. If this number does not match the current required
+      Pack version: If this number does not match the current required
       number, the data pack displays a warning and requires additional
-      confirmation to load the pack. Requires 4 for 1.13–1.14.4, 5 for
-      1.15–1.16.1 and 6 for 1.16.2–1.16.4.
+      confirmation to load the pack. Requires 4 for 1.13–1.14.4. Requires 5
+      for 1.15–1.16.1. Requires 6 for 1.16.2–1.16.5. Requires 7 for 1.17.

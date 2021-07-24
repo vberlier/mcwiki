@@ -7,10 +7,9 @@ The root tag
 │  block for loot a block drops, chest for a treasure chest, fishing for
 │  a fishing loot table, gift for a cat or villager gift,
 │  advancement_reward if it's used as a reward for an advancement, barter
-│  for loot from bartering with piglins, command for /execute (if|unless)
-│  predicate, selector for predicate= in selectors, advancement_entity
-│  for entity predicates in advancements or generic if none of the above
-│  apply.
+│  for loot from bartering with piglins, command for /execute, selector
+│  for predicate= in selectors, advancement_entity for entity predicates
+│  in advancements or generic if none of the above apply.
 ├─ functions
 │  [TAG_List]
 │  Applies functions to all item stacks produced by this table. Functions
@@ -68,36 +67,12 @@ The root tag
       │              [TAG_String]
       │              Namespaced ID of condition. Valid conditions are described below.
       ├─ rolls
-      │  [TAG_Int, TAG_Compound, TAG_Compound]
-      │  Specifies the exact number of rolls on the pool. Specifies a random
-      │  number of rolls within a range. Specifies a random number of rolls
-      │  from a binomial distribution.
-      │  ├─ min
-      │  │  [TAG_Int]
-      │  │  Minimum number of rolls. Inclusive.
-      │  ├─ max
-      │  │  [TAG_Int]
-      │  │  Maximum number of rolls. Inclusive.
-      │  ├─ type
-      │  │  [TAG_String]
-      │  │  Type of uniform int. Set to "minecraft:binomial".
-      │  ├─ n
-      │  │  [TAG_Int]
-      │  │  Number of tries.
-      │  └─ p
-      │     [TAG_Int]
-      │     Probability of each try to add a roll.
+      │  [TAG_Int, TAG_Compound]
+      │  Number Provider. Specifies the number of rolls on the pool.
       ├─ bonus_rolls
       │  [TAG_Float, TAG_Compound]
-      │  Specifies the exact number of bonus rolls on the pool per point of
-      │  luck. Rounded down after multiplying. Specifies a random number of
-      │  bonus rolls within a range. Rounded down after multiplying.
-      │  ├─ min
-      │  │  [TAG_Float]
-      │  │  Minimum number of bonus rolls. Inclusive.
-      │  └─ max
-      │     [TAG_Float]
-      │     Maximum number of bonus rolls. Inclusive.
+      │  Number Provider. Specifies the number of bonus rolls on the pool per
+      │  point of luck. Rounded down after multiplying.
       └─ entries
          [TAG_List]
          A list of all things that can be produced by this pool. One entry is

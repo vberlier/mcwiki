@@ -54,6 +54,9 @@ conditions
 │  │  └─ <minecraft:effect_name>
 │  │     [TAG_Compound]
 │  │     A status effect with the key name being the status effect name.
+│  │     ├─ ambient
+│  │     │  [TAG_Boolean]
+│  │     │  Whether the effect is from a beacon.
 │  │     ├─ amplifier
 │  │     │  [TAG_Int, TAG_Compound]
 │  │     │  The effect amplifier.
@@ -63,15 +66,18 @@ conditions
 │  │     │  └─ min
 │  │     │     [TAG_Int]
 │  │     │     The minimum value.
-│  │     └─ duration
-│  │        [TAG_Int, TAG_Compound]
-│  │        The effect duration in ticks.
-│  │        ├─ max
-│  │        │  [TAG_Int]
-│  │        │  The maximum value.
-│  │        └─ min
-│  │           [TAG_Int]
-│  │           The minimum value.
+│  │     ├─ duration
+│  │     │  [TAG_Int, TAG_Compound]
+│  │     │  The effect duration in ticks.
+│  │     │  ├─ max
+│  │     │  │  [TAG_Int]
+│  │     │  │  The maximum value.
+│  │     │  └─ min
+│  │     │     [TAG_Int]
+│  │     │     The minimum value.
+│  │     └─ visible
+│  │        [TAG_Boolean]
+│  │        Whether the effect has visible particles.
 │  ├─ equipment
 │  │  [TAG_Compound]
 │  │  ├─ mainhand
@@ -126,9 +132,9 @@ conditions
 │  │  │  │        └─ min
 │  │  │  │           [TAG_Int]
 │  │  │  │           The minimum value.
-│  │  │  ├─ item
-│  │  │  │  [TAG_String]
-│  │  │  │  An item ID.
+│  │  │  ├─ items
+│  │  │  │  [TAG_List]
+│  │  │  │  A list of item IDs.
 │  │  │  ├─ nbt
 │  │  │  │  [TAG_String]
 │  │  │  │  An NBT string.
@@ -190,9 +196,9 @@ conditions
 │  │  │  │        └─ min
 │  │  │  │           [TAG_Int]
 │  │  │  │           The minimum value.
-│  │  │  ├─ item
-│  │  │  │  [TAG_String]
-│  │  │  │  An item ID.
+│  │  │  ├─ items
+│  │  │  │  [TAG_List]
+│  │  │  │  A list of item IDs.
 │  │  │  ├─ nbt
 │  │  │  │  [TAG_String]
 │  │  │  │  An NBT string.
@@ -254,9 +260,9 @@ conditions
 │  │  │  │        └─ min
 │  │  │  │           [TAG_Int]
 │  │  │  │           The minimum value.
-│  │  │  ├─ item
-│  │  │  │  [TAG_String]
-│  │  │  │  An item ID.
+│  │  │  ├─ items
+│  │  │  │  [TAG_List]
+│  │  │  │  A list of item IDs.
 │  │  │  ├─ nbt
 │  │  │  │  [TAG_String]
 │  │  │  │  An NBT string.
@@ -318,9 +324,9 @@ conditions
 │  │  │  │        └─ min
 │  │  │  │           [TAG_Int]
 │  │  │  │           The minimum value.
-│  │  │  ├─ item
-│  │  │  │  [TAG_String]
-│  │  │  │  An item ID.
+│  │  │  ├─ items
+│  │  │  │  [TAG_List]
+│  │  │  │  A list of item IDs.
 │  │  │  ├─ nbt
 │  │  │  │  [TAG_String]
 │  │  │  │  An NBT string.
@@ -382,9 +388,9 @@ conditions
 │  │  │  │        └─ min
 │  │  │  │           [TAG_Int]
 │  │  │  │           The minimum value.
-│  │  │  ├─ item
-│  │  │  │  [TAG_String]
-│  │  │  │  An item ID.
+│  │  │  ├─ items
+│  │  │  │  [TAG_List]
+│  │  │  │  A list of item IDs.
 │  │  │  ├─ nbt
 │  │  │  │  [TAG_String]
 │  │  │  │  An NBT string.
@@ -446,9 +452,9 @@ conditions
 │  │     │        └─ min
 │  │     │           [TAG_Int]
 │  │     │           The minimum value.
-│  │     ├─ item
-│  │     │  [TAG_String]
-│  │     │  An item ID.
+│  │     ├─ items
+│  │     │  [TAG_List]
+│  │     │  A list of item IDs.
 │  │     ├─ nbt
 │  │     │  [TAG_String]
 │  │     │  An NBT string.
@@ -476,6 +482,795 @@ conditions
 │  │  └─ is_baby
 │  │     [TAG_Boolean]
 │  │     Test whether the entity is or is not a baby variant.
+│  ├─ lightning_bolt
+│  │  [TAG_Compound]
+│  │  Lightning bolt properties to be checked. Fails when entity is not a
+│  │  lightning bolt.
+│  │  ├─ blocks_set_on_fire
+│  │  │  [TAG_Int]
+│  │  │  Number of blocks set on fire by this lightning bolt.
+│  │  ├─ entity_struck
+│  │  │  [TAG_Compound]
+│  │  │  Entity properties of entities struck by this lightning bolt. If
+│  │  │  present, this tag must match one or more entities.
+│  │  ├─ distance
+│  │  │  [TAG_Compound]
+│  │  │  ├─ absolute
+│  │  │  │  [TAG_Compound]
+│  │  │  │  ├─ max
+│  │  │  │  │  [TAG_Float]
+│  │  │  │  │  The maximum value.
+│  │  │  │  └─ min
+│  │  │  │     [TAG_Float]
+│  │  │  │     The minimum value.
+│  │  │  ├─ horizontal
+│  │  │  │  [TAG_Compound]
+│  │  │  │  ├─ max
+│  │  │  │  │  [TAG_Float]
+│  │  │  │  │  The maximum value.
+│  │  │  │  └─ min
+│  │  │  │     [TAG_Float]
+│  │  │  │     The minimum value.
+│  │  │  ├─ x
+│  │  │  │  [TAG_Compound]
+│  │  │  │  ├─ max
+│  │  │  │  │  [TAG_Float]
+│  │  │  │  │  The maximum value.
+│  │  │  │  └─ min
+│  │  │  │     [TAG_Float]
+│  │  │  │     The minimum value.
+│  │  │  ├─ y
+│  │  │  │  [TAG_Compound]
+│  │  │  │  ├─ max
+│  │  │  │  │  [TAG_Float]
+│  │  │  │  │  The maximum value.
+│  │  │  │  └─ min
+│  │  │  │     [TAG_Float]
+│  │  │  │     The minimum value.
+│  │  │  └─ z
+│  │  │     [TAG_Compound]
+│  │  │     ├─ max
+│  │  │     │  [TAG_Float]
+│  │  │     │  The maximum value.
+│  │  │     └─ min
+│  │  │        [TAG_Float]
+│  │  │        The minimum value.
+│  │  ├─ effects
+│  │  │  [TAG_Compound]
+│  │  │  A list of status effects.
+│  │  │  └─ <minecraft:effect_name>
+│  │  │     [TAG_Compound]
+│  │  │     A status effect with the key name being the status effect name.
+│  │  │     ├─ ambient
+│  │  │     │  [TAG_Boolean]
+│  │  │     │  Whether the effect is from a beacon.
+│  │  │     ├─ amplifier
+│  │  │     │  [TAG_Int, TAG_Compound]
+│  │  │     │  The effect amplifier.
+│  │  │     │  ├─ max
+│  │  │     │  │  [TAG_Int]
+│  │  │     │  │  The maximum value.
+│  │  │     │  └─ min
+│  │  │     │     [TAG_Int]
+│  │  │     │     The minimum value.
+│  │  │     ├─ duration
+│  │  │     │  [TAG_Int, TAG_Compound]
+│  │  │     │  The effect duration in ticks.
+│  │  │     │  ├─ max
+│  │  │     │  │  [TAG_Int]
+│  │  │     │  │  The maximum value.
+│  │  │     │  └─ min
+│  │  │     │     [TAG_Int]
+│  │  │     │     The minimum value.
+│  │  │     └─ visible
+│  │  │        [TAG_Boolean]
+│  │  │        Whether the effect has visible particles.
+│  │  ├─ equipment
+│  │  │  [TAG_Compound]
+│  │  │  ├─ mainhand
+│  │  │  │  [TAG_Compound]
+│  │  │  │  ├─ count
+│  │  │  │  │  [TAG_Int, TAG_Compound]
+│  │  │  │  │  Amount of the item.
+│  │  │  │  │  ├─ max
+│  │  │  │  │  │  [TAG_Int]
+│  │  │  │  │  │  The maximum value.
+│  │  │  │  │  └─ min
+│  │  │  │  │     [TAG_Int]
+│  │  │  │  │     The minimum value.
+│  │  │  │  ├─ durability
+│  │  │  │  │  [TAG_Int, TAG_Compound]
+│  │  │  │  │  The durability of the item.
+│  │  │  │  │  ├─ max
+│  │  │  │  │  │  [TAG_Int]
+│  │  │  │  │  │  The maximum value.
+│  │  │  │  │  └─ min
+│  │  │  │  │     [TAG_Int]
+│  │  │  │  │     The minimum value.
+│  │  │  │  ├─ enchantments
+│  │  │  │  │  [TAG_List]
+│  │  │  │  │  List of enchantments.
+│  │  │  │  │  └─ [TAG_Compound]
+│  │  │  │  │     ├─ enchantment
+│  │  │  │  │     │  [TAG_String]
+│  │  │  │  │     │  An enchantment ID.
+│  │  │  │  │     └─ levels
+│  │  │  │  │        [TAG_Int, TAG_Compound]
+│  │  │  │  │        The level of the enchantment.
+│  │  │  │  │        ├─ max
+│  │  │  │  │        │  [TAG_Int]
+│  │  │  │  │        │  The maximum value.
+│  │  │  │  │        └─ min
+│  │  │  │  │           [TAG_Int]
+│  │  │  │  │           The minimum value.
+│  │  │  │  ├─ stored_enchantments
+│  │  │  │  │  [TAG_List]
+│  │  │  │  │  List of stored enchantments.
+│  │  │  │  │  └─ [TAG_Compound]
+│  │  │  │  │     ├─ enchantment
+│  │  │  │  │     │  [TAG_String]
+│  │  │  │  │     │  An enchantment ID.
+│  │  │  │  │     └─ levels
+│  │  │  │  │        [TAG_Int, TAG_Compound]
+│  │  │  │  │        The level of the enchantment.
+│  │  │  │  │        ├─ max
+│  │  │  │  │        │  [TAG_Int]
+│  │  │  │  │        │  The maximum value.
+│  │  │  │  │        └─ min
+│  │  │  │  │           [TAG_Int]
+│  │  │  │  │           The minimum value.
+│  │  │  │  ├─ items
+│  │  │  │  │  [TAG_List]
+│  │  │  │  │  A list of item IDs.
+│  │  │  │  ├─ nbt
+│  │  │  │  │  [TAG_String]
+│  │  │  │  │  An NBT string.
+│  │  │  │  ├─ potion
+│  │  │  │  │  [TAG_String]
+│  │  │  │  │  A brewed potion ID.
+│  │  │  │  └─ tag
+│  │  │  │     [TAG_String]
+│  │  │  │     An item data pack tag.
+│  │  │  ├─ offhand
+│  │  │  │  [TAG_Compound]
+│  │  │  │  ├─ count
+│  │  │  │  │  [TAG_Int, TAG_Compound]
+│  │  │  │  │  Amount of the item.
+│  │  │  │  │  ├─ max
+│  │  │  │  │  │  [TAG_Int]
+│  │  │  │  │  │  The maximum value.
+│  │  │  │  │  └─ min
+│  │  │  │  │     [TAG_Int]
+│  │  │  │  │     The minimum value.
+│  │  │  │  ├─ durability
+│  │  │  │  │  [TAG_Int, TAG_Compound]
+│  │  │  │  │  The durability of the item.
+│  │  │  │  │  ├─ max
+│  │  │  │  │  │  [TAG_Int]
+│  │  │  │  │  │  The maximum value.
+│  │  │  │  │  └─ min
+│  │  │  │  │     [TAG_Int]
+│  │  │  │  │     The minimum value.
+│  │  │  │  ├─ enchantments
+│  │  │  │  │  [TAG_List]
+│  │  │  │  │  List of enchantments.
+│  │  │  │  │  └─ [TAG_Compound]
+│  │  │  │  │     ├─ enchantment
+│  │  │  │  │     │  [TAG_String]
+│  │  │  │  │     │  An enchantment ID.
+│  │  │  │  │     └─ levels
+│  │  │  │  │        [TAG_Int, TAG_Compound]
+│  │  │  │  │        The level of the enchantment.
+│  │  │  │  │        ├─ max
+│  │  │  │  │        │  [TAG_Int]
+│  │  │  │  │        │  The maximum value.
+│  │  │  │  │        └─ min
+│  │  │  │  │           [TAG_Int]
+│  │  │  │  │           The minimum value.
+│  │  │  │  ├─ stored_enchantments
+│  │  │  │  │  [TAG_List]
+│  │  │  │  │  List of stored enchantments.
+│  │  │  │  │  └─ [TAG_Compound]
+│  │  │  │  │     ├─ enchantment
+│  │  │  │  │     │  [TAG_String]
+│  │  │  │  │     │  An enchantment ID.
+│  │  │  │  │     └─ levels
+│  │  │  │  │        [TAG_Int, TAG_Compound]
+│  │  │  │  │        The level of the enchantment.
+│  │  │  │  │        ├─ max
+│  │  │  │  │        │  [TAG_Int]
+│  │  │  │  │        │  The maximum value.
+│  │  │  │  │        └─ min
+│  │  │  │  │           [TAG_Int]
+│  │  │  │  │           The minimum value.
+│  │  │  │  ├─ items
+│  │  │  │  │  [TAG_List]
+│  │  │  │  │  A list of item IDs.
+│  │  │  │  ├─ nbt
+│  │  │  │  │  [TAG_String]
+│  │  │  │  │  An NBT string.
+│  │  │  │  ├─ potion
+│  │  │  │  │  [TAG_String]
+│  │  │  │  │  A brewed potion ID.
+│  │  │  │  └─ tag
+│  │  │  │     [TAG_String]
+│  │  │  │     An item data pack tag.
+│  │  │  ├─ head
+│  │  │  │  [TAG_Compound]
+│  │  │  │  ├─ count
+│  │  │  │  │  [TAG_Int, TAG_Compound]
+│  │  │  │  │  Amount of the item.
+│  │  │  │  │  ├─ max
+│  │  │  │  │  │  [TAG_Int]
+│  │  │  │  │  │  The maximum value.
+│  │  │  │  │  └─ min
+│  │  │  │  │     [TAG_Int]
+│  │  │  │  │     The minimum value.
+│  │  │  │  ├─ durability
+│  │  │  │  │  [TAG_Int, TAG_Compound]
+│  │  │  │  │  The durability of the item.
+│  │  │  │  │  ├─ max
+│  │  │  │  │  │  [TAG_Int]
+│  │  │  │  │  │  The maximum value.
+│  │  │  │  │  └─ min
+│  │  │  │  │     [TAG_Int]
+│  │  │  │  │     The minimum value.
+│  │  │  │  ├─ enchantments
+│  │  │  │  │  [TAG_List]
+│  │  │  │  │  List of enchantments.
+│  │  │  │  │  └─ [TAG_Compound]
+│  │  │  │  │     ├─ enchantment
+│  │  │  │  │     │  [TAG_String]
+│  │  │  │  │     │  An enchantment ID.
+│  │  │  │  │     └─ levels
+│  │  │  │  │        [TAG_Int, TAG_Compound]
+│  │  │  │  │        The level of the enchantment.
+│  │  │  │  │        ├─ max
+│  │  │  │  │        │  [TAG_Int]
+│  │  │  │  │        │  The maximum value.
+│  │  │  │  │        └─ min
+│  │  │  │  │           [TAG_Int]
+│  │  │  │  │           The minimum value.
+│  │  │  │  ├─ stored_enchantments
+│  │  │  │  │  [TAG_List]
+│  │  │  │  │  List of stored enchantments.
+│  │  │  │  │  └─ [TAG_Compound]
+│  │  │  │  │     ├─ enchantment
+│  │  │  │  │     │  [TAG_String]
+│  │  │  │  │     │  An enchantment ID.
+│  │  │  │  │     └─ levels
+│  │  │  │  │        [TAG_Int, TAG_Compound]
+│  │  │  │  │        The level of the enchantment.
+│  │  │  │  │        ├─ max
+│  │  │  │  │        │  [TAG_Int]
+│  │  │  │  │        │  The maximum value.
+│  │  │  │  │        └─ min
+│  │  │  │  │           [TAG_Int]
+│  │  │  │  │           The minimum value.
+│  │  │  │  ├─ items
+│  │  │  │  │  [TAG_List]
+│  │  │  │  │  A list of item IDs.
+│  │  │  │  ├─ nbt
+│  │  │  │  │  [TAG_String]
+│  │  │  │  │  An NBT string.
+│  │  │  │  ├─ potion
+│  │  │  │  │  [TAG_String]
+│  │  │  │  │  A brewed potion ID.
+│  │  │  │  └─ tag
+│  │  │  │     [TAG_String]
+│  │  │  │     An item data pack tag.
+│  │  │  ├─ chest
+│  │  │  │  [TAG_Compound]
+│  │  │  │  ├─ count
+│  │  │  │  │  [TAG_Int, TAG_Compound]
+│  │  │  │  │  Amount of the item.
+│  │  │  │  │  ├─ max
+│  │  │  │  │  │  [TAG_Int]
+│  │  │  │  │  │  The maximum value.
+│  │  │  │  │  └─ min
+│  │  │  │  │     [TAG_Int]
+│  │  │  │  │     The minimum value.
+│  │  │  │  ├─ durability
+│  │  │  │  │  [TAG_Int, TAG_Compound]
+│  │  │  │  │  The durability of the item.
+│  │  │  │  │  ├─ max
+│  │  │  │  │  │  [TAG_Int]
+│  │  │  │  │  │  The maximum value.
+│  │  │  │  │  └─ min
+│  │  │  │  │     [TAG_Int]
+│  │  │  │  │     The minimum value.
+│  │  │  │  ├─ enchantments
+│  │  │  │  │  [TAG_List]
+│  │  │  │  │  List of enchantments.
+│  │  │  │  │  └─ [TAG_Compound]
+│  │  │  │  │     ├─ enchantment
+│  │  │  │  │     │  [TAG_String]
+│  │  │  │  │     │  An enchantment ID.
+│  │  │  │  │     └─ levels
+│  │  │  │  │        [TAG_Int, TAG_Compound]
+│  │  │  │  │        The level of the enchantment.
+│  │  │  │  │        ├─ max
+│  │  │  │  │        │  [TAG_Int]
+│  │  │  │  │        │  The maximum value.
+│  │  │  │  │        └─ min
+│  │  │  │  │           [TAG_Int]
+│  │  │  │  │           The minimum value.
+│  │  │  │  ├─ stored_enchantments
+│  │  │  │  │  [TAG_List]
+│  │  │  │  │  List of stored enchantments.
+│  │  │  │  │  └─ [TAG_Compound]
+│  │  │  │  │     ├─ enchantment
+│  │  │  │  │     │  [TAG_String]
+│  │  │  │  │     │  An enchantment ID.
+│  │  │  │  │     └─ levels
+│  │  │  │  │        [TAG_Int, TAG_Compound]
+│  │  │  │  │        The level of the enchantment.
+│  │  │  │  │        ├─ max
+│  │  │  │  │        │  [TAG_Int]
+│  │  │  │  │        │  The maximum value.
+│  │  │  │  │        └─ min
+│  │  │  │  │           [TAG_Int]
+│  │  │  │  │           The minimum value.
+│  │  │  │  ├─ items
+│  │  │  │  │  [TAG_List]
+│  │  │  │  │  A list of item IDs.
+│  │  │  │  ├─ nbt
+│  │  │  │  │  [TAG_String]
+│  │  │  │  │  An NBT string.
+│  │  │  │  ├─ potion
+│  │  │  │  │  [TAG_String]
+│  │  │  │  │  A brewed potion ID.
+│  │  │  │  └─ tag
+│  │  │  │     [TAG_String]
+│  │  │  │     An item data pack tag.
+│  │  │  ├─ legs
+│  │  │  │  [TAG_Compound]
+│  │  │  │  ├─ count
+│  │  │  │  │  [TAG_Int, TAG_Compound]
+│  │  │  │  │  Amount of the item.
+│  │  │  │  │  ├─ max
+│  │  │  │  │  │  [TAG_Int]
+│  │  │  │  │  │  The maximum value.
+│  │  │  │  │  └─ min
+│  │  │  │  │     [TAG_Int]
+│  │  │  │  │     The minimum value.
+│  │  │  │  ├─ durability
+│  │  │  │  │  [TAG_Int, TAG_Compound]
+│  │  │  │  │  The durability of the item.
+│  │  │  │  │  ├─ max
+│  │  │  │  │  │  [TAG_Int]
+│  │  │  │  │  │  The maximum value.
+│  │  │  │  │  └─ min
+│  │  │  │  │     [TAG_Int]
+│  │  │  │  │     The minimum value.
+│  │  │  │  ├─ enchantments
+│  │  │  │  │  [TAG_List]
+│  │  │  │  │  List of enchantments.
+│  │  │  │  │  └─ [TAG_Compound]
+│  │  │  │  │     ├─ enchantment
+│  │  │  │  │     │  [TAG_String]
+│  │  │  │  │     │  An enchantment ID.
+│  │  │  │  │     └─ levels
+│  │  │  │  │        [TAG_Int, TAG_Compound]
+│  │  │  │  │        The level of the enchantment.
+│  │  │  │  │        ├─ max
+│  │  │  │  │        │  [TAG_Int]
+│  │  │  │  │        │  The maximum value.
+│  │  │  │  │        └─ min
+│  │  │  │  │           [TAG_Int]
+│  │  │  │  │           The minimum value.
+│  │  │  │  ├─ stored_enchantments
+│  │  │  │  │  [TAG_List]
+│  │  │  │  │  List of stored enchantments.
+│  │  │  │  │  └─ [TAG_Compound]
+│  │  │  │  │     ├─ enchantment
+│  │  │  │  │     │  [TAG_String]
+│  │  │  │  │     │  An enchantment ID.
+│  │  │  │  │     └─ levels
+│  │  │  │  │        [TAG_Int, TAG_Compound]
+│  │  │  │  │        The level of the enchantment.
+│  │  │  │  │        ├─ max
+│  │  │  │  │        │  [TAG_Int]
+│  │  │  │  │        │  The maximum value.
+│  │  │  │  │        └─ min
+│  │  │  │  │           [TAG_Int]
+│  │  │  │  │           The minimum value.
+│  │  │  │  ├─ items
+│  │  │  │  │  [TAG_List]
+│  │  │  │  │  A list of item IDs.
+│  │  │  │  ├─ nbt
+│  │  │  │  │  [TAG_String]
+│  │  │  │  │  An NBT string.
+│  │  │  │  ├─ potion
+│  │  │  │  │  [TAG_String]
+│  │  │  │  │  A brewed potion ID.
+│  │  │  │  └─ tag
+│  │  │  │     [TAG_String]
+│  │  │  │     An item data pack tag.
+│  │  │  └─ feet
+│  │  │     [TAG_Compound]
+│  │  │     ├─ count
+│  │  │     │  [TAG_Int, TAG_Compound]
+│  │  │     │  Amount of the item.
+│  │  │     │  ├─ max
+│  │  │     │  │  [TAG_Int]
+│  │  │     │  │  The maximum value.
+│  │  │     │  └─ min
+│  │  │     │     [TAG_Int]
+│  │  │     │     The minimum value.
+│  │  │     ├─ durability
+│  │  │     │  [TAG_Int, TAG_Compound]
+│  │  │     │  The durability of the item.
+│  │  │     │  ├─ max
+│  │  │     │  │  [TAG_Int]
+│  │  │     │  │  The maximum value.
+│  │  │     │  └─ min
+│  │  │     │     [TAG_Int]
+│  │  │     │     The minimum value.
+│  │  │     ├─ enchantments
+│  │  │     │  [TAG_List]
+│  │  │     │  List of enchantments.
+│  │  │     │  └─ [TAG_Compound]
+│  │  │     │     ├─ enchantment
+│  │  │     │     │  [TAG_String]
+│  │  │     │     │  An enchantment ID.
+│  │  │     │     └─ levels
+│  │  │     │        [TAG_Int, TAG_Compound]
+│  │  │     │        The level of the enchantment.
+│  │  │     │        ├─ max
+│  │  │     │        │  [TAG_Int]
+│  │  │     │        │  The maximum value.
+│  │  │     │        └─ min
+│  │  │     │           [TAG_Int]
+│  │  │     │           The minimum value.
+│  │  │     ├─ stored_enchantments
+│  │  │     │  [TAG_List]
+│  │  │     │  List of stored enchantments.
+│  │  │     │  └─ [TAG_Compound]
+│  │  │     │     ├─ enchantment
+│  │  │     │     │  [TAG_String]
+│  │  │     │     │  An enchantment ID.
+│  │  │     │     └─ levels
+│  │  │     │        [TAG_Int, TAG_Compound]
+│  │  │     │        The level of the enchantment.
+│  │  │     │        ├─ max
+│  │  │     │        │  [TAG_Int]
+│  │  │     │        │  The maximum value.
+│  │  │     │        └─ min
+│  │  │     │           [TAG_Int]
+│  │  │     │           The minimum value.
+│  │  │     ├─ items
+│  │  │     │  [TAG_List]
+│  │  │     │  A list of item IDs.
+│  │  │     ├─ nbt
+│  │  │     │  [TAG_String]
+│  │  │     │  An NBT string.
+│  │  │     ├─ potion
+│  │  │     │  [TAG_String]
+│  │  │     │  A brewed potion ID.
+│  │  │     └─ tag
+│  │  │        [TAG_String]
+│  │  │        An item data pack tag.
+│  │  ├─ flags
+│  │  │  [TAG_Compound]
+│  │  │  Predicate Flags to be checked.
+│  │  │  ├─ is_on_fire
+│  │  │  │  [TAG_Boolean]
+│  │  │  │  Test whether the entity is or is not on fire.
+│  │  │  ├─ is_sneaking
+│  │  │  │  [TAG_Boolean]
+│  │  │  │  Test whether the entity is or is not sneaking.
+│  │  │  ├─ is_sprinting
+│  │  │  │  [TAG_Boolean]
+│  │  │  │  Test whether the entity is or is not sprinting.
+│  │  │  ├─ is_swimming
+│  │  │  │  [TAG_Boolean]
+│  │  │  │  Test whether the entity is or is not swimming.
+│  │  │  └─ is_baby
+│  │  │     [TAG_Boolean]
+│  │  │     Test whether the entity is or is not a baby variant.
+│  │  ├─ lightning_bolt
+│  │  │  [TAG_Compound]
+│  │  │  Lightning bolt properties to be checked. Fails when entity is not a
+│  │  │  lightning bolt.
+│  │  │  └─ <...>
+│  │  ├─ location
+│  │  │  [TAG_Compound]
+│  │  │  ├─ biome
+│  │  │  │  [TAG_String]
+│  │  │  │  The biome the entity is currently in. Accepts these 73 values (see
+│  │  │  │  also Biome#Biome IDs).
+│  │  │  ├─ block
+│  │  │  │  [TAG_Compound]
+│  │  │  │  The block at the location.
+│  │  │  │  ├─ blocks
+│  │  │  │  │  [TAG_List]
+│  │  │  │  │  A list of block IDs.
+│  │  │  │  ├─ tag
+│  │  │  │  │  [TAG_String]
+│  │  │  │  │  The block Tag.
+│  │  │  │  ├─ nbt
+│  │  │  │  │  [TAG_String]
+│  │  │  │  │  The block NBT.
+│  │  │  │  └─ state
+│  │  │  │     [TAG_Compound]
+│  │  │  │     A map of block property names to values. Test will fail if the block
+│  │  │  │     doesn't match.
+│  │  │  │     └─ key
+│  │  │  │        [TAG_Boolean, TAG_Int, TAG_String, TAG_Compound]
+│  │  │  │        Block property key and value pair.
+│  │  │  │        ├─ max
+│  │  │  │        │  [TAG_Int]
+│  │  │  │        │  A maximum value.
+│  │  │  │        └─ min
+│  │  │  │           [TAG_Int]
+│  │  │  │           A minimum value.
+│  │  │  ├─ dimension
+│  │  │  │  [TAG_String]
+│  │  │  │  The dimension the entity is currently in.
+│  │  │  ├─ feature
+│  │  │  │  [TAG_String]
+│  │  │  │  Name of a structure. Accepts these 15 values (see also
+│  │  │  │  Commands/locate).
+│  │  │  ├─ fluid
+│  │  │  │  [TAG_Compound]
+│  │  │  │  The fluid at the location.
+│  │  │  │  ├─ fluid
+│  │  │  │  │  [TAG_String]
+│  │  │  │  │  The fluid ID.
+│  │  │  │  ├─ tag
+│  │  │  │  │  [TAG_String]
+│  │  │  │  │  The fluid Tag.
+│  │  │  │  └─ state
+│  │  │  │     [TAG_Compound]
+│  │  │  │     A map of fluid property names to values. Test will fail if the fluid
+│  │  │  │     doesn't match.
+│  │  │  │     └─ key
+│  │  │  │        [TAG_Boolean, TAG_Int, TAG_String, TAG_Compound]
+│  │  │  │        Fluid property key and value pair.
+│  │  │  │        ├─ max
+│  │  │  │        │  [TAG_Int]
+│  │  │  │        │  A maximum value.
+│  │  │  │        └─ min
+│  │  │  │           [TAG_Int]
+│  │  │  │           A minimum value.
+│  │  │  ├─ light
+│  │  │  │  [TAG_Compound]
+│  │  │  │  The light at the location.
+│  │  │  │  └─ light
+│  │  │  │     [TAG_Int, TAG_Compound]
+│  │  │  │     The light Level of visible light. Calculated using: (max(sky-
+│  │  │  │     darkening,block)).
+│  │  │  │     ├─ max
+│  │  │  │     │  [TAG_Int]
+│  │  │  │     │  A maximum value.
+│  │  │  │     └─ min
+│  │  │  │        [TAG_Int]
+│  │  │  │        A minimum value.
+│  │  │  ├─ position
+│  │  │  │  [TAG_Compound]
+│  │  │  │  ├─ x
+│  │  │  │  │  [TAG_Double, TAG_Compound]
+│  │  │  │  │  The x position.
+│  │  │  │  │  ├─ max
+│  │  │  │  │  │  [TAG_Double]
+│  │  │  │  │  │  A maximum value.
+│  │  │  │  │  └─ min
+│  │  │  │  │     [TAG_Double]
+│  │  │  │  │     A minimum value.
+│  │  │  │  ├─ y
+│  │  │  │  │  [TAG_Double, TAG_Compound]
+│  │  │  │  │  The y position.
+│  │  │  │  │  ├─ max
+│  │  │  │  │  │  [TAG_Double]
+│  │  │  │  │  │  A maximum value.
+│  │  │  │  │  └─ min
+│  │  │  │  │     [TAG_Double]
+│  │  │  │  │     A minimum value.
+│  │  │  │  └─ z
+│  │  │  │     [TAG_Double, TAG_Compound]
+│  │  │  │     The z position.
+│  │  │  │     ├─ max
+│  │  │  │     │  [TAG_Double]
+│  │  │  │     │  A maximum value.
+│  │  │  │     └─ min
+│  │  │  │        [TAG_Double]
+│  │  │  │        A minimum value.
+│  │  │  └─ smokey
+│  │  │     [TAG_Boolean]
+│  │  │     True if the block is closely above a campfire or soul campfire.
+│  │  ├─ nbt
+│  │  │  [TAG_String]
+│  │  │  An NBT string.
+│  │  ├─ passenger
+│  │  │  [TAG_Compound]
+│  │  │  The entity directly riding this entity.
+│  │  │  └─ <...>
+│  │  ├─ player
+│  │  │  [TAG_Compound]
+│  │  │  Player properties to be checked. Fails when entity is not a player.
+│  │  │  ├─ looking_at
+│  │  │  │  [TAG_Compound]
+│  │  │  │  The entity that the player is looking at, as long as it is visible and
+│  │  │  │  within a radius of 100 blocks. Visibility is defined through the line
+│  │  │  │  from the player's eyes to the entity's eyes, rather than the direction
+│  │  │  │  that the player is looking in.
+│  │  │  │  └─ <...>
+│  │  │  ├─ advancements
+│  │  │  │  [TAG_Compound]
+│  │  │  │  A map of advancements to check.
+│  │  │  │  └─ <advancement id>
+│  │  │  │     [TAG_Boolean, TAG_Compound]
+│  │  │  │     An advancement ID.
+│  │  │  │     └─ <criteria id>
+│  │  │  │        [TAG_Boolean]
+│  │  │  │        A criteria ID of the advancement.
+│  │  │  ├─ gamemode
+│  │  │  │  [TAG_String]
+│  │  │  │  The game mode of the player. Must be survival, adventure, creative or
+│  │  │  │  spectator.
+│  │  │  ├─ level
+│  │  │  │  [TAG_Int, TAG_Compound]
+│  │  │  │  The experience level of the player.
+│  │  │  │  ├─ max
+│  │  │  │  │  [TAG_Int]
+│  │  │  │  │  The maximum value.
+│  │  │  │  └─ min
+│  │  │  │     [TAG_Int]
+│  │  │  │     The minimum value.
+│  │  │  ├─ recipes
+│  │  │  │  [TAG_Compound]
+│  │  │  │  A map of recipes to check.
+│  │  │  │  └─ <recipe id>
+│  │  │  │     [TAG_Boolean]
+│  │  │  │     A recipe ID. True if the recipe is known to the player.
+│  │  │  └─ stats
+│  │  │     [TAG_List]
+│  │  │     List of statistics to match.
+│  │  │     └─ [TAG_Compound]
+│  │  │        A statistic. Note that unlike when adding scoreboard objectives, the
+│  │  │        base (for example, minecraft:custom) and the statistic (for example,
+│  │  │        minecraft:sneak_time) are split and use proper namespaces instead of
+│  │  │        the dot-notation (minecraft.custom:minecraft.sneak_time).
+│  │  │        ├─ type
+│  │  │        │  [TAG_String]
+│  │  │        │  The statistic base. Possible values are minecraft:custom,
+│  │  │        │  minecraft:crafted, minecraft:used, minecraft:broken, minecraft:mined,
+│  │  │        │  minecraft:killed, minecraft:picked_up, minecraft:dropped and
+│  │  │        │  minecraft:killed_by.
+│  │  │        ├─ stat
+│  │  │        │  [TAG_String]
+│  │  │        │  The statistic ID. Mostly mimics the criteria used for defining
+│  │  │        │  scoreboard objectives.
+│  │  │        └─ value
+│  │  │           [TAG_Int, TAG_Compound]
+│  │  │           The value of the statistic.
+│  │  │           ├─ max
+│  │  │           │  [TAG_Int]
+│  │  │           │  The maximum value.
+│  │  │           └─ min
+│  │  │              [TAG_Int]
+│  │  │              The minimum value.
+│  │  ├─ stepping_on
+│  │  │  [TAG_Compound]
+│  │  │  Location predicate for the block the entity is standing on.
+│  │  │  ├─ biome
+│  │  │  │  [TAG_String]
+│  │  │  │  The biome the entity is currently in. Accepts these 73 values (see
+│  │  │  │  also Biome#Biome IDs).
+│  │  │  ├─ block
+│  │  │  │  [TAG_Compound]
+│  │  │  │  The block at the location.
+│  │  │  │  ├─ blocks
+│  │  │  │  │  [TAG_List]
+│  │  │  │  │  A list of block IDs.
+│  │  │  │  ├─ tag
+│  │  │  │  │  [TAG_String]
+│  │  │  │  │  The block Tag.
+│  │  │  │  ├─ nbt
+│  │  │  │  │  [TAG_String]
+│  │  │  │  │  The block NBT.
+│  │  │  │  └─ state
+│  │  │  │     [TAG_Compound]
+│  │  │  │     A map of block property names to values. Test will fail if the block
+│  │  │  │     doesn't match.
+│  │  │  │     └─ key
+│  │  │  │        [TAG_Boolean, TAG_Int, TAG_String, TAG_Compound]
+│  │  │  │        Block property key and value pair.
+│  │  │  │        ├─ max
+│  │  │  │        │  [TAG_Int]
+│  │  │  │        │  A maximum value.
+│  │  │  │        └─ min
+│  │  │  │           [TAG_Int]
+│  │  │  │           A minimum value.
+│  │  │  ├─ dimension
+│  │  │  │  [TAG_String]
+│  │  │  │  The dimension the entity is currently in.
+│  │  │  ├─ feature
+│  │  │  │  [TAG_String]
+│  │  │  │  Name of a structure. Accepts these 15 values (see also
+│  │  │  │  Commands/locate).
+│  │  │  ├─ fluid
+│  │  │  │  [TAG_Compound]
+│  │  │  │  The fluid at the location.
+│  │  │  │  ├─ fluid
+│  │  │  │  │  [TAG_String]
+│  │  │  │  │  The fluid ID.
+│  │  │  │  ├─ tag
+│  │  │  │  │  [TAG_String]
+│  │  │  │  │  The fluid Tag.
+│  │  │  │  └─ state
+│  │  │  │     [TAG_Compound]
+│  │  │  │     A map of fluid property names to values. Test will fail if the fluid
+│  │  │  │     doesn't match.
+│  │  │  │     └─ key
+│  │  │  │        [TAG_Boolean, TAG_Int, TAG_String, TAG_Compound]
+│  │  │  │        Fluid property key and value pair.
+│  │  │  │        ├─ max
+│  │  │  │        │  [TAG_Int]
+│  │  │  │        │  A maximum value.
+│  │  │  │        └─ min
+│  │  │  │           [TAG_Int]
+│  │  │  │           A minimum value.
+│  │  │  ├─ light
+│  │  │  │  [TAG_Compound]
+│  │  │  │  The light at the location.
+│  │  │  │  └─ light
+│  │  │  │     [TAG_Int, TAG_Compound]
+│  │  │  │     The light Level of visible light. Calculated using: (max(sky-
+│  │  │  │     darkening,block)).
+│  │  │  │     ├─ max
+│  │  │  │     │  [TAG_Int]
+│  │  │  │     │  A maximum value.
+│  │  │  │     └─ min
+│  │  │  │        [TAG_Int]
+│  │  │  │        A minimum value.
+│  │  │  ├─ position
+│  │  │  │  [TAG_Compound]
+│  │  │  │  ├─ x
+│  │  │  │  │  [TAG_Double, TAG_Compound]
+│  │  │  │  │  The x position.
+│  │  │  │  │  ├─ max
+│  │  │  │  │  │  [TAG_Double]
+│  │  │  │  │  │  A maximum value.
+│  │  │  │  │  └─ min
+│  │  │  │  │     [TAG_Double]
+│  │  │  │  │     A minimum value.
+│  │  │  │  ├─ y
+│  │  │  │  │  [TAG_Double, TAG_Compound]
+│  │  │  │  │  The y position.
+│  │  │  │  │  ├─ max
+│  │  │  │  │  │  [TAG_Double]
+│  │  │  │  │  │  A maximum value.
+│  │  │  │  │  └─ min
+│  │  │  │  │     [TAG_Double]
+│  │  │  │  │     A minimum value.
+│  │  │  │  └─ z
+│  │  │  │     [TAG_Double, TAG_Compound]
+│  │  │  │     The z position.
+│  │  │  │     ├─ max
+│  │  │  │     │  [TAG_Double]
+│  │  │  │     │  A maximum value.
+│  │  │  │     └─ min
+│  │  │  │        [TAG_Double]
+│  │  │  │        A minimum value.
+│  │  │  └─ smokey
+│  │  │     [TAG_Boolean]
+│  │  │     True if the block is closely above a campfire or soul campfire.
+│  │  ├─ team
+│  │  │  [TAG_String]
+│  │  │  The team the entity belongs to.
+│  │  ├─ type
+│  │  │  [TAG_String]
+│  │  │  An entity ID.
+│  │  ├─ targeted_entity
+│  │  │  [TAG_Compound]
+│  │  │  The entity which this entity is targeting for attacks.
+│  │  │  └─ <...>
+│  │  └─ vehicle
+│  │     [TAG_Compound]
+│  │     The vehicle that the entity is riding on.
+│  │     └─ <...>
 │  ├─ location
 │  │  [TAG_Compound]
 │  │  ├─ biome
@@ -485,9 +1280,9 @@ conditions
 │  │  ├─ block
 │  │  │  [TAG_Compound]
 │  │  │  The block at the location.
-│  │  │  ├─ block
-│  │  │  │  [TAG_String]
-│  │  │  │  The block ID.
+│  │  │  ├─ blocks
+│  │  │  │  [TAG_List]
+│  │  │  │  A list of block IDs.
 │  │  │  ├─ tag
 │  │  │  │  [TAG_String]
 │  │  │  │  The block Tag.
@@ -509,7 +1304,7 @@ conditions
 │  │  │           A minimum value.
 │  │  ├─ dimension
 │  │  │  [TAG_String]
-│  │  │  The dimension the entity is currently in. Accepts these 3 values.
+│  │  │  The dimension the entity is currently in.
 │  │  ├─ feature
 │  │  │  [TAG_String]
 │  │  │  Name of a structure. Accepts these 15 values (see also
@@ -584,9 +1379,20 @@ conditions
 │  ├─ nbt
 │  │  [TAG_String]
 │  │  An NBT string.
+│  ├─ passenger
+│  │  [TAG_Compound]
+│  │  The entity directly riding this entity.
+│  │  └─ <...>
 │  ├─ player
 │  │  [TAG_Compound]
 │  │  Player properties to be checked. Fails when entity is not a player.
+│  │  ├─ looking_at
+│  │  │  [TAG_Compound]
+│  │  │  The entity that the player is looking at, as long as it is visible and
+│  │  │  within a radius of 100 blocks. Visibility is defined through the line
+│  │  │  from the player's eyes to the entity's eyes, rather than the direction
+│  │  │  that the player is looking in.
+│  │  │  └─ <...>
 │  │  ├─ advancements
 │  │  │  [TAG_Compound]
 │  │  │  A map of advancements to check.
@@ -642,6 +1448,112 @@ conditions
 │  │           └─ min
 │  │              [TAG_Int]
 │  │              The minimum value.
+│  ├─ stepping_on
+│  │  [TAG_Compound]
+│  │  Location predicate for the block the entity is standing on.
+│  │  ├─ biome
+│  │  │  [TAG_String]
+│  │  │  The biome the entity is currently in. Accepts these 73 values (see
+│  │  │  also Biome#Biome IDs).
+│  │  ├─ block
+│  │  │  [TAG_Compound]
+│  │  │  The block at the location.
+│  │  │  ├─ blocks
+│  │  │  │  [TAG_List]
+│  │  │  │  A list of block IDs.
+│  │  │  ├─ tag
+│  │  │  │  [TAG_String]
+│  │  │  │  The block Tag.
+│  │  │  ├─ nbt
+│  │  │  │  [TAG_String]
+│  │  │  │  The block NBT.
+│  │  │  └─ state
+│  │  │     [TAG_Compound]
+│  │  │     A map of block property names to values. Test will fail if the block
+│  │  │     doesn't match.
+│  │  │     └─ key
+│  │  │        [TAG_Boolean, TAG_Int, TAG_String, TAG_Compound]
+│  │  │        Block property key and value pair.
+│  │  │        ├─ max
+│  │  │        │  [TAG_Int]
+│  │  │        │  A maximum value.
+│  │  │        └─ min
+│  │  │           [TAG_Int]
+│  │  │           A minimum value.
+│  │  ├─ dimension
+│  │  │  [TAG_String]
+│  │  │  The dimension the entity is currently in.
+│  │  ├─ feature
+│  │  │  [TAG_String]
+│  │  │  Name of a structure. Accepts these 15 values (see also
+│  │  │  Commands/locate).
+│  │  ├─ fluid
+│  │  │  [TAG_Compound]
+│  │  │  The fluid at the location.
+│  │  │  ├─ fluid
+│  │  │  │  [TAG_String]
+│  │  │  │  The fluid ID.
+│  │  │  ├─ tag
+│  │  │  │  [TAG_String]
+│  │  │  │  The fluid Tag.
+│  │  │  └─ state
+│  │  │     [TAG_Compound]
+│  │  │     A map of fluid property names to values. Test will fail if the fluid
+│  │  │     doesn't match.
+│  │  │     └─ key
+│  │  │        [TAG_Boolean, TAG_Int, TAG_String, TAG_Compound]
+│  │  │        Fluid property key and value pair.
+│  │  │        ├─ max
+│  │  │        │  [TAG_Int]
+│  │  │        │  A maximum value.
+│  │  │        └─ min
+│  │  │           [TAG_Int]
+│  │  │           A minimum value.
+│  │  ├─ light
+│  │  │  [TAG_Compound]
+│  │  │  The light at the location.
+│  │  │  └─ light
+│  │  │     [TAG_Int, TAG_Compound]
+│  │  │     The light Level of visible light. Calculated using: (max(sky-
+│  │  │     darkening,block)).
+│  │  │     ├─ max
+│  │  │     │  [TAG_Int]
+│  │  │     │  A maximum value.
+│  │  │     └─ min
+│  │  │        [TAG_Int]
+│  │  │        A minimum value.
+│  │  ├─ position
+│  │  │  [TAG_Compound]
+│  │  │  ├─ x
+│  │  │  │  [TAG_Double, TAG_Compound]
+│  │  │  │  The x position.
+│  │  │  │  ├─ max
+│  │  │  │  │  [TAG_Double]
+│  │  │  │  │  A maximum value.
+│  │  │  │  └─ min
+│  │  │  │     [TAG_Double]
+│  │  │  │     A minimum value.
+│  │  │  ├─ y
+│  │  │  │  [TAG_Double, TAG_Compound]
+│  │  │  │  The y position.
+│  │  │  │  ├─ max
+│  │  │  │  │  [TAG_Double]
+│  │  │  │  │  A maximum value.
+│  │  │  │  └─ min
+│  │  │  │     [TAG_Double]
+│  │  │  │     A minimum value.
+│  │  │  └─ z
+│  │  │     [TAG_Double, TAG_Compound]
+│  │  │     The z position.
+│  │  │     ├─ max
+│  │  │     │  [TAG_Double]
+│  │  │     │  A maximum value.
+│  │  │     └─ min
+│  │  │        [TAG_Double]
+│  │  │        A minimum value.
+│  │  └─ smokey
+│  │     [TAG_Boolean]
+│  │     True if the block is closely above a campfire or soul campfire.
 │  ├─ team
 │  │  [TAG_String]
 │  │  The team the entity belongs to.
@@ -722,6 +1634,9 @@ conditions
 │  │  │  └─ <minecraft:effect_name>
 │  │  │     [TAG_Compound]
 │  │  │     A status effect with the key name being the status effect name.
+│  │  │     ├─ ambient
+│  │  │     │  [TAG_Boolean]
+│  │  │     │  Whether the effect is from a beacon.
 │  │  │     ├─ amplifier
 │  │  │     │  [TAG_Int, TAG_Compound]
 │  │  │     │  The effect amplifier.
@@ -731,15 +1646,18 @@ conditions
 │  │  │     │  └─ min
 │  │  │     │     [TAG_Int]
 │  │  │     │     The minimum value.
-│  │  │     └─ duration
-│  │  │        [TAG_Int, TAG_Compound]
-│  │  │        The effect duration in ticks.
-│  │  │        ├─ max
-│  │  │        │  [TAG_Int]
-│  │  │        │  The maximum value.
-│  │  │        └─ min
-│  │  │           [TAG_Int]
-│  │  │           The minimum value.
+│  │  │     ├─ duration
+│  │  │     │  [TAG_Int, TAG_Compound]
+│  │  │     │  The effect duration in ticks.
+│  │  │     │  ├─ max
+│  │  │     │  │  [TAG_Int]
+│  │  │     │  │  The maximum value.
+│  │  │     │  └─ min
+│  │  │     │     [TAG_Int]
+│  │  │     │     The minimum value.
+│  │  │     └─ visible
+│  │  │        [TAG_Boolean]
+│  │  │        Whether the effect has visible particles.
 │  │  ├─ equipment
 │  │  │  [TAG_Compound]
 │  │  │  ├─ mainhand
@@ -794,9 +1712,9 @@ conditions
 │  │  │  │  │        └─ min
 │  │  │  │  │           [TAG_Int]
 │  │  │  │  │           The minimum value.
-│  │  │  │  ├─ item
-│  │  │  │  │  [TAG_String]
-│  │  │  │  │  An item ID.
+│  │  │  │  ├─ items
+│  │  │  │  │  [TAG_List]
+│  │  │  │  │  A list of item IDs.
 │  │  │  │  ├─ nbt
 │  │  │  │  │  [TAG_String]
 │  │  │  │  │  An NBT string.
@@ -858,9 +1776,9 @@ conditions
 │  │  │  │  │        └─ min
 │  │  │  │  │           [TAG_Int]
 │  │  │  │  │           The minimum value.
-│  │  │  │  ├─ item
-│  │  │  │  │  [TAG_String]
-│  │  │  │  │  An item ID.
+│  │  │  │  ├─ items
+│  │  │  │  │  [TAG_List]
+│  │  │  │  │  A list of item IDs.
 │  │  │  │  ├─ nbt
 │  │  │  │  │  [TAG_String]
 │  │  │  │  │  An NBT string.
@@ -922,9 +1840,9 @@ conditions
 │  │  │  │  │        └─ min
 │  │  │  │  │           [TAG_Int]
 │  │  │  │  │           The minimum value.
-│  │  │  │  ├─ item
-│  │  │  │  │  [TAG_String]
-│  │  │  │  │  An item ID.
+│  │  │  │  ├─ items
+│  │  │  │  │  [TAG_List]
+│  │  │  │  │  A list of item IDs.
 │  │  │  │  ├─ nbt
 │  │  │  │  │  [TAG_String]
 │  │  │  │  │  An NBT string.
@@ -986,9 +1904,9 @@ conditions
 │  │  │  │  │        └─ min
 │  │  │  │  │           [TAG_Int]
 │  │  │  │  │           The minimum value.
-│  │  │  │  ├─ item
-│  │  │  │  │  [TAG_String]
-│  │  │  │  │  An item ID.
+│  │  │  │  ├─ items
+│  │  │  │  │  [TAG_List]
+│  │  │  │  │  A list of item IDs.
 │  │  │  │  ├─ nbt
 │  │  │  │  │  [TAG_String]
 │  │  │  │  │  An NBT string.
@@ -1050,9 +1968,9 @@ conditions
 │  │  │  │  │        └─ min
 │  │  │  │  │           [TAG_Int]
 │  │  │  │  │           The minimum value.
-│  │  │  │  ├─ item
-│  │  │  │  │  [TAG_String]
-│  │  │  │  │  An item ID.
+│  │  │  │  ├─ items
+│  │  │  │  │  [TAG_List]
+│  │  │  │  │  A list of item IDs.
 │  │  │  │  ├─ nbt
 │  │  │  │  │  [TAG_String]
 │  │  │  │  │  An NBT string.
@@ -1114,9 +2032,9 @@ conditions
 │  │  │     │        └─ min
 │  │  │     │           [TAG_Int]
 │  │  │     │           The minimum value.
-│  │  │     ├─ item
-│  │  │     │  [TAG_String]
-│  │  │     │  An item ID.
+│  │  │     ├─ items
+│  │  │     │  [TAG_List]
+│  │  │     │  A list of item IDs.
 │  │  │     ├─ nbt
 │  │  │     │  [TAG_String]
 │  │  │     │  An NBT string.
@@ -1144,6 +2062,795 @@ conditions
 │  │  │  └─ is_baby
 │  │  │     [TAG_Boolean]
 │  │  │     Test whether the entity is or is not a baby variant.
+│  │  ├─ lightning_bolt
+│  │  │  [TAG_Compound]
+│  │  │  Lightning bolt properties to be checked. Fails when entity is not a
+│  │  │  lightning bolt.
+│  │  │  ├─ blocks_set_on_fire
+│  │  │  │  [TAG_Int]
+│  │  │  │  Number of blocks set on fire by this lightning bolt.
+│  │  │  ├─ entity_struck
+│  │  │  │  [TAG_Compound]
+│  │  │  │  Entity properties of entities struck by this lightning bolt. If
+│  │  │  │  present, this tag must match one or more entities.
+│  │  │  ├─ distance
+│  │  │  │  [TAG_Compound]
+│  │  │  │  ├─ absolute
+│  │  │  │  │  [TAG_Compound]
+│  │  │  │  │  ├─ max
+│  │  │  │  │  │  [TAG_Float]
+│  │  │  │  │  │  The maximum value.
+│  │  │  │  │  └─ min
+│  │  │  │  │     [TAG_Float]
+│  │  │  │  │     The minimum value.
+│  │  │  │  ├─ horizontal
+│  │  │  │  │  [TAG_Compound]
+│  │  │  │  │  ├─ max
+│  │  │  │  │  │  [TAG_Float]
+│  │  │  │  │  │  The maximum value.
+│  │  │  │  │  └─ min
+│  │  │  │  │     [TAG_Float]
+│  │  │  │  │     The minimum value.
+│  │  │  │  ├─ x
+│  │  │  │  │  [TAG_Compound]
+│  │  │  │  │  ├─ max
+│  │  │  │  │  │  [TAG_Float]
+│  │  │  │  │  │  The maximum value.
+│  │  │  │  │  └─ min
+│  │  │  │  │     [TAG_Float]
+│  │  │  │  │     The minimum value.
+│  │  │  │  ├─ y
+│  │  │  │  │  [TAG_Compound]
+│  │  │  │  │  ├─ max
+│  │  │  │  │  │  [TAG_Float]
+│  │  │  │  │  │  The maximum value.
+│  │  │  │  │  └─ min
+│  │  │  │  │     [TAG_Float]
+│  │  │  │  │     The minimum value.
+│  │  │  │  └─ z
+│  │  │  │     [TAG_Compound]
+│  │  │  │     ├─ max
+│  │  │  │     │  [TAG_Float]
+│  │  │  │     │  The maximum value.
+│  │  │  │     └─ min
+│  │  │  │        [TAG_Float]
+│  │  │  │        The minimum value.
+│  │  │  ├─ effects
+│  │  │  │  [TAG_Compound]
+│  │  │  │  A list of status effects.
+│  │  │  │  └─ <minecraft:effect_name>
+│  │  │  │     [TAG_Compound]
+│  │  │  │     A status effect with the key name being the status effect name.
+│  │  │  │     ├─ ambient
+│  │  │  │     │  [TAG_Boolean]
+│  │  │  │     │  Whether the effect is from a beacon.
+│  │  │  │     ├─ amplifier
+│  │  │  │     │  [TAG_Int, TAG_Compound]
+│  │  │  │     │  The effect amplifier.
+│  │  │  │     │  ├─ max
+│  │  │  │     │  │  [TAG_Int]
+│  │  │  │     │  │  The maximum value.
+│  │  │  │     │  └─ min
+│  │  │  │     │     [TAG_Int]
+│  │  │  │     │     The minimum value.
+│  │  │  │     ├─ duration
+│  │  │  │     │  [TAG_Int, TAG_Compound]
+│  │  │  │     │  The effect duration in ticks.
+│  │  │  │     │  ├─ max
+│  │  │  │     │  │  [TAG_Int]
+│  │  │  │     │  │  The maximum value.
+│  │  │  │     │  └─ min
+│  │  │  │     │     [TAG_Int]
+│  │  │  │     │     The minimum value.
+│  │  │  │     └─ visible
+│  │  │  │        [TAG_Boolean]
+│  │  │  │        Whether the effect has visible particles.
+│  │  │  ├─ equipment
+│  │  │  │  [TAG_Compound]
+│  │  │  │  ├─ mainhand
+│  │  │  │  │  [TAG_Compound]
+│  │  │  │  │  ├─ count
+│  │  │  │  │  │  [TAG_Int, TAG_Compound]
+│  │  │  │  │  │  Amount of the item.
+│  │  │  │  │  │  ├─ max
+│  │  │  │  │  │  │  [TAG_Int]
+│  │  │  │  │  │  │  The maximum value.
+│  │  │  │  │  │  └─ min
+│  │  │  │  │  │     [TAG_Int]
+│  │  │  │  │  │     The minimum value.
+│  │  │  │  │  ├─ durability
+│  │  │  │  │  │  [TAG_Int, TAG_Compound]
+│  │  │  │  │  │  The durability of the item.
+│  │  │  │  │  │  ├─ max
+│  │  │  │  │  │  │  [TAG_Int]
+│  │  │  │  │  │  │  The maximum value.
+│  │  │  │  │  │  └─ min
+│  │  │  │  │  │     [TAG_Int]
+│  │  │  │  │  │     The minimum value.
+│  │  │  │  │  ├─ enchantments
+│  │  │  │  │  │  [TAG_List]
+│  │  │  │  │  │  List of enchantments.
+│  │  │  │  │  │  └─ [TAG_Compound]
+│  │  │  │  │  │     ├─ enchantment
+│  │  │  │  │  │     │  [TAG_String]
+│  │  │  │  │  │     │  An enchantment ID.
+│  │  │  │  │  │     └─ levels
+│  │  │  │  │  │        [TAG_Int, TAG_Compound]
+│  │  │  │  │  │        The level of the enchantment.
+│  │  │  │  │  │        ├─ max
+│  │  │  │  │  │        │  [TAG_Int]
+│  │  │  │  │  │        │  The maximum value.
+│  │  │  │  │  │        └─ min
+│  │  │  │  │  │           [TAG_Int]
+│  │  │  │  │  │           The minimum value.
+│  │  │  │  │  ├─ stored_enchantments
+│  │  │  │  │  │  [TAG_List]
+│  │  │  │  │  │  List of stored enchantments.
+│  │  │  │  │  │  └─ [TAG_Compound]
+│  │  │  │  │  │     ├─ enchantment
+│  │  │  │  │  │     │  [TAG_String]
+│  │  │  │  │  │     │  An enchantment ID.
+│  │  │  │  │  │     └─ levels
+│  │  │  │  │  │        [TAG_Int, TAG_Compound]
+│  │  │  │  │  │        The level of the enchantment.
+│  │  │  │  │  │        ├─ max
+│  │  │  │  │  │        │  [TAG_Int]
+│  │  │  │  │  │        │  The maximum value.
+│  │  │  │  │  │        └─ min
+│  │  │  │  │  │           [TAG_Int]
+│  │  │  │  │  │           The minimum value.
+│  │  │  │  │  ├─ items
+│  │  │  │  │  │  [TAG_List]
+│  │  │  │  │  │  A list of item IDs.
+│  │  │  │  │  ├─ nbt
+│  │  │  │  │  │  [TAG_String]
+│  │  │  │  │  │  An NBT string.
+│  │  │  │  │  ├─ potion
+│  │  │  │  │  │  [TAG_String]
+│  │  │  │  │  │  A brewed potion ID.
+│  │  │  │  │  └─ tag
+│  │  │  │  │     [TAG_String]
+│  │  │  │  │     An item data pack tag.
+│  │  │  │  ├─ offhand
+│  │  │  │  │  [TAG_Compound]
+│  │  │  │  │  ├─ count
+│  │  │  │  │  │  [TAG_Int, TAG_Compound]
+│  │  │  │  │  │  Amount of the item.
+│  │  │  │  │  │  ├─ max
+│  │  │  │  │  │  │  [TAG_Int]
+│  │  │  │  │  │  │  The maximum value.
+│  │  │  │  │  │  └─ min
+│  │  │  │  │  │     [TAG_Int]
+│  │  │  │  │  │     The minimum value.
+│  │  │  │  │  ├─ durability
+│  │  │  │  │  │  [TAG_Int, TAG_Compound]
+│  │  │  │  │  │  The durability of the item.
+│  │  │  │  │  │  ├─ max
+│  │  │  │  │  │  │  [TAG_Int]
+│  │  │  │  │  │  │  The maximum value.
+│  │  │  │  │  │  └─ min
+│  │  │  │  │  │     [TAG_Int]
+│  │  │  │  │  │     The minimum value.
+│  │  │  │  │  ├─ enchantments
+│  │  │  │  │  │  [TAG_List]
+│  │  │  │  │  │  List of enchantments.
+│  │  │  │  │  │  └─ [TAG_Compound]
+│  │  │  │  │  │     ├─ enchantment
+│  │  │  │  │  │     │  [TAG_String]
+│  │  │  │  │  │     │  An enchantment ID.
+│  │  │  │  │  │     └─ levels
+│  │  │  │  │  │        [TAG_Int, TAG_Compound]
+│  │  │  │  │  │        The level of the enchantment.
+│  │  │  │  │  │        ├─ max
+│  │  │  │  │  │        │  [TAG_Int]
+│  │  │  │  │  │        │  The maximum value.
+│  │  │  │  │  │        └─ min
+│  │  │  │  │  │           [TAG_Int]
+│  │  │  │  │  │           The minimum value.
+│  │  │  │  │  ├─ stored_enchantments
+│  │  │  │  │  │  [TAG_List]
+│  │  │  │  │  │  List of stored enchantments.
+│  │  │  │  │  │  └─ [TAG_Compound]
+│  │  │  │  │  │     ├─ enchantment
+│  │  │  │  │  │     │  [TAG_String]
+│  │  │  │  │  │     │  An enchantment ID.
+│  │  │  │  │  │     └─ levels
+│  │  │  │  │  │        [TAG_Int, TAG_Compound]
+│  │  │  │  │  │        The level of the enchantment.
+│  │  │  │  │  │        ├─ max
+│  │  │  │  │  │        │  [TAG_Int]
+│  │  │  │  │  │        │  The maximum value.
+│  │  │  │  │  │        └─ min
+│  │  │  │  │  │           [TAG_Int]
+│  │  │  │  │  │           The minimum value.
+│  │  │  │  │  ├─ items
+│  │  │  │  │  │  [TAG_List]
+│  │  │  │  │  │  A list of item IDs.
+│  │  │  │  │  ├─ nbt
+│  │  │  │  │  │  [TAG_String]
+│  │  │  │  │  │  An NBT string.
+│  │  │  │  │  ├─ potion
+│  │  │  │  │  │  [TAG_String]
+│  │  │  │  │  │  A brewed potion ID.
+│  │  │  │  │  └─ tag
+│  │  │  │  │     [TAG_String]
+│  │  │  │  │     An item data pack tag.
+│  │  │  │  ├─ head
+│  │  │  │  │  [TAG_Compound]
+│  │  │  │  │  ├─ count
+│  │  │  │  │  │  [TAG_Int, TAG_Compound]
+│  │  │  │  │  │  Amount of the item.
+│  │  │  │  │  │  ├─ max
+│  │  │  │  │  │  │  [TAG_Int]
+│  │  │  │  │  │  │  The maximum value.
+│  │  │  │  │  │  └─ min
+│  │  │  │  │  │     [TAG_Int]
+│  │  │  │  │  │     The minimum value.
+│  │  │  │  │  ├─ durability
+│  │  │  │  │  │  [TAG_Int, TAG_Compound]
+│  │  │  │  │  │  The durability of the item.
+│  │  │  │  │  │  ├─ max
+│  │  │  │  │  │  │  [TAG_Int]
+│  │  │  │  │  │  │  The maximum value.
+│  │  │  │  │  │  └─ min
+│  │  │  │  │  │     [TAG_Int]
+│  │  │  │  │  │     The minimum value.
+│  │  │  │  │  ├─ enchantments
+│  │  │  │  │  │  [TAG_List]
+│  │  │  │  │  │  List of enchantments.
+│  │  │  │  │  │  └─ [TAG_Compound]
+│  │  │  │  │  │     ├─ enchantment
+│  │  │  │  │  │     │  [TAG_String]
+│  │  │  │  │  │     │  An enchantment ID.
+│  │  │  │  │  │     └─ levels
+│  │  │  │  │  │        [TAG_Int, TAG_Compound]
+│  │  │  │  │  │        The level of the enchantment.
+│  │  │  │  │  │        ├─ max
+│  │  │  │  │  │        │  [TAG_Int]
+│  │  │  │  │  │        │  The maximum value.
+│  │  │  │  │  │        └─ min
+│  │  │  │  │  │           [TAG_Int]
+│  │  │  │  │  │           The minimum value.
+│  │  │  │  │  ├─ stored_enchantments
+│  │  │  │  │  │  [TAG_List]
+│  │  │  │  │  │  List of stored enchantments.
+│  │  │  │  │  │  └─ [TAG_Compound]
+│  │  │  │  │  │     ├─ enchantment
+│  │  │  │  │  │     │  [TAG_String]
+│  │  │  │  │  │     │  An enchantment ID.
+│  │  │  │  │  │     └─ levels
+│  │  │  │  │  │        [TAG_Int, TAG_Compound]
+│  │  │  │  │  │        The level of the enchantment.
+│  │  │  │  │  │        ├─ max
+│  │  │  │  │  │        │  [TAG_Int]
+│  │  │  │  │  │        │  The maximum value.
+│  │  │  │  │  │        └─ min
+│  │  │  │  │  │           [TAG_Int]
+│  │  │  │  │  │           The minimum value.
+│  │  │  │  │  ├─ items
+│  │  │  │  │  │  [TAG_List]
+│  │  │  │  │  │  A list of item IDs.
+│  │  │  │  │  ├─ nbt
+│  │  │  │  │  │  [TAG_String]
+│  │  │  │  │  │  An NBT string.
+│  │  │  │  │  ├─ potion
+│  │  │  │  │  │  [TAG_String]
+│  │  │  │  │  │  A brewed potion ID.
+│  │  │  │  │  └─ tag
+│  │  │  │  │     [TAG_String]
+│  │  │  │  │     An item data pack tag.
+│  │  │  │  ├─ chest
+│  │  │  │  │  [TAG_Compound]
+│  │  │  │  │  ├─ count
+│  │  │  │  │  │  [TAG_Int, TAG_Compound]
+│  │  │  │  │  │  Amount of the item.
+│  │  │  │  │  │  ├─ max
+│  │  │  │  │  │  │  [TAG_Int]
+│  │  │  │  │  │  │  The maximum value.
+│  │  │  │  │  │  └─ min
+│  │  │  │  │  │     [TAG_Int]
+│  │  │  │  │  │     The minimum value.
+│  │  │  │  │  ├─ durability
+│  │  │  │  │  │  [TAG_Int, TAG_Compound]
+│  │  │  │  │  │  The durability of the item.
+│  │  │  │  │  │  ├─ max
+│  │  │  │  │  │  │  [TAG_Int]
+│  │  │  │  │  │  │  The maximum value.
+│  │  │  │  │  │  └─ min
+│  │  │  │  │  │     [TAG_Int]
+│  │  │  │  │  │     The minimum value.
+│  │  │  │  │  ├─ enchantments
+│  │  │  │  │  │  [TAG_List]
+│  │  │  │  │  │  List of enchantments.
+│  │  │  │  │  │  └─ [TAG_Compound]
+│  │  │  │  │  │     ├─ enchantment
+│  │  │  │  │  │     │  [TAG_String]
+│  │  │  │  │  │     │  An enchantment ID.
+│  │  │  │  │  │     └─ levels
+│  │  │  │  │  │        [TAG_Int, TAG_Compound]
+│  │  │  │  │  │        The level of the enchantment.
+│  │  │  │  │  │        ├─ max
+│  │  │  │  │  │        │  [TAG_Int]
+│  │  │  │  │  │        │  The maximum value.
+│  │  │  │  │  │        └─ min
+│  │  │  │  │  │           [TAG_Int]
+│  │  │  │  │  │           The minimum value.
+│  │  │  │  │  ├─ stored_enchantments
+│  │  │  │  │  │  [TAG_List]
+│  │  │  │  │  │  List of stored enchantments.
+│  │  │  │  │  │  └─ [TAG_Compound]
+│  │  │  │  │  │     ├─ enchantment
+│  │  │  │  │  │     │  [TAG_String]
+│  │  │  │  │  │     │  An enchantment ID.
+│  │  │  │  │  │     └─ levels
+│  │  │  │  │  │        [TAG_Int, TAG_Compound]
+│  │  │  │  │  │        The level of the enchantment.
+│  │  │  │  │  │        ├─ max
+│  │  │  │  │  │        │  [TAG_Int]
+│  │  │  │  │  │        │  The maximum value.
+│  │  │  │  │  │        └─ min
+│  │  │  │  │  │           [TAG_Int]
+│  │  │  │  │  │           The minimum value.
+│  │  │  │  │  ├─ items
+│  │  │  │  │  │  [TAG_List]
+│  │  │  │  │  │  A list of item IDs.
+│  │  │  │  │  ├─ nbt
+│  │  │  │  │  │  [TAG_String]
+│  │  │  │  │  │  An NBT string.
+│  │  │  │  │  ├─ potion
+│  │  │  │  │  │  [TAG_String]
+│  │  │  │  │  │  A brewed potion ID.
+│  │  │  │  │  └─ tag
+│  │  │  │  │     [TAG_String]
+│  │  │  │  │     An item data pack tag.
+│  │  │  │  ├─ legs
+│  │  │  │  │  [TAG_Compound]
+│  │  │  │  │  ├─ count
+│  │  │  │  │  │  [TAG_Int, TAG_Compound]
+│  │  │  │  │  │  Amount of the item.
+│  │  │  │  │  │  ├─ max
+│  │  │  │  │  │  │  [TAG_Int]
+│  │  │  │  │  │  │  The maximum value.
+│  │  │  │  │  │  └─ min
+│  │  │  │  │  │     [TAG_Int]
+│  │  │  │  │  │     The minimum value.
+│  │  │  │  │  ├─ durability
+│  │  │  │  │  │  [TAG_Int, TAG_Compound]
+│  │  │  │  │  │  The durability of the item.
+│  │  │  │  │  │  ├─ max
+│  │  │  │  │  │  │  [TAG_Int]
+│  │  │  │  │  │  │  The maximum value.
+│  │  │  │  │  │  └─ min
+│  │  │  │  │  │     [TAG_Int]
+│  │  │  │  │  │     The minimum value.
+│  │  │  │  │  ├─ enchantments
+│  │  │  │  │  │  [TAG_List]
+│  │  │  │  │  │  List of enchantments.
+│  │  │  │  │  │  └─ [TAG_Compound]
+│  │  │  │  │  │     ├─ enchantment
+│  │  │  │  │  │     │  [TAG_String]
+│  │  │  │  │  │     │  An enchantment ID.
+│  │  │  │  │  │     └─ levels
+│  │  │  │  │  │        [TAG_Int, TAG_Compound]
+│  │  │  │  │  │        The level of the enchantment.
+│  │  │  │  │  │        ├─ max
+│  │  │  │  │  │        │  [TAG_Int]
+│  │  │  │  │  │        │  The maximum value.
+│  │  │  │  │  │        └─ min
+│  │  │  │  │  │           [TAG_Int]
+│  │  │  │  │  │           The minimum value.
+│  │  │  │  │  ├─ stored_enchantments
+│  │  │  │  │  │  [TAG_List]
+│  │  │  │  │  │  List of stored enchantments.
+│  │  │  │  │  │  └─ [TAG_Compound]
+│  │  │  │  │  │     ├─ enchantment
+│  │  │  │  │  │     │  [TAG_String]
+│  │  │  │  │  │     │  An enchantment ID.
+│  │  │  │  │  │     └─ levels
+│  │  │  │  │  │        [TAG_Int, TAG_Compound]
+│  │  │  │  │  │        The level of the enchantment.
+│  │  │  │  │  │        ├─ max
+│  │  │  │  │  │        │  [TAG_Int]
+│  │  │  │  │  │        │  The maximum value.
+│  │  │  │  │  │        └─ min
+│  │  │  │  │  │           [TAG_Int]
+│  │  │  │  │  │           The minimum value.
+│  │  │  │  │  ├─ items
+│  │  │  │  │  │  [TAG_List]
+│  │  │  │  │  │  A list of item IDs.
+│  │  │  │  │  ├─ nbt
+│  │  │  │  │  │  [TAG_String]
+│  │  │  │  │  │  An NBT string.
+│  │  │  │  │  ├─ potion
+│  │  │  │  │  │  [TAG_String]
+│  │  │  │  │  │  A brewed potion ID.
+│  │  │  │  │  └─ tag
+│  │  │  │  │     [TAG_String]
+│  │  │  │  │     An item data pack tag.
+│  │  │  │  └─ feet
+│  │  │  │     [TAG_Compound]
+│  │  │  │     ├─ count
+│  │  │  │     │  [TAG_Int, TAG_Compound]
+│  │  │  │     │  Amount of the item.
+│  │  │  │     │  ├─ max
+│  │  │  │     │  │  [TAG_Int]
+│  │  │  │     │  │  The maximum value.
+│  │  │  │     │  └─ min
+│  │  │  │     │     [TAG_Int]
+│  │  │  │     │     The minimum value.
+│  │  │  │     ├─ durability
+│  │  │  │     │  [TAG_Int, TAG_Compound]
+│  │  │  │     │  The durability of the item.
+│  │  │  │     │  ├─ max
+│  │  │  │     │  │  [TAG_Int]
+│  │  │  │     │  │  The maximum value.
+│  │  │  │     │  └─ min
+│  │  │  │     │     [TAG_Int]
+│  │  │  │     │     The minimum value.
+│  │  │  │     ├─ enchantments
+│  │  │  │     │  [TAG_List]
+│  │  │  │     │  List of enchantments.
+│  │  │  │     │  └─ [TAG_Compound]
+│  │  │  │     │     ├─ enchantment
+│  │  │  │     │     │  [TAG_String]
+│  │  │  │     │     │  An enchantment ID.
+│  │  │  │     │     └─ levels
+│  │  │  │     │        [TAG_Int, TAG_Compound]
+│  │  │  │     │        The level of the enchantment.
+│  │  │  │     │        ├─ max
+│  │  │  │     │        │  [TAG_Int]
+│  │  │  │     │        │  The maximum value.
+│  │  │  │     │        └─ min
+│  │  │  │     │           [TAG_Int]
+│  │  │  │     │           The minimum value.
+│  │  │  │     ├─ stored_enchantments
+│  │  │  │     │  [TAG_List]
+│  │  │  │     │  List of stored enchantments.
+│  │  │  │     │  └─ [TAG_Compound]
+│  │  │  │     │     ├─ enchantment
+│  │  │  │     │     │  [TAG_String]
+│  │  │  │     │     │  An enchantment ID.
+│  │  │  │     │     └─ levels
+│  │  │  │     │        [TAG_Int, TAG_Compound]
+│  │  │  │     │        The level of the enchantment.
+│  │  │  │     │        ├─ max
+│  │  │  │     │        │  [TAG_Int]
+│  │  │  │     │        │  The maximum value.
+│  │  │  │     │        └─ min
+│  │  │  │     │           [TAG_Int]
+│  │  │  │     │           The minimum value.
+│  │  │  │     ├─ items
+│  │  │  │     │  [TAG_List]
+│  │  │  │     │  A list of item IDs.
+│  │  │  │     ├─ nbt
+│  │  │  │     │  [TAG_String]
+│  │  │  │     │  An NBT string.
+│  │  │  │     ├─ potion
+│  │  │  │     │  [TAG_String]
+│  │  │  │     │  A brewed potion ID.
+│  │  │  │     └─ tag
+│  │  │  │        [TAG_String]
+│  │  │  │        An item data pack tag.
+│  │  │  ├─ flags
+│  │  │  │  [TAG_Compound]
+│  │  │  │  Predicate Flags to be checked.
+│  │  │  │  ├─ is_on_fire
+│  │  │  │  │  [TAG_Boolean]
+│  │  │  │  │  Test whether the entity is or is not on fire.
+│  │  │  │  ├─ is_sneaking
+│  │  │  │  │  [TAG_Boolean]
+│  │  │  │  │  Test whether the entity is or is not sneaking.
+│  │  │  │  ├─ is_sprinting
+│  │  │  │  │  [TAG_Boolean]
+│  │  │  │  │  Test whether the entity is or is not sprinting.
+│  │  │  │  ├─ is_swimming
+│  │  │  │  │  [TAG_Boolean]
+│  │  │  │  │  Test whether the entity is or is not swimming.
+│  │  │  │  └─ is_baby
+│  │  │  │     [TAG_Boolean]
+│  │  │  │     Test whether the entity is or is not a baby variant.
+│  │  │  ├─ lightning_bolt
+│  │  │  │  [TAG_Compound]
+│  │  │  │  Lightning bolt properties to be checked. Fails when entity is not a
+│  │  │  │  lightning bolt.
+│  │  │  │  └─ <...>
+│  │  │  ├─ location
+│  │  │  │  [TAG_Compound]
+│  │  │  │  ├─ biome
+│  │  │  │  │  [TAG_String]
+│  │  │  │  │  The biome the entity is currently in. Accepts these 73 values (see
+│  │  │  │  │  also Biome#Biome IDs).
+│  │  │  │  ├─ block
+│  │  │  │  │  [TAG_Compound]
+│  │  │  │  │  The block at the location.
+│  │  │  │  │  ├─ blocks
+│  │  │  │  │  │  [TAG_List]
+│  │  │  │  │  │  A list of block IDs.
+│  │  │  │  │  ├─ tag
+│  │  │  │  │  │  [TAG_String]
+│  │  │  │  │  │  The block Tag.
+│  │  │  │  │  ├─ nbt
+│  │  │  │  │  │  [TAG_String]
+│  │  │  │  │  │  The block NBT.
+│  │  │  │  │  └─ state
+│  │  │  │  │     [TAG_Compound]
+│  │  │  │  │     A map of block property names to values. Test will fail if the block
+│  │  │  │  │     doesn't match.
+│  │  │  │  │     └─ key
+│  │  │  │  │        [TAG_Boolean, TAG_Int, TAG_String, TAG_Compound]
+│  │  │  │  │        Block property key and value pair.
+│  │  │  │  │        ├─ max
+│  │  │  │  │        │  [TAG_Int]
+│  │  │  │  │        │  A maximum value.
+│  │  │  │  │        └─ min
+│  │  │  │  │           [TAG_Int]
+│  │  │  │  │           A minimum value.
+│  │  │  │  ├─ dimension
+│  │  │  │  │  [TAG_String]
+│  │  │  │  │  The dimension the entity is currently in.
+│  │  │  │  ├─ feature
+│  │  │  │  │  [TAG_String]
+│  │  │  │  │  Name of a structure. Accepts these 15 values (see also
+│  │  │  │  │  Commands/locate).
+│  │  │  │  ├─ fluid
+│  │  │  │  │  [TAG_Compound]
+│  │  │  │  │  The fluid at the location.
+│  │  │  │  │  ├─ fluid
+│  │  │  │  │  │  [TAG_String]
+│  │  │  │  │  │  The fluid ID.
+│  │  │  │  │  ├─ tag
+│  │  │  │  │  │  [TAG_String]
+│  │  │  │  │  │  The fluid Tag.
+│  │  │  │  │  └─ state
+│  │  │  │  │     [TAG_Compound]
+│  │  │  │  │     A map of fluid property names to values. Test will fail if the fluid
+│  │  │  │  │     doesn't match.
+│  │  │  │  │     └─ key
+│  │  │  │  │        [TAG_Boolean, TAG_Int, TAG_String, TAG_Compound]
+│  │  │  │  │        Fluid property key and value pair.
+│  │  │  │  │        ├─ max
+│  │  │  │  │        │  [TAG_Int]
+│  │  │  │  │        │  A maximum value.
+│  │  │  │  │        └─ min
+│  │  │  │  │           [TAG_Int]
+│  │  │  │  │           A minimum value.
+│  │  │  │  ├─ light
+│  │  │  │  │  [TAG_Compound]
+│  │  │  │  │  The light at the location.
+│  │  │  │  │  └─ light
+│  │  │  │  │     [TAG_Int, TAG_Compound]
+│  │  │  │  │     The light Level of visible light. Calculated using: (max(sky-
+│  │  │  │  │     darkening,block)).
+│  │  │  │  │     ├─ max
+│  │  │  │  │     │  [TAG_Int]
+│  │  │  │  │     │  A maximum value.
+│  │  │  │  │     └─ min
+│  │  │  │  │        [TAG_Int]
+│  │  │  │  │        A minimum value.
+│  │  │  │  ├─ position
+│  │  │  │  │  [TAG_Compound]
+│  │  │  │  │  ├─ x
+│  │  │  │  │  │  [TAG_Double, TAG_Compound]
+│  │  │  │  │  │  The x position.
+│  │  │  │  │  │  ├─ max
+│  │  │  │  │  │  │  [TAG_Double]
+│  │  │  │  │  │  │  A maximum value.
+│  │  │  │  │  │  └─ min
+│  │  │  │  │  │     [TAG_Double]
+│  │  │  │  │  │     A minimum value.
+│  │  │  │  │  ├─ y
+│  │  │  │  │  │  [TAG_Double, TAG_Compound]
+│  │  │  │  │  │  The y position.
+│  │  │  │  │  │  ├─ max
+│  │  │  │  │  │  │  [TAG_Double]
+│  │  │  │  │  │  │  A maximum value.
+│  │  │  │  │  │  └─ min
+│  │  │  │  │  │     [TAG_Double]
+│  │  │  │  │  │     A minimum value.
+│  │  │  │  │  └─ z
+│  │  │  │  │     [TAG_Double, TAG_Compound]
+│  │  │  │  │     The z position.
+│  │  │  │  │     ├─ max
+│  │  │  │  │     │  [TAG_Double]
+│  │  │  │  │     │  A maximum value.
+│  │  │  │  │     └─ min
+│  │  │  │  │        [TAG_Double]
+│  │  │  │  │        A minimum value.
+│  │  │  │  └─ smokey
+│  │  │  │     [TAG_Boolean]
+│  │  │  │     True if the block is closely above a campfire or soul campfire.
+│  │  │  ├─ nbt
+│  │  │  │  [TAG_String]
+│  │  │  │  An NBT string.
+│  │  │  ├─ passenger
+│  │  │  │  [TAG_Compound]
+│  │  │  │  The entity directly riding this entity.
+│  │  │  │  └─ <...>
+│  │  │  ├─ player
+│  │  │  │  [TAG_Compound]
+│  │  │  │  Player properties to be checked. Fails when entity is not a player.
+│  │  │  │  ├─ looking_at
+│  │  │  │  │  [TAG_Compound]
+│  │  │  │  │  The entity that the player is looking at, as long as it is visible and
+│  │  │  │  │  within a radius of 100 blocks. Visibility is defined through the line
+│  │  │  │  │  from the player's eyes to the entity's eyes, rather than the direction
+│  │  │  │  │  that the player is looking in.
+│  │  │  │  │  └─ <...>
+│  │  │  │  ├─ advancements
+│  │  │  │  │  [TAG_Compound]
+│  │  │  │  │  A map of advancements to check.
+│  │  │  │  │  └─ <advancement id>
+│  │  │  │  │     [TAG_Boolean, TAG_Compound]
+│  │  │  │  │     An advancement ID.
+│  │  │  │  │     └─ <criteria id>
+│  │  │  │  │        [TAG_Boolean]
+│  │  │  │  │        A criteria ID of the advancement.
+│  │  │  │  ├─ gamemode
+│  │  │  │  │  [TAG_String]
+│  │  │  │  │  The game mode of the player. Must be survival, adventure, creative or
+│  │  │  │  │  spectator.
+│  │  │  │  ├─ level
+│  │  │  │  │  [TAG_Int, TAG_Compound]
+│  │  │  │  │  The experience level of the player.
+│  │  │  │  │  ├─ max
+│  │  │  │  │  │  [TAG_Int]
+│  │  │  │  │  │  The maximum value.
+│  │  │  │  │  └─ min
+│  │  │  │  │     [TAG_Int]
+│  │  │  │  │     The minimum value.
+│  │  │  │  ├─ recipes
+│  │  │  │  │  [TAG_Compound]
+│  │  │  │  │  A map of recipes to check.
+│  │  │  │  │  └─ <recipe id>
+│  │  │  │  │     [TAG_Boolean]
+│  │  │  │  │     A recipe ID. True if the recipe is known to the player.
+│  │  │  │  └─ stats
+│  │  │  │     [TAG_List]
+│  │  │  │     List of statistics to match.
+│  │  │  │     └─ [TAG_Compound]
+│  │  │  │        A statistic. Note that unlike when adding scoreboard objectives, the
+│  │  │  │        base (for example, minecraft:custom) and the statistic (for example,
+│  │  │  │        minecraft:sneak_time) are split and use proper namespaces instead of
+│  │  │  │        the dot-notation (minecraft.custom:minecraft.sneak_time).
+│  │  │  │        ├─ type
+│  │  │  │        │  [TAG_String]
+│  │  │  │        │  The statistic base. Possible values are minecraft:custom,
+│  │  │  │        │  minecraft:crafted, minecraft:used, minecraft:broken, minecraft:mined,
+│  │  │  │        │  minecraft:killed, minecraft:picked_up, minecraft:dropped and
+│  │  │  │        │  minecraft:killed_by.
+│  │  │  │        ├─ stat
+│  │  │  │        │  [TAG_String]
+│  │  │  │        │  The statistic ID. Mostly mimics the criteria used for defining
+│  │  │  │        │  scoreboard objectives.
+│  │  │  │        └─ value
+│  │  │  │           [TAG_Int, TAG_Compound]
+│  │  │  │           The value of the statistic.
+│  │  │  │           ├─ max
+│  │  │  │           │  [TAG_Int]
+│  │  │  │           │  The maximum value.
+│  │  │  │           └─ min
+│  │  │  │              [TAG_Int]
+│  │  │  │              The minimum value.
+│  │  │  ├─ stepping_on
+│  │  │  │  [TAG_Compound]
+│  │  │  │  Location predicate for the block the entity is standing on.
+│  │  │  │  ├─ biome
+│  │  │  │  │  [TAG_String]
+│  │  │  │  │  The biome the entity is currently in. Accepts these 73 values (see
+│  │  │  │  │  also Biome#Biome IDs).
+│  │  │  │  ├─ block
+│  │  │  │  │  [TAG_Compound]
+│  │  │  │  │  The block at the location.
+│  │  │  │  │  ├─ blocks
+│  │  │  │  │  │  [TAG_List]
+│  │  │  │  │  │  A list of block IDs.
+│  │  │  │  │  ├─ tag
+│  │  │  │  │  │  [TAG_String]
+│  │  │  │  │  │  The block Tag.
+│  │  │  │  │  ├─ nbt
+│  │  │  │  │  │  [TAG_String]
+│  │  │  │  │  │  The block NBT.
+│  │  │  │  │  └─ state
+│  │  │  │  │     [TAG_Compound]
+│  │  │  │  │     A map of block property names to values. Test will fail if the block
+│  │  │  │  │     doesn't match.
+│  │  │  │  │     └─ key
+│  │  │  │  │        [TAG_Boolean, TAG_Int, TAG_String, TAG_Compound]
+│  │  │  │  │        Block property key and value pair.
+│  │  │  │  │        ├─ max
+│  │  │  │  │        │  [TAG_Int]
+│  │  │  │  │        │  A maximum value.
+│  │  │  │  │        └─ min
+│  │  │  │  │           [TAG_Int]
+│  │  │  │  │           A minimum value.
+│  │  │  │  ├─ dimension
+│  │  │  │  │  [TAG_String]
+│  │  │  │  │  The dimension the entity is currently in.
+│  │  │  │  ├─ feature
+│  │  │  │  │  [TAG_String]
+│  │  │  │  │  Name of a structure. Accepts these 15 values (see also
+│  │  │  │  │  Commands/locate).
+│  │  │  │  ├─ fluid
+│  │  │  │  │  [TAG_Compound]
+│  │  │  │  │  The fluid at the location.
+│  │  │  │  │  ├─ fluid
+│  │  │  │  │  │  [TAG_String]
+│  │  │  │  │  │  The fluid ID.
+│  │  │  │  │  ├─ tag
+│  │  │  │  │  │  [TAG_String]
+│  │  │  │  │  │  The fluid Tag.
+│  │  │  │  │  └─ state
+│  │  │  │  │     [TAG_Compound]
+│  │  │  │  │     A map of fluid property names to values. Test will fail if the fluid
+│  │  │  │  │     doesn't match.
+│  │  │  │  │     └─ key
+│  │  │  │  │        [TAG_Boolean, TAG_Int, TAG_String, TAG_Compound]
+│  │  │  │  │        Fluid property key and value pair.
+│  │  │  │  │        ├─ max
+│  │  │  │  │        │  [TAG_Int]
+│  │  │  │  │        │  A maximum value.
+│  │  │  │  │        └─ min
+│  │  │  │  │           [TAG_Int]
+│  │  │  │  │           A minimum value.
+│  │  │  │  ├─ light
+│  │  │  │  │  [TAG_Compound]
+│  │  │  │  │  The light at the location.
+│  │  │  │  │  └─ light
+│  │  │  │  │     [TAG_Int, TAG_Compound]
+│  │  │  │  │     The light Level of visible light. Calculated using: (max(sky-
+│  │  │  │  │     darkening,block)).
+│  │  │  │  │     ├─ max
+│  │  │  │  │     │  [TAG_Int]
+│  │  │  │  │     │  A maximum value.
+│  │  │  │  │     └─ min
+│  │  │  │  │        [TAG_Int]
+│  │  │  │  │        A minimum value.
+│  │  │  │  ├─ position
+│  │  │  │  │  [TAG_Compound]
+│  │  │  │  │  ├─ x
+│  │  │  │  │  │  [TAG_Double, TAG_Compound]
+│  │  │  │  │  │  The x position.
+│  │  │  │  │  │  ├─ max
+│  │  │  │  │  │  │  [TAG_Double]
+│  │  │  │  │  │  │  A maximum value.
+│  │  │  │  │  │  └─ min
+│  │  │  │  │  │     [TAG_Double]
+│  │  │  │  │  │     A minimum value.
+│  │  │  │  │  ├─ y
+│  │  │  │  │  │  [TAG_Double, TAG_Compound]
+│  │  │  │  │  │  The y position.
+│  │  │  │  │  │  ├─ max
+│  │  │  │  │  │  │  [TAG_Double]
+│  │  │  │  │  │  │  A maximum value.
+│  │  │  │  │  │  └─ min
+│  │  │  │  │  │     [TAG_Double]
+│  │  │  │  │  │     A minimum value.
+│  │  │  │  │  └─ z
+│  │  │  │  │     [TAG_Double, TAG_Compound]
+│  │  │  │  │     The z position.
+│  │  │  │  │     ├─ max
+│  │  │  │  │     │  [TAG_Double]
+│  │  │  │  │     │  A maximum value.
+│  │  │  │  │     └─ min
+│  │  │  │  │        [TAG_Double]
+│  │  │  │  │        A minimum value.
+│  │  │  │  └─ smokey
+│  │  │  │     [TAG_Boolean]
+│  │  │  │     True if the block is closely above a campfire or soul campfire.
+│  │  │  ├─ team
+│  │  │  │  [TAG_String]
+│  │  │  │  The team the entity belongs to.
+│  │  │  ├─ type
+│  │  │  │  [TAG_String]
+│  │  │  │  An entity ID.
+│  │  │  ├─ targeted_entity
+│  │  │  │  [TAG_Compound]
+│  │  │  │  The entity which this entity is targeting for attacks.
+│  │  │  │  └─ <...>
+│  │  │  └─ vehicle
+│  │  │     [TAG_Compound]
+│  │  │     The vehicle that the entity is riding on.
+│  │  │     └─ <...>
 │  │  ├─ location
 │  │  │  [TAG_Compound]
 │  │  │  ├─ biome
@@ -1153,9 +2860,9 @@ conditions
 │  │  │  ├─ block
 │  │  │  │  [TAG_Compound]
 │  │  │  │  The block at the location.
-│  │  │  │  ├─ block
-│  │  │  │  │  [TAG_String]
-│  │  │  │  │  The block ID.
+│  │  │  │  ├─ blocks
+│  │  │  │  │  [TAG_List]
+│  │  │  │  │  A list of block IDs.
 │  │  │  │  ├─ tag
 │  │  │  │  │  [TAG_String]
 │  │  │  │  │  The block Tag.
@@ -1177,7 +2884,7 @@ conditions
 │  │  │  │           A minimum value.
 │  │  │  ├─ dimension
 │  │  │  │  [TAG_String]
-│  │  │  │  The dimension the entity is currently in. Accepts these 3 values.
+│  │  │  │  The dimension the entity is currently in.
 │  │  │  ├─ feature
 │  │  │  │  [TAG_String]
 │  │  │  │  Name of a structure. Accepts these 15 values (see also
@@ -1252,9 +2959,20 @@ conditions
 │  │  ├─ nbt
 │  │  │  [TAG_String]
 │  │  │  An NBT string.
+│  │  ├─ passenger
+│  │  │  [TAG_Compound]
+│  │  │  The entity directly riding this entity.
+│  │  │  └─ <...>
 │  │  ├─ player
 │  │  │  [TAG_Compound]
 │  │  │  Player properties to be checked. Fails when entity is not a player.
+│  │  │  ├─ looking_at
+│  │  │  │  [TAG_Compound]
+│  │  │  │  The entity that the player is looking at, as long as it is visible and
+│  │  │  │  within a radius of 100 blocks. Visibility is defined through the line
+│  │  │  │  from the player's eyes to the entity's eyes, rather than the direction
+│  │  │  │  that the player is looking in.
+│  │  │  │  └─ <...>
 │  │  │  ├─ advancements
 │  │  │  │  [TAG_Compound]
 │  │  │  │  A map of advancements to check.
@@ -1310,6 +3028,112 @@ conditions
 │  │  │           └─ min
 │  │  │              [TAG_Int]
 │  │  │              The minimum value.
+│  │  ├─ stepping_on
+│  │  │  [TAG_Compound]
+│  │  │  Location predicate for the block the entity is standing on.
+│  │  │  ├─ biome
+│  │  │  │  [TAG_String]
+│  │  │  │  The biome the entity is currently in. Accepts these 73 values (see
+│  │  │  │  also Biome#Biome IDs).
+│  │  │  ├─ block
+│  │  │  │  [TAG_Compound]
+│  │  │  │  The block at the location.
+│  │  │  │  ├─ blocks
+│  │  │  │  │  [TAG_List]
+│  │  │  │  │  A list of block IDs.
+│  │  │  │  ├─ tag
+│  │  │  │  │  [TAG_String]
+│  │  │  │  │  The block Tag.
+│  │  │  │  ├─ nbt
+│  │  │  │  │  [TAG_String]
+│  │  │  │  │  The block NBT.
+│  │  │  │  └─ state
+│  │  │  │     [TAG_Compound]
+│  │  │  │     A map of block property names to values. Test will fail if the block
+│  │  │  │     doesn't match.
+│  │  │  │     └─ key
+│  │  │  │        [TAG_Boolean, TAG_Int, TAG_String, TAG_Compound]
+│  │  │  │        Block property key and value pair.
+│  │  │  │        ├─ max
+│  │  │  │        │  [TAG_Int]
+│  │  │  │        │  A maximum value.
+│  │  │  │        └─ min
+│  │  │  │           [TAG_Int]
+│  │  │  │           A minimum value.
+│  │  │  ├─ dimension
+│  │  │  │  [TAG_String]
+│  │  │  │  The dimension the entity is currently in.
+│  │  │  ├─ feature
+│  │  │  │  [TAG_String]
+│  │  │  │  Name of a structure. Accepts these 15 values (see also
+│  │  │  │  Commands/locate).
+│  │  │  ├─ fluid
+│  │  │  │  [TAG_Compound]
+│  │  │  │  The fluid at the location.
+│  │  │  │  ├─ fluid
+│  │  │  │  │  [TAG_String]
+│  │  │  │  │  The fluid ID.
+│  │  │  │  ├─ tag
+│  │  │  │  │  [TAG_String]
+│  │  │  │  │  The fluid Tag.
+│  │  │  │  └─ state
+│  │  │  │     [TAG_Compound]
+│  │  │  │     A map of fluid property names to values. Test will fail if the fluid
+│  │  │  │     doesn't match.
+│  │  │  │     └─ key
+│  │  │  │        [TAG_Boolean, TAG_Int, TAG_String, TAG_Compound]
+│  │  │  │        Fluid property key and value pair.
+│  │  │  │        ├─ max
+│  │  │  │        │  [TAG_Int]
+│  │  │  │        │  A maximum value.
+│  │  │  │        └─ min
+│  │  │  │           [TAG_Int]
+│  │  │  │           A minimum value.
+│  │  │  ├─ light
+│  │  │  │  [TAG_Compound]
+│  │  │  │  The light at the location.
+│  │  │  │  └─ light
+│  │  │  │     [TAG_Int, TAG_Compound]
+│  │  │  │     The light Level of visible light. Calculated using: (max(sky-
+│  │  │  │     darkening,block)).
+│  │  │  │     ├─ max
+│  │  │  │     │  [TAG_Int]
+│  │  │  │     │  A maximum value.
+│  │  │  │     └─ min
+│  │  │  │        [TAG_Int]
+│  │  │  │        A minimum value.
+│  │  │  ├─ position
+│  │  │  │  [TAG_Compound]
+│  │  │  │  ├─ x
+│  │  │  │  │  [TAG_Double, TAG_Compound]
+│  │  │  │  │  The x position.
+│  │  │  │  │  ├─ max
+│  │  │  │  │  │  [TAG_Double]
+│  │  │  │  │  │  A maximum value.
+│  │  │  │  │  └─ min
+│  │  │  │  │     [TAG_Double]
+│  │  │  │  │     A minimum value.
+│  │  │  │  ├─ y
+│  │  │  │  │  [TAG_Double, TAG_Compound]
+│  │  │  │  │  The y position.
+│  │  │  │  │  ├─ max
+│  │  │  │  │  │  [TAG_Double]
+│  │  │  │  │  │  A maximum value.
+│  │  │  │  │  └─ min
+│  │  │  │  │     [TAG_Double]
+│  │  │  │  │     A minimum value.
+│  │  │  │  └─ z
+│  │  │  │     [TAG_Double, TAG_Compound]
+│  │  │  │     The z position.
+│  │  │  │     ├─ max
+│  │  │  │     │  [TAG_Double]
+│  │  │  │     │  A maximum value.
+│  │  │  │     └─ min
+│  │  │  │        [TAG_Double]
+│  │  │  │        A minimum value.
+│  │  │  └─ smokey
+│  │  │     [TAG_Boolean]
+│  │  │     True if the block is closely above a campfire or soul campfire.
 │  │  ├─ team
 │  │  │  [TAG_String]
 │  │  │  The team the entity belongs to.
@@ -1391,6 +3215,9 @@ conditions
 │     │  └─ <minecraft:effect_name>
 │     │     [TAG_Compound]
 │     │     A status effect with the key name being the status effect name.
+│     │     ├─ ambient
+│     │     │  [TAG_Boolean]
+│     │     │  Whether the effect is from a beacon.
 │     │     ├─ amplifier
 │     │     │  [TAG_Int, TAG_Compound]
 │     │     │  The effect amplifier.
@@ -1400,15 +3227,18 @@ conditions
 │     │     │  └─ min
 │     │     │     [TAG_Int]
 │     │     │     The minimum value.
-│     │     └─ duration
-│     │        [TAG_Int, TAG_Compound]
-│     │        The effect duration in ticks.
-│     │        ├─ max
-│     │        │  [TAG_Int]
-│     │        │  The maximum value.
-│     │        └─ min
-│     │           [TAG_Int]
-│     │           The minimum value.
+│     │     ├─ duration
+│     │     │  [TAG_Int, TAG_Compound]
+│     │     │  The effect duration in ticks.
+│     │     │  ├─ max
+│     │     │  │  [TAG_Int]
+│     │     │  │  The maximum value.
+│     │     │  └─ min
+│     │     │     [TAG_Int]
+│     │     │     The minimum value.
+│     │     └─ visible
+│     │        [TAG_Boolean]
+│     │        Whether the effect has visible particles.
 │     ├─ equipment
 │     │  [TAG_Compound]
 │     │  ├─ mainhand
@@ -1463,9 +3293,9 @@ conditions
 │     │  │  │        └─ min
 │     │  │  │           [TAG_Int]
 │     │  │  │           The minimum value.
-│     │  │  ├─ item
-│     │  │  │  [TAG_String]
-│     │  │  │  An item ID.
+│     │  │  ├─ items
+│     │  │  │  [TAG_List]
+│     │  │  │  A list of item IDs.
 │     │  │  ├─ nbt
 │     │  │  │  [TAG_String]
 │     │  │  │  An NBT string.
@@ -1527,9 +3357,9 @@ conditions
 │     │  │  │        └─ min
 │     │  │  │           [TAG_Int]
 │     │  │  │           The minimum value.
-│     │  │  ├─ item
-│     │  │  │  [TAG_String]
-│     │  │  │  An item ID.
+│     │  │  ├─ items
+│     │  │  │  [TAG_List]
+│     │  │  │  A list of item IDs.
 │     │  │  ├─ nbt
 │     │  │  │  [TAG_String]
 │     │  │  │  An NBT string.
@@ -1591,9 +3421,9 @@ conditions
 │     │  │  │        └─ min
 │     │  │  │           [TAG_Int]
 │     │  │  │           The minimum value.
-│     │  │  ├─ item
-│     │  │  │  [TAG_String]
-│     │  │  │  An item ID.
+│     │  │  ├─ items
+│     │  │  │  [TAG_List]
+│     │  │  │  A list of item IDs.
 │     │  │  ├─ nbt
 │     │  │  │  [TAG_String]
 │     │  │  │  An NBT string.
@@ -1655,9 +3485,9 @@ conditions
 │     │  │  │        └─ min
 │     │  │  │           [TAG_Int]
 │     │  │  │           The minimum value.
-│     │  │  ├─ item
-│     │  │  │  [TAG_String]
-│     │  │  │  An item ID.
+│     │  │  ├─ items
+│     │  │  │  [TAG_List]
+│     │  │  │  A list of item IDs.
 │     │  │  ├─ nbt
 │     │  │  │  [TAG_String]
 │     │  │  │  An NBT string.
@@ -1719,9 +3549,9 @@ conditions
 │     │  │  │        └─ min
 │     │  │  │           [TAG_Int]
 │     │  │  │           The minimum value.
-│     │  │  ├─ item
-│     │  │  │  [TAG_String]
-│     │  │  │  An item ID.
+│     │  │  ├─ items
+│     │  │  │  [TAG_List]
+│     │  │  │  A list of item IDs.
 │     │  │  ├─ nbt
 │     │  │  │  [TAG_String]
 │     │  │  │  An NBT string.
@@ -1783,9 +3613,9 @@ conditions
 │     │     │        └─ min
 │     │     │           [TAG_Int]
 │     │     │           The minimum value.
-│     │     ├─ item
-│     │     │  [TAG_String]
-│     │     │  An item ID.
+│     │     ├─ items
+│     │     │  [TAG_List]
+│     │     │  A list of item IDs.
 │     │     ├─ nbt
 │     │     │  [TAG_String]
 │     │     │  An NBT string.
@@ -1813,6 +3643,795 @@ conditions
 │     │  └─ is_baby
 │     │     [TAG_Boolean]
 │     │     Test whether the entity is or is not a baby variant.
+│     ├─ lightning_bolt
+│     │  [TAG_Compound]
+│     │  Lightning bolt properties to be checked. Fails when entity is not a
+│     │  lightning bolt.
+│     │  ├─ blocks_set_on_fire
+│     │  │  [TAG_Int]
+│     │  │  Number of blocks set on fire by this lightning bolt.
+│     │  ├─ entity_struck
+│     │  │  [TAG_Compound]
+│     │  │  Entity properties of entities struck by this lightning bolt. If
+│     │  │  present, this tag must match one or more entities.
+│     │  ├─ distance
+│     │  │  [TAG_Compound]
+│     │  │  ├─ absolute
+│     │  │  │  [TAG_Compound]
+│     │  │  │  ├─ max
+│     │  │  │  │  [TAG_Float]
+│     │  │  │  │  The maximum value.
+│     │  │  │  └─ min
+│     │  │  │     [TAG_Float]
+│     │  │  │     The minimum value.
+│     │  │  ├─ horizontal
+│     │  │  │  [TAG_Compound]
+│     │  │  │  ├─ max
+│     │  │  │  │  [TAG_Float]
+│     │  │  │  │  The maximum value.
+│     │  │  │  └─ min
+│     │  │  │     [TAG_Float]
+│     │  │  │     The minimum value.
+│     │  │  ├─ x
+│     │  │  │  [TAG_Compound]
+│     │  │  │  ├─ max
+│     │  │  │  │  [TAG_Float]
+│     │  │  │  │  The maximum value.
+│     │  │  │  └─ min
+│     │  │  │     [TAG_Float]
+│     │  │  │     The minimum value.
+│     │  │  ├─ y
+│     │  │  │  [TAG_Compound]
+│     │  │  │  ├─ max
+│     │  │  │  │  [TAG_Float]
+│     │  │  │  │  The maximum value.
+│     │  │  │  └─ min
+│     │  │  │     [TAG_Float]
+│     │  │  │     The minimum value.
+│     │  │  └─ z
+│     │  │     [TAG_Compound]
+│     │  │     ├─ max
+│     │  │     │  [TAG_Float]
+│     │  │     │  The maximum value.
+│     │  │     └─ min
+│     │  │        [TAG_Float]
+│     │  │        The minimum value.
+│     │  ├─ effects
+│     │  │  [TAG_Compound]
+│     │  │  A list of status effects.
+│     │  │  └─ <minecraft:effect_name>
+│     │  │     [TAG_Compound]
+│     │  │     A status effect with the key name being the status effect name.
+│     │  │     ├─ ambient
+│     │  │     │  [TAG_Boolean]
+│     │  │     │  Whether the effect is from a beacon.
+│     │  │     ├─ amplifier
+│     │  │     │  [TAG_Int, TAG_Compound]
+│     │  │     │  The effect amplifier.
+│     │  │     │  ├─ max
+│     │  │     │  │  [TAG_Int]
+│     │  │     │  │  The maximum value.
+│     │  │     │  └─ min
+│     │  │     │     [TAG_Int]
+│     │  │     │     The minimum value.
+│     │  │     ├─ duration
+│     │  │     │  [TAG_Int, TAG_Compound]
+│     │  │     │  The effect duration in ticks.
+│     │  │     │  ├─ max
+│     │  │     │  │  [TAG_Int]
+│     │  │     │  │  The maximum value.
+│     │  │     │  └─ min
+│     │  │     │     [TAG_Int]
+│     │  │     │     The minimum value.
+│     │  │     └─ visible
+│     │  │        [TAG_Boolean]
+│     │  │        Whether the effect has visible particles.
+│     │  ├─ equipment
+│     │  │  [TAG_Compound]
+│     │  │  ├─ mainhand
+│     │  │  │  [TAG_Compound]
+│     │  │  │  ├─ count
+│     │  │  │  │  [TAG_Int, TAG_Compound]
+│     │  │  │  │  Amount of the item.
+│     │  │  │  │  ├─ max
+│     │  │  │  │  │  [TAG_Int]
+│     │  │  │  │  │  The maximum value.
+│     │  │  │  │  └─ min
+│     │  │  │  │     [TAG_Int]
+│     │  │  │  │     The minimum value.
+│     │  │  │  ├─ durability
+│     │  │  │  │  [TAG_Int, TAG_Compound]
+│     │  │  │  │  The durability of the item.
+│     │  │  │  │  ├─ max
+│     │  │  │  │  │  [TAG_Int]
+│     │  │  │  │  │  The maximum value.
+│     │  │  │  │  └─ min
+│     │  │  │  │     [TAG_Int]
+│     │  │  │  │     The minimum value.
+│     │  │  │  ├─ enchantments
+│     │  │  │  │  [TAG_List]
+│     │  │  │  │  List of enchantments.
+│     │  │  │  │  └─ [TAG_Compound]
+│     │  │  │  │     ├─ enchantment
+│     │  │  │  │     │  [TAG_String]
+│     │  │  │  │     │  An enchantment ID.
+│     │  │  │  │     └─ levels
+│     │  │  │  │        [TAG_Int, TAG_Compound]
+│     │  │  │  │        The level of the enchantment.
+│     │  │  │  │        ├─ max
+│     │  │  │  │        │  [TAG_Int]
+│     │  │  │  │        │  The maximum value.
+│     │  │  │  │        └─ min
+│     │  │  │  │           [TAG_Int]
+│     │  │  │  │           The minimum value.
+│     │  │  │  ├─ stored_enchantments
+│     │  │  │  │  [TAG_List]
+│     │  │  │  │  List of stored enchantments.
+│     │  │  │  │  └─ [TAG_Compound]
+│     │  │  │  │     ├─ enchantment
+│     │  │  │  │     │  [TAG_String]
+│     │  │  │  │     │  An enchantment ID.
+│     │  │  │  │     └─ levels
+│     │  │  │  │        [TAG_Int, TAG_Compound]
+│     │  │  │  │        The level of the enchantment.
+│     │  │  │  │        ├─ max
+│     │  │  │  │        │  [TAG_Int]
+│     │  │  │  │        │  The maximum value.
+│     │  │  │  │        └─ min
+│     │  │  │  │           [TAG_Int]
+│     │  │  │  │           The minimum value.
+│     │  │  │  ├─ items
+│     │  │  │  │  [TAG_List]
+│     │  │  │  │  A list of item IDs.
+│     │  │  │  ├─ nbt
+│     │  │  │  │  [TAG_String]
+│     │  │  │  │  An NBT string.
+│     │  │  │  ├─ potion
+│     │  │  │  │  [TAG_String]
+│     │  │  │  │  A brewed potion ID.
+│     │  │  │  └─ tag
+│     │  │  │     [TAG_String]
+│     │  │  │     An item data pack tag.
+│     │  │  ├─ offhand
+│     │  │  │  [TAG_Compound]
+│     │  │  │  ├─ count
+│     │  │  │  │  [TAG_Int, TAG_Compound]
+│     │  │  │  │  Amount of the item.
+│     │  │  │  │  ├─ max
+│     │  │  │  │  │  [TAG_Int]
+│     │  │  │  │  │  The maximum value.
+│     │  │  │  │  └─ min
+│     │  │  │  │     [TAG_Int]
+│     │  │  │  │     The minimum value.
+│     │  │  │  ├─ durability
+│     │  │  │  │  [TAG_Int, TAG_Compound]
+│     │  │  │  │  The durability of the item.
+│     │  │  │  │  ├─ max
+│     │  │  │  │  │  [TAG_Int]
+│     │  │  │  │  │  The maximum value.
+│     │  │  │  │  └─ min
+│     │  │  │  │     [TAG_Int]
+│     │  │  │  │     The minimum value.
+│     │  │  │  ├─ enchantments
+│     │  │  │  │  [TAG_List]
+│     │  │  │  │  List of enchantments.
+│     │  │  │  │  └─ [TAG_Compound]
+│     │  │  │  │     ├─ enchantment
+│     │  │  │  │     │  [TAG_String]
+│     │  │  │  │     │  An enchantment ID.
+│     │  │  │  │     └─ levels
+│     │  │  │  │        [TAG_Int, TAG_Compound]
+│     │  │  │  │        The level of the enchantment.
+│     │  │  │  │        ├─ max
+│     │  │  │  │        │  [TAG_Int]
+│     │  │  │  │        │  The maximum value.
+│     │  │  │  │        └─ min
+│     │  │  │  │           [TAG_Int]
+│     │  │  │  │           The minimum value.
+│     │  │  │  ├─ stored_enchantments
+│     │  │  │  │  [TAG_List]
+│     │  │  │  │  List of stored enchantments.
+│     │  │  │  │  └─ [TAG_Compound]
+│     │  │  │  │     ├─ enchantment
+│     │  │  │  │     │  [TAG_String]
+│     │  │  │  │     │  An enchantment ID.
+│     │  │  │  │     └─ levels
+│     │  │  │  │        [TAG_Int, TAG_Compound]
+│     │  │  │  │        The level of the enchantment.
+│     │  │  │  │        ├─ max
+│     │  │  │  │        │  [TAG_Int]
+│     │  │  │  │        │  The maximum value.
+│     │  │  │  │        └─ min
+│     │  │  │  │           [TAG_Int]
+│     │  │  │  │           The minimum value.
+│     │  │  │  ├─ items
+│     │  │  │  │  [TAG_List]
+│     │  │  │  │  A list of item IDs.
+│     │  │  │  ├─ nbt
+│     │  │  │  │  [TAG_String]
+│     │  │  │  │  An NBT string.
+│     │  │  │  ├─ potion
+│     │  │  │  │  [TAG_String]
+│     │  │  │  │  A brewed potion ID.
+│     │  │  │  └─ tag
+│     │  │  │     [TAG_String]
+│     │  │  │     An item data pack tag.
+│     │  │  ├─ head
+│     │  │  │  [TAG_Compound]
+│     │  │  │  ├─ count
+│     │  │  │  │  [TAG_Int, TAG_Compound]
+│     │  │  │  │  Amount of the item.
+│     │  │  │  │  ├─ max
+│     │  │  │  │  │  [TAG_Int]
+│     │  │  │  │  │  The maximum value.
+│     │  │  │  │  └─ min
+│     │  │  │  │     [TAG_Int]
+│     │  │  │  │     The minimum value.
+│     │  │  │  ├─ durability
+│     │  │  │  │  [TAG_Int, TAG_Compound]
+│     │  │  │  │  The durability of the item.
+│     │  │  │  │  ├─ max
+│     │  │  │  │  │  [TAG_Int]
+│     │  │  │  │  │  The maximum value.
+│     │  │  │  │  └─ min
+│     │  │  │  │     [TAG_Int]
+│     │  │  │  │     The minimum value.
+│     │  │  │  ├─ enchantments
+│     │  │  │  │  [TAG_List]
+│     │  │  │  │  List of enchantments.
+│     │  │  │  │  └─ [TAG_Compound]
+│     │  │  │  │     ├─ enchantment
+│     │  │  │  │     │  [TAG_String]
+│     │  │  │  │     │  An enchantment ID.
+│     │  │  │  │     └─ levels
+│     │  │  │  │        [TAG_Int, TAG_Compound]
+│     │  │  │  │        The level of the enchantment.
+│     │  │  │  │        ├─ max
+│     │  │  │  │        │  [TAG_Int]
+│     │  │  │  │        │  The maximum value.
+│     │  │  │  │        └─ min
+│     │  │  │  │           [TAG_Int]
+│     │  │  │  │           The minimum value.
+│     │  │  │  ├─ stored_enchantments
+│     │  │  │  │  [TAG_List]
+│     │  │  │  │  List of stored enchantments.
+│     │  │  │  │  └─ [TAG_Compound]
+│     │  │  │  │     ├─ enchantment
+│     │  │  │  │     │  [TAG_String]
+│     │  │  │  │     │  An enchantment ID.
+│     │  │  │  │     └─ levels
+│     │  │  │  │        [TAG_Int, TAG_Compound]
+│     │  │  │  │        The level of the enchantment.
+│     │  │  │  │        ├─ max
+│     │  │  │  │        │  [TAG_Int]
+│     │  │  │  │        │  The maximum value.
+│     │  │  │  │        └─ min
+│     │  │  │  │           [TAG_Int]
+│     │  │  │  │           The minimum value.
+│     │  │  │  ├─ items
+│     │  │  │  │  [TAG_List]
+│     │  │  │  │  A list of item IDs.
+│     │  │  │  ├─ nbt
+│     │  │  │  │  [TAG_String]
+│     │  │  │  │  An NBT string.
+│     │  │  │  ├─ potion
+│     │  │  │  │  [TAG_String]
+│     │  │  │  │  A brewed potion ID.
+│     │  │  │  └─ tag
+│     │  │  │     [TAG_String]
+│     │  │  │     An item data pack tag.
+│     │  │  ├─ chest
+│     │  │  │  [TAG_Compound]
+│     │  │  │  ├─ count
+│     │  │  │  │  [TAG_Int, TAG_Compound]
+│     │  │  │  │  Amount of the item.
+│     │  │  │  │  ├─ max
+│     │  │  │  │  │  [TAG_Int]
+│     │  │  │  │  │  The maximum value.
+│     │  │  │  │  └─ min
+│     │  │  │  │     [TAG_Int]
+│     │  │  │  │     The minimum value.
+│     │  │  │  ├─ durability
+│     │  │  │  │  [TAG_Int, TAG_Compound]
+│     │  │  │  │  The durability of the item.
+│     │  │  │  │  ├─ max
+│     │  │  │  │  │  [TAG_Int]
+│     │  │  │  │  │  The maximum value.
+│     │  │  │  │  └─ min
+│     │  │  │  │     [TAG_Int]
+│     │  │  │  │     The minimum value.
+│     │  │  │  ├─ enchantments
+│     │  │  │  │  [TAG_List]
+│     │  │  │  │  List of enchantments.
+│     │  │  │  │  └─ [TAG_Compound]
+│     │  │  │  │     ├─ enchantment
+│     │  │  │  │     │  [TAG_String]
+│     │  │  │  │     │  An enchantment ID.
+│     │  │  │  │     └─ levels
+│     │  │  │  │        [TAG_Int, TAG_Compound]
+│     │  │  │  │        The level of the enchantment.
+│     │  │  │  │        ├─ max
+│     │  │  │  │        │  [TAG_Int]
+│     │  │  │  │        │  The maximum value.
+│     │  │  │  │        └─ min
+│     │  │  │  │           [TAG_Int]
+│     │  │  │  │           The minimum value.
+│     │  │  │  ├─ stored_enchantments
+│     │  │  │  │  [TAG_List]
+│     │  │  │  │  List of stored enchantments.
+│     │  │  │  │  └─ [TAG_Compound]
+│     │  │  │  │     ├─ enchantment
+│     │  │  │  │     │  [TAG_String]
+│     │  │  │  │     │  An enchantment ID.
+│     │  │  │  │     └─ levels
+│     │  │  │  │        [TAG_Int, TAG_Compound]
+│     │  │  │  │        The level of the enchantment.
+│     │  │  │  │        ├─ max
+│     │  │  │  │        │  [TAG_Int]
+│     │  │  │  │        │  The maximum value.
+│     │  │  │  │        └─ min
+│     │  │  │  │           [TAG_Int]
+│     │  │  │  │           The minimum value.
+│     │  │  │  ├─ items
+│     │  │  │  │  [TAG_List]
+│     │  │  │  │  A list of item IDs.
+│     │  │  │  ├─ nbt
+│     │  │  │  │  [TAG_String]
+│     │  │  │  │  An NBT string.
+│     │  │  │  ├─ potion
+│     │  │  │  │  [TAG_String]
+│     │  │  │  │  A brewed potion ID.
+│     │  │  │  └─ tag
+│     │  │  │     [TAG_String]
+│     │  │  │     An item data pack tag.
+│     │  │  ├─ legs
+│     │  │  │  [TAG_Compound]
+│     │  │  │  ├─ count
+│     │  │  │  │  [TAG_Int, TAG_Compound]
+│     │  │  │  │  Amount of the item.
+│     │  │  │  │  ├─ max
+│     │  │  │  │  │  [TAG_Int]
+│     │  │  │  │  │  The maximum value.
+│     │  │  │  │  └─ min
+│     │  │  │  │     [TAG_Int]
+│     │  │  │  │     The minimum value.
+│     │  │  │  ├─ durability
+│     │  │  │  │  [TAG_Int, TAG_Compound]
+│     │  │  │  │  The durability of the item.
+│     │  │  │  │  ├─ max
+│     │  │  │  │  │  [TAG_Int]
+│     │  │  │  │  │  The maximum value.
+│     │  │  │  │  └─ min
+│     │  │  │  │     [TAG_Int]
+│     │  │  │  │     The minimum value.
+│     │  │  │  ├─ enchantments
+│     │  │  │  │  [TAG_List]
+│     │  │  │  │  List of enchantments.
+│     │  │  │  │  └─ [TAG_Compound]
+│     │  │  │  │     ├─ enchantment
+│     │  │  │  │     │  [TAG_String]
+│     │  │  │  │     │  An enchantment ID.
+│     │  │  │  │     └─ levels
+│     │  │  │  │        [TAG_Int, TAG_Compound]
+│     │  │  │  │        The level of the enchantment.
+│     │  │  │  │        ├─ max
+│     │  │  │  │        │  [TAG_Int]
+│     │  │  │  │        │  The maximum value.
+│     │  │  │  │        └─ min
+│     │  │  │  │           [TAG_Int]
+│     │  │  │  │           The minimum value.
+│     │  │  │  ├─ stored_enchantments
+│     │  │  │  │  [TAG_List]
+│     │  │  │  │  List of stored enchantments.
+│     │  │  │  │  └─ [TAG_Compound]
+│     │  │  │  │     ├─ enchantment
+│     │  │  │  │     │  [TAG_String]
+│     │  │  │  │     │  An enchantment ID.
+│     │  │  │  │     └─ levels
+│     │  │  │  │        [TAG_Int, TAG_Compound]
+│     │  │  │  │        The level of the enchantment.
+│     │  │  │  │        ├─ max
+│     │  │  │  │        │  [TAG_Int]
+│     │  │  │  │        │  The maximum value.
+│     │  │  │  │        └─ min
+│     │  │  │  │           [TAG_Int]
+│     │  │  │  │           The minimum value.
+│     │  │  │  ├─ items
+│     │  │  │  │  [TAG_List]
+│     │  │  │  │  A list of item IDs.
+│     │  │  │  ├─ nbt
+│     │  │  │  │  [TAG_String]
+│     │  │  │  │  An NBT string.
+│     │  │  │  ├─ potion
+│     │  │  │  │  [TAG_String]
+│     │  │  │  │  A brewed potion ID.
+│     │  │  │  └─ tag
+│     │  │  │     [TAG_String]
+│     │  │  │     An item data pack tag.
+│     │  │  └─ feet
+│     │  │     [TAG_Compound]
+│     │  │     ├─ count
+│     │  │     │  [TAG_Int, TAG_Compound]
+│     │  │     │  Amount of the item.
+│     │  │     │  ├─ max
+│     │  │     │  │  [TAG_Int]
+│     │  │     │  │  The maximum value.
+│     │  │     │  └─ min
+│     │  │     │     [TAG_Int]
+│     │  │     │     The minimum value.
+│     │  │     ├─ durability
+│     │  │     │  [TAG_Int, TAG_Compound]
+│     │  │     │  The durability of the item.
+│     │  │     │  ├─ max
+│     │  │     │  │  [TAG_Int]
+│     │  │     │  │  The maximum value.
+│     │  │     │  └─ min
+│     │  │     │     [TAG_Int]
+│     │  │     │     The minimum value.
+│     │  │     ├─ enchantments
+│     │  │     │  [TAG_List]
+│     │  │     │  List of enchantments.
+│     │  │     │  └─ [TAG_Compound]
+│     │  │     │     ├─ enchantment
+│     │  │     │     │  [TAG_String]
+│     │  │     │     │  An enchantment ID.
+│     │  │     │     └─ levels
+│     │  │     │        [TAG_Int, TAG_Compound]
+│     │  │     │        The level of the enchantment.
+│     │  │     │        ├─ max
+│     │  │     │        │  [TAG_Int]
+│     │  │     │        │  The maximum value.
+│     │  │     │        └─ min
+│     │  │     │           [TAG_Int]
+│     │  │     │           The minimum value.
+│     │  │     ├─ stored_enchantments
+│     │  │     │  [TAG_List]
+│     │  │     │  List of stored enchantments.
+│     │  │     │  └─ [TAG_Compound]
+│     │  │     │     ├─ enchantment
+│     │  │     │     │  [TAG_String]
+│     │  │     │     │  An enchantment ID.
+│     │  │     │     └─ levels
+│     │  │     │        [TAG_Int, TAG_Compound]
+│     │  │     │        The level of the enchantment.
+│     │  │     │        ├─ max
+│     │  │     │        │  [TAG_Int]
+│     │  │     │        │  The maximum value.
+│     │  │     │        └─ min
+│     │  │     │           [TAG_Int]
+│     │  │     │           The minimum value.
+│     │  │     ├─ items
+│     │  │     │  [TAG_List]
+│     │  │     │  A list of item IDs.
+│     │  │     ├─ nbt
+│     │  │     │  [TAG_String]
+│     │  │     │  An NBT string.
+│     │  │     ├─ potion
+│     │  │     │  [TAG_String]
+│     │  │     │  A brewed potion ID.
+│     │  │     └─ tag
+│     │  │        [TAG_String]
+│     │  │        An item data pack tag.
+│     │  ├─ flags
+│     │  │  [TAG_Compound]
+│     │  │  Predicate Flags to be checked.
+│     │  │  ├─ is_on_fire
+│     │  │  │  [TAG_Boolean]
+│     │  │  │  Test whether the entity is or is not on fire.
+│     │  │  ├─ is_sneaking
+│     │  │  │  [TAG_Boolean]
+│     │  │  │  Test whether the entity is or is not sneaking.
+│     │  │  ├─ is_sprinting
+│     │  │  │  [TAG_Boolean]
+│     │  │  │  Test whether the entity is or is not sprinting.
+│     │  │  ├─ is_swimming
+│     │  │  │  [TAG_Boolean]
+│     │  │  │  Test whether the entity is or is not swimming.
+│     │  │  └─ is_baby
+│     │  │     [TAG_Boolean]
+│     │  │     Test whether the entity is or is not a baby variant.
+│     │  ├─ lightning_bolt
+│     │  │  [TAG_Compound]
+│     │  │  Lightning bolt properties to be checked. Fails when entity is not a
+│     │  │  lightning bolt.
+│     │  │  └─ <...>
+│     │  ├─ location
+│     │  │  [TAG_Compound]
+│     │  │  ├─ biome
+│     │  │  │  [TAG_String]
+│     │  │  │  The biome the entity is currently in. Accepts these 73 values (see
+│     │  │  │  also Biome#Biome IDs).
+│     │  │  ├─ block
+│     │  │  │  [TAG_Compound]
+│     │  │  │  The block at the location.
+│     │  │  │  ├─ blocks
+│     │  │  │  │  [TAG_List]
+│     │  │  │  │  A list of block IDs.
+│     │  │  │  ├─ tag
+│     │  │  │  │  [TAG_String]
+│     │  │  │  │  The block Tag.
+│     │  │  │  ├─ nbt
+│     │  │  │  │  [TAG_String]
+│     │  │  │  │  The block NBT.
+│     │  │  │  └─ state
+│     │  │  │     [TAG_Compound]
+│     │  │  │     A map of block property names to values. Test will fail if the block
+│     │  │  │     doesn't match.
+│     │  │  │     └─ key
+│     │  │  │        [TAG_Boolean, TAG_Int, TAG_String, TAG_Compound]
+│     │  │  │        Block property key and value pair.
+│     │  │  │        ├─ max
+│     │  │  │        │  [TAG_Int]
+│     │  │  │        │  A maximum value.
+│     │  │  │        └─ min
+│     │  │  │           [TAG_Int]
+│     │  │  │           A minimum value.
+│     │  │  ├─ dimension
+│     │  │  │  [TAG_String]
+│     │  │  │  The dimension the entity is currently in.
+│     │  │  ├─ feature
+│     │  │  │  [TAG_String]
+│     │  │  │  Name of a structure. Accepts these 15 values (see also
+│     │  │  │  Commands/locate).
+│     │  │  ├─ fluid
+│     │  │  │  [TAG_Compound]
+│     │  │  │  The fluid at the location.
+│     │  │  │  ├─ fluid
+│     │  │  │  │  [TAG_String]
+│     │  │  │  │  The fluid ID.
+│     │  │  │  ├─ tag
+│     │  │  │  │  [TAG_String]
+│     │  │  │  │  The fluid Tag.
+│     │  │  │  └─ state
+│     │  │  │     [TAG_Compound]
+│     │  │  │     A map of fluid property names to values. Test will fail if the fluid
+│     │  │  │     doesn't match.
+│     │  │  │     └─ key
+│     │  │  │        [TAG_Boolean, TAG_Int, TAG_String, TAG_Compound]
+│     │  │  │        Fluid property key and value pair.
+│     │  │  │        ├─ max
+│     │  │  │        │  [TAG_Int]
+│     │  │  │        │  A maximum value.
+│     │  │  │        └─ min
+│     │  │  │           [TAG_Int]
+│     │  │  │           A minimum value.
+│     │  │  ├─ light
+│     │  │  │  [TAG_Compound]
+│     │  │  │  The light at the location.
+│     │  │  │  └─ light
+│     │  │  │     [TAG_Int, TAG_Compound]
+│     │  │  │     The light Level of visible light. Calculated using: (max(sky-
+│     │  │  │     darkening,block)).
+│     │  │  │     ├─ max
+│     │  │  │     │  [TAG_Int]
+│     │  │  │     │  A maximum value.
+│     │  │  │     └─ min
+│     │  │  │        [TAG_Int]
+│     │  │  │        A minimum value.
+│     │  │  ├─ position
+│     │  │  │  [TAG_Compound]
+│     │  │  │  ├─ x
+│     │  │  │  │  [TAG_Double, TAG_Compound]
+│     │  │  │  │  The x position.
+│     │  │  │  │  ├─ max
+│     │  │  │  │  │  [TAG_Double]
+│     │  │  │  │  │  A maximum value.
+│     │  │  │  │  └─ min
+│     │  │  │  │     [TAG_Double]
+│     │  │  │  │     A minimum value.
+│     │  │  │  ├─ y
+│     │  │  │  │  [TAG_Double, TAG_Compound]
+│     │  │  │  │  The y position.
+│     │  │  │  │  ├─ max
+│     │  │  │  │  │  [TAG_Double]
+│     │  │  │  │  │  A maximum value.
+│     │  │  │  │  └─ min
+│     │  │  │  │     [TAG_Double]
+│     │  │  │  │     A minimum value.
+│     │  │  │  └─ z
+│     │  │  │     [TAG_Double, TAG_Compound]
+│     │  │  │     The z position.
+│     │  │  │     ├─ max
+│     │  │  │     │  [TAG_Double]
+│     │  │  │     │  A maximum value.
+│     │  │  │     └─ min
+│     │  │  │        [TAG_Double]
+│     │  │  │        A minimum value.
+│     │  │  └─ smokey
+│     │  │     [TAG_Boolean]
+│     │  │     True if the block is closely above a campfire or soul campfire.
+│     │  ├─ nbt
+│     │  │  [TAG_String]
+│     │  │  An NBT string.
+│     │  ├─ passenger
+│     │  │  [TAG_Compound]
+│     │  │  The entity directly riding this entity.
+│     │  │  └─ <...>
+│     │  ├─ player
+│     │  │  [TAG_Compound]
+│     │  │  Player properties to be checked. Fails when entity is not a player.
+│     │  │  ├─ looking_at
+│     │  │  │  [TAG_Compound]
+│     │  │  │  The entity that the player is looking at, as long as it is visible and
+│     │  │  │  within a radius of 100 blocks. Visibility is defined through the line
+│     │  │  │  from the player's eyes to the entity's eyes, rather than the direction
+│     │  │  │  that the player is looking in.
+│     │  │  │  └─ <...>
+│     │  │  ├─ advancements
+│     │  │  │  [TAG_Compound]
+│     │  │  │  A map of advancements to check.
+│     │  │  │  └─ <advancement id>
+│     │  │  │     [TAG_Boolean, TAG_Compound]
+│     │  │  │     An advancement ID.
+│     │  │  │     └─ <criteria id>
+│     │  │  │        [TAG_Boolean]
+│     │  │  │        A criteria ID of the advancement.
+│     │  │  ├─ gamemode
+│     │  │  │  [TAG_String]
+│     │  │  │  The game mode of the player. Must be survival, adventure, creative or
+│     │  │  │  spectator.
+│     │  │  ├─ level
+│     │  │  │  [TAG_Int, TAG_Compound]
+│     │  │  │  The experience level of the player.
+│     │  │  │  ├─ max
+│     │  │  │  │  [TAG_Int]
+│     │  │  │  │  The maximum value.
+│     │  │  │  └─ min
+│     │  │  │     [TAG_Int]
+│     │  │  │     The minimum value.
+│     │  │  ├─ recipes
+│     │  │  │  [TAG_Compound]
+│     │  │  │  A map of recipes to check.
+│     │  │  │  └─ <recipe id>
+│     │  │  │     [TAG_Boolean]
+│     │  │  │     A recipe ID. True if the recipe is known to the player.
+│     │  │  └─ stats
+│     │  │     [TAG_List]
+│     │  │     List of statistics to match.
+│     │  │     └─ [TAG_Compound]
+│     │  │        A statistic. Note that unlike when adding scoreboard objectives, the
+│     │  │        base (for example, minecraft:custom) and the statistic (for example,
+│     │  │        minecraft:sneak_time) are split and use proper namespaces instead of
+│     │  │        the dot-notation (minecraft.custom:minecraft.sneak_time).
+│     │  │        ├─ type
+│     │  │        │  [TAG_String]
+│     │  │        │  The statistic base. Possible values are minecraft:custom,
+│     │  │        │  minecraft:crafted, minecraft:used, minecraft:broken, minecraft:mined,
+│     │  │        │  minecraft:killed, minecraft:picked_up, minecraft:dropped and
+│     │  │        │  minecraft:killed_by.
+│     │  │        ├─ stat
+│     │  │        │  [TAG_String]
+│     │  │        │  The statistic ID. Mostly mimics the criteria used for defining
+│     │  │        │  scoreboard objectives.
+│     │  │        └─ value
+│     │  │           [TAG_Int, TAG_Compound]
+│     │  │           The value of the statistic.
+│     │  │           ├─ max
+│     │  │           │  [TAG_Int]
+│     │  │           │  The maximum value.
+│     │  │           └─ min
+│     │  │              [TAG_Int]
+│     │  │              The minimum value.
+│     │  ├─ stepping_on
+│     │  │  [TAG_Compound]
+│     │  │  Location predicate for the block the entity is standing on.
+│     │  │  ├─ biome
+│     │  │  │  [TAG_String]
+│     │  │  │  The biome the entity is currently in. Accepts these 73 values (see
+│     │  │  │  also Biome#Biome IDs).
+│     │  │  ├─ block
+│     │  │  │  [TAG_Compound]
+│     │  │  │  The block at the location.
+│     │  │  │  ├─ blocks
+│     │  │  │  │  [TAG_List]
+│     │  │  │  │  A list of block IDs.
+│     │  │  │  ├─ tag
+│     │  │  │  │  [TAG_String]
+│     │  │  │  │  The block Tag.
+│     │  │  │  ├─ nbt
+│     │  │  │  │  [TAG_String]
+│     │  │  │  │  The block NBT.
+│     │  │  │  └─ state
+│     │  │  │     [TAG_Compound]
+│     │  │  │     A map of block property names to values. Test will fail if the block
+│     │  │  │     doesn't match.
+│     │  │  │     └─ key
+│     │  │  │        [TAG_Boolean, TAG_Int, TAG_String, TAG_Compound]
+│     │  │  │        Block property key and value pair.
+│     │  │  │        ├─ max
+│     │  │  │        │  [TAG_Int]
+│     │  │  │        │  A maximum value.
+│     │  │  │        └─ min
+│     │  │  │           [TAG_Int]
+│     │  │  │           A minimum value.
+│     │  │  ├─ dimension
+│     │  │  │  [TAG_String]
+│     │  │  │  The dimension the entity is currently in.
+│     │  │  ├─ feature
+│     │  │  │  [TAG_String]
+│     │  │  │  Name of a structure. Accepts these 15 values (see also
+│     │  │  │  Commands/locate).
+│     │  │  ├─ fluid
+│     │  │  │  [TAG_Compound]
+│     │  │  │  The fluid at the location.
+│     │  │  │  ├─ fluid
+│     │  │  │  │  [TAG_String]
+│     │  │  │  │  The fluid ID.
+│     │  │  │  ├─ tag
+│     │  │  │  │  [TAG_String]
+│     │  │  │  │  The fluid Tag.
+│     │  │  │  └─ state
+│     │  │  │     [TAG_Compound]
+│     │  │  │     A map of fluid property names to values. Test will fail if the fluid
+│     │  │  │     doesn't match.
+│     │  │  │     └─ key
+│     │  │  │        [TAG_Boolean, TAG_Int, TAG_String, TAG_Compound]
+│     │  │  │        Fluid property key and value pair.
+│     │  │  │        ├─ max
+│     │  │  │        │  [TAG_Int]
+│     │  │  │        │  A maximum value.
+│     │  │  │        └─ min
+│     │  │  │           [TAG_Int]
+│     │  │  │           A minimum value.
+│     │  │  ├─ light
+│     │  │  │  [TAG_Compound]
+│     │  │  │  The light at the location.
+│     │  │  │  └─ light
+│     │  │  │     [TAG_Int, TAG_Compound]
+│     │  │  │     The light Level of visible light. Calculated using: (max(sky-
+│     │  │  │     darkening,block)).
+│     │  │  │     ├─ max
+│     │  │  │     │  [TAG_Int]
+│     │  │  │     │  A maximum value.
+│     │  │  │     └─ min
+│     │  │  │        [TAG_Int]
+│     │  │  │        A minimum value.
+│     │  │  ├─ position
+│     │  │  │  [TAG_Compound]
+│     │  │  │  ├─ x
+│     │  │  │  │  [TAG_Double, TAG_Compound]
+│     │  │  │  │  The x position.
+│     │  │  │  │  ├─ max
+│     │  │  │  │  │  [TAG_Double]
+│     │  │  │  │  │  A maximum value.
+│     │  │  │  │  └─ min
+│     │  │  │  │     [TAG_Double]
+│     │  │  │  │     A minimum value.
+│     │  │  │  ├─ y
+│     │  │  │  │  [TAG_Double, TAG_Compound]
+│     │  │  │  │  The y position.
+│     │  │  │  │  ├─ max
+│     │  │  │  │  │  [TAG_Double]
+│     │  │  │  │  │  A maximum value.
+│     │  │  │  │  └─ min
+│     │  │  │  │     [TAG_Double]
+│     │  │  │  │     A minimum value.
+│     │  │  │  └─ z
+│     │  │  │     [TAG_Double, TAG_Compound]
+│     │  │  │     The z position.
+│     │  │  │     ├─ max
+│     │  │  │     │  [TAG_Double]
+│     │  │  │     │  A maximum value.
+│     │  │  │     └─ min
+│     │  │  │        [TAG_Double]
+│     │  │  │        A minimum value.
+│     │  │  └─ smokey
+│     │  │     [TAG_Boolean]
+│     │  │     True if the block is closely above a campfire or soul campfire.
+│     │  ├─ team
+│     │  │  [TAG_String]
+│     │  │  The team the entity belongs to.
+│     │  ├─ type
+│     │  │  [TAG_String]
+│     │  │  An entity ID.
+│     │  ├─ targeted_entity
+│     │  │  [TAG_Compound]
+│     │  │  The entity which this entity is targeting for attacks.
+│     │  │  └─ <...>
+│     │  └─ vehicle
+│     │     [TAG_Compound]
+│     │     The vehicle that the entity is riding on.
+│     │     └─ <...>
 │     ├─ location
 │     │  [TAG_Compound]
 │     │  ├─ biome
@@ -1822,9 +4441,9 @@ conditions
 │     │  ├─ block
 │     │  │  [TAG_Compound]
 │     │  │  The block at the location.
-│     │  │  ├─ block
-│     │  │  │  [TAG_String]
-│     │  │  │  The block ID.
+│     │  │  ├─ blocks
+│     │  │  │  [TAG_List]
+│     │  │  │  A list of block IDs.
 │     │  │  ├─ tag
 │     │  │  │  [TAG_String]
 │     │  │  │  The block Tag.
@@ -1846,7 +4465,7 @@ conditions
 │     │  │           A minimum value.
 │     │  ├─ dimension
 │     │  │  [TAG_String]
-│     │  │  The dimension the entity is currently in. Accepts these 3 values.
+│     │  │  The dimension the entity is currently in.
 │     │  ├─ feature
 │     │  │  [TAG_String]
 │     │  │  Name of a structure. Accepts these 15 values (see also
@@ -1921,9 +4540,20 @@ conditions
 │     ├─ nbt
 │     │  [TAG_String]
 │     │  An NBT string.
+│     ├─ passenger
+│     │  [TAG_Compound]
+│     │  The entity directly riding this entity.
+│     │  └─ <...>
 │     ├─ player
 │     │  [TAG_Compound]
 │     │  Player properties to be checked. Fails when entity is not a player.
+│     │  ├─ looking_at
+│     │  │  [TAG_Compound]
+│     │  │  The entity that the player is looking at, as long as it is visible and
+│     │  │  within a radius of 100 blocks. Visibility is defined through the line
+│     │  │  from the player's eyes to the entity's eyes, rather than the direction
+│     │  │  that the player is looking in.
+│     │  │  └─ <...>
 │     │  ├─ advancements
 │     │  │  [TAG_Compound]
 │     │  │  A map of advancements to check.
@@ -1979,6 +4609,112 @@ conditions
 │     │           └─ min
 │     │              [TAG_Int]
 │     │              The minimum value.
+│     ├─ stepping_on
+│     │  [TAG_Compound]
+│     │  Location predicate for the block the entity is standing on.
+│     │  ├─ biome
+│     │  │  [TAG_String]
+│     │  │  The biome the entity is currently in. Accepts these 73 values (see
+│     │  │  also Biome#Biome IDs).
+│     │  ├─ block
+│     │  │  [TAG_Compound]
+│     │  │  The block at the location.
+│     │  │  ├─ blocks
+│     │  │  │  [TAG_List]
+│     │  │  │  A list of block IDs.
+│     │  │  ├─ tag
+│     │  │  │  [TAG_String]
+│     │  │  │  The block Tag.
+│     │  │  ├─ nbt
+│     │  │  │  [TAG_String]
+│     │  │  │  The block NBT.
+│     │  │  └─ state
+│     │  │     [TAG_Compound]
+│     │  │     A map of block property names to values. Test will fail if the block
+│     │  │     doesn't match.
+│     │  │     └─ key
+│     │  │        [TAG_Boolean, TAG_Int, TAG_String, TAG_Compound]
+│     │  │        Block property key and value pair.
+│     │  │        ├─ max
+│     │  │        │  [TAG_Int]
+│     │  │        │  A maximum value.
+│     │  │        └─ min
+│     │  │           [TAG_Int]
+│     │  │           A minimum value.
+│     │  ├─ dimension
+│     │  │  [TAG_String]
+│     │  │  The dimension the entity is currently in.
+│     │  ├─ feature
+│     │  │  [TAG_String]
+│     │  │  Name of a structure. Accepts these 15 values (see also
+│     │  │  Commands/locate).
+│     │  ├─ fluid
+│     │  │  [TAG_Compound]
+│     │  │  The fluid at the location.
+│     │  │  ├─ fluid
+│     │  │  │  [TAG_String]
+│     │  │  │  The fluid ID.
+│     │  │  ├─ tag
+│     │  │  │  [TAG_String]
+│     │  │  │  The fluid Tag.
+│     │  │  └─ state
+│     │  │     [TAG_Compound]
+│     │  │     A map of fluid property names to values. Test will fail if the fluid
+│     │  │     doesn't match.
+│     │  │     └─ key
+│     │  │        [TAG_Boolean, TAG_Int, TAG_String, TAG_Compound]
+│     │  │        Fluid property key and value pair.
+│     │  │        ├─ max
+│     │  │        │  [TAG_Int]
+│     │  │        │  A maximum value.
+│     │  │        └─ min
+│     │  │           [TAG_Int]
+│     │  │           A minimum value.
+│     │  ├─ light
+│     │  │  [TAG_Compound]
+│     │  │  The light at the location.
+│     │  │  └─ light
+│     │  │     [TAG_Int, TAG_Compound]
+│     │  │     The light Level of visible light. Calculated using: (max(sky-
+│     │  │     darkening,block)).
+│     │  │     ├─ max
+│     │  │     │  [TAG_Int]
+│     │  │     │  A maximum value.
+│     │  │     └─ min
+│     │  │        [TAG_Int]
+│     │  │        A minimum value.
+│     │  ├─ position
+│     │  │  [TAG_Compound]
+│     │  │  ├─ x
+│     │  │  │  [TAG_Double, TAG_Compound]
+│     │  │  │  The x position.
+│     │  │  │  ├─ max
+│     │  │  │  │  [TAG_Double]
+│     │  │  │  │  A maximum value.
+│     │  │  │  └─ min
+│     │  │  │     [TAG_Double]
+│     │  │  │     A minimum value.
+│     │  │  ├─ y
+│     │  │  │  [TAG_Double, TAG_Compound]
+│     │  │  │  The y position.
+│     │  │  │  ├─ max
+│     │  │  │  │  [TAG_Double]
+│     │  │  │  │  A maximum value.
+│     │  │  │  └─ min
+│     │  │  │     [TAG_Double]
+│     │  │  │     A minimum value.
+│     │  │  └─ z
+│     │  │     [TAG_Double, TAG_Compound]
+│     │  │     The z position.
+│     │  │     ├─ max
+│     │  │     │  [TAG_Double]
+│     │  │     │  A maximum value.
+│     │  │     └─ min
+│     │  │        [TAG_Double]
+│     │  │        A minimum value.
+│     │  └─ smokey
+│     │     [TAG_Boolean]
+│     │     True if the block is closely above a campfire or soul campfire.
 │     ├─ team
 │     │  [TAG_String]
 │     │  The team the entity belongs to.
@@ -1994,7 +4730,1568 @@ conditions
 │        The vehicle that the entity is riding on.
 │        └─ <...>
 └─ player
-   [TAG_List]
-   A list of predicates that must pass in order for the trigger to
-   activate. The checks are applied to the player that would get the
-   advancement.
+   [TAG_Compound, TAG_List]
+   The player that would get the advancement. May also be a list of
+   predicates that must pass in order for the trigger to activate.
+   ├─ distance
+   │  [TAG_Compound]
+   │  ├─ absolute
+   │  │  [TAG_Compound]
+   │  │  ├─ max
+   │  │  │  [TAG_Float]
+   │  │  │  The maximum value.
+   │  │  └─ min
+   │  │     [TAG_Float]
+   │  │     The minimum value.
+   │  ├─ horizontal
+   │  │  [TAG_Compound]
+   │  │  ├─ max
+   │  │  │  [TAG_Float]
+   │  │  │  The maximum value.
+   │  │  └─ min
+   │  │     [TAG_Float]
+   │  │     The minimum value.
+   │  ├─ x
+   │  │  [TAG_Compound]
+   │  │  ├─ max
+   │  │  │  [TAG_Float]
+   │  │  │  The maximum value.
+   │  │  └─ min
+   │  │     [TAG_Float]
+   │  │     The minimum value.
+   │  ├─ y
+   │  │  [TAG_Compound]
+   │  │  ├─ max
+   │  │  │  [TAG_Float]
+   │  │  │  The maximum value.
+   │  │  └─ min
+   │  │     [TAG_Float]
+   │  │     The minimum value.
+   │  └─ z
+   │     [TAG_Compound]
+   │     ├─ max
+   │     │  [TAG_Float]
+   │     │  The maximum value.
+   │     └─ min
+   │        [TAG_Float]
+   │        The minimum value.
+   ├─ effects
+   │  [TAG_Compound]
+   │  A list of status effects.
+   │  └─ <minecraft:effect_name>
+   │     [TAG_Compound]
+   │     A status effect with the key name being the status effect name.
+   │     ├─ ambient
+   │     │  [TAG_Boolean]
+   │     │  Whether the effect is from a beacon.
+   │     ├─ amplifier
+   │     │  [TAG_Int, TAG_Compound]
+   │     │  The effect amplifier.
+   │     │  ├─ max
+   │     │  │  [TAG_Int]
+   │     │  │  The maximum value.
+   │     │  └─ min
+   │     │     [TAG_Int]
+   │     │     The minimum value.
+   │     ├─ duration
+   │     │  [TAG_Int, TAG_Compound]
+   │     │  The effect duration in ticks.
+   │     │  ├─ max
+   │     │  │  [TAG_Int]
+   │     │  │  The maximum value.
+   │     │  └─ min
+   │     │     [TAG_Int]
+   │     │     The minimum value.
+   │     └─ visible
+   │        [TAG_Boolean]
+   │        Whether the effect has visible particles.
+   ├─ equipment
+   │  [TAG_Compound]
+   │  ├─ mainhand
+   │  │  [TAG_Compound]
+   │  │  ├─ count
+   │  │  │  [TAG_Int, TAG_Compound]
+   │  │  │  Amount of the item.
+   │  │  │  ├─ max
+   │  │  │  │  [TAG_Int]
+   │  │  │  │  The maximum value.
+   │  │  │  └─ min
+   │  │  │     [TAG_Int]
+   │  │  │     The minimum value.
+   │  │  ├─ durability
+   │  │  │  [TAG_Int, TAG_Compound]
+   │  │  │  The durability of the item.
+   │  │  │  ├─ max
+   │  │  │  │  [TAG_Int]
+   │  │  │  │  The maximum value.
+   │  │  │  └─ min
+   │  │  │     [TAG_Int]
+   │  │  │     The minimum value.
+   │  │  ├─ enchantments
+   │  │  │  [TAG_List]
+   │  │  │  List of enchantments.
+   │  │  │  └─ [TAG_Compound]
+   │  │  │     ├─ enchantment
+   │  │  │     │  [TAG_String]
+   │  │  │     │  An enchantment ID.
+   │  │  │     └─ levels
+   │  │  │        [TAG_Int, TAG_Compound]
+   │  │  │        The level of the enchantment.
+   │  │  │        ├─ max
+   │  │  │        │  [TAG_Int]
+   │  │  │        │  The maximum value.
+   │  │  │        └─ min
+   │  │  │           [TAG_Int]
+   │  │  │           The minimum value.
+   │  │  ├─ stored_enchantments
+   │  │  │  [TAG_List]
+   │  │  │  List of stored enchantments.
+   │  │  │  └─ [TAG_Compound]
+   │  │  │     ├─ enchantment
+   │  │  │     │  [TAG_String]
+   │  │  │     │  An enchantment ID.
+   │  │  │     └─ levels
+   │  │  │        [TAG_Int, TAG_Compound]
+   │  │  │        The level of the enchantment.
+   │  │  │        ├─ max
+   │  │  │        │  [TAG_Int]
+   │  │  │        │  The maximum value.
+   │  │  │        └─ min
+   │  │  │           [TAG_Int]
+   │  │  │           The minimum value.
+   │  │  ├─ items
+   │  │  │  [TAG_List]
+   │  │  │  A list of item IDs.
+   │  │  ├─ nbt
+   │  │  │  [TAG_String]
+   │  │  │  An NBT string.
+   │  │  ├─ potion
+   │  │  │  [TAG_String]
+   │  │  │  A brewed potion ID.
+   │  │  └─ tag
+   │  │     [TAG_String]
+   │  │     An item data pack tag.
+   │  ├─ offhand
+   │  │  [TAG_Compound]
+   │  │  ├─ count
+   │  │  │  [TAG_Int, TAG_Compound]
+   │  │  │  Amount of the item.
+   │  │  │  ├─ max
+   │  │  │  │  [TAG_Int]
+   │  │  │  │  The maximum value.
+   │  │  │  └─ min
+   │  │  │     [TAG_Int]
+   │  │  │     The minimum value.
+   │  │  ├─ durability
+   │  │  │  [TAG_Int, TAG_Compound]
+   │  │  │  The durability of the item.
+   │  │  │  ├─ max
+   │  │  │  │  [TAG_Int]
+   │  │  │  │  The maximum value.
+   │  │  │  └─ min
+   │  │  │     [TAG_Int]
+   │  │  │     The minimum value.
+   │  │  ├─ enchantments
+   │  │  │  [TAG_List]
+   │  │  │  List of enchantments.
+   │  │  │  └─ [TAG_Compound]
+   │  │  │     ├─ enchantment
+   │  │  │     │  [TAG_String]
+   │  │  │     │  An enchantment ID.
+   │  │  │     └─ levels
+   │  │  │        [TAG_Int, TAG_Compound]
+   │  │  │        The level of the enchantment.
+   │  │  │        ├─ max
+   │  │  │        │  [TAG_Int]
+   │  │  │        │  The maximum value.
+   │  │  │        └─ min
+   │  │  │           [TAG_Int]
+   │  │  │           The minimum value.
+   │  │  ├─ stored_enchantments
+   │  │  │  [TAG_List]
+   │  │  │  List of stored enchantments.
+   │  │  │  └─ [TAG_Compound]
+   │  │  │     ├─ enchantment
+   │  │  │     │  [TAG_String]
+   │  │  │     │  An enchantment ID.
+   │  │  │     └─ levels
+   │  │  │        [TAG_Int, TAG_Compound]
+   │  │  │        The level of the enchantment.
+   │  │  │        ├─ max
+   │  │  │        │  [TAG_Int]
+   │  │  │        │  The maximum value.
+   │  │  │        └─ min
+   │  │  │           [TAG_Int]
+   │  │  │           The minimum value.
+   │  │  ├─ items
+   │  │  │  [TAG_List]
+   │  │  │  A list of item IDs.
+   │  │  ├─ nbt
+   │  │  │  [TAG_String]
+   │  │  │  An NBT string.
+   │  │  ├─ potion
+   │  │  │  [TAG_String]
+   │  │  │  A brewed potion ID.
+   │  │  └─ tag
+   │  │     [TAG_String]
+   │  │     An item data pack tag.
+   │  ├─ head
+   │  │  [TAG_Compound]
+   │  │  ├─ count
+   │  │  │  [TAG_Int, TAG_Compound]
+   │  │  │  Amount of the item.
+   │  │  │  ├─ max
+   │  │  │  │  [TAG_Int]
+   │  │  │  │  The maximum value.
+   │  │  │  └─ min
+   │  │  │     [TAG_Int]
+   │  │  │     The minimum value.
+   │  │  ├─ durability
+   │  │  │  [TAG_Int, TAG_Compound]
+   │  │  │  The durability of the item.
+   │  │  │  ├─ max
+   │  │  │  │  [TAG_Int]
+   │  │  │  │  The maximum value.
+   │  │  │  └─ min
+   │  │  │     [TAG_Int]
+   │  │  │     The minimum value.
+   │  │  ├─ enchantments
+   │  │  │  [TAG_List]
+   │  │  │  List of enchantments.
+   │  │  │  └─ [TAG_Compound]
+   │  │  │     ├─ enchantment
+   │  │  │     │  [TAG_String]
+   │  │  │     │  An enchantment ID.
+   │  │  │     └─ levels
+   │  │  │        [TAG_Int, TAG_Compound]
+   │  │  │        The level of the enchantment.
+   │  │  │        ├─ max
+   │  │  │        │  [TAG_Int]
+   │  │  │        │  The maximum value.
+   │  │  │        └─ min
+   │  │  │           [TAG_Int]
+   │  │  │           The minimum value.
+   │  │  ├─ stored_enchantments
+   │  │  │  [TAG_List]
+   │  │  │  List of stored enchantments.
+   │  │  │  └─ [TAG_Compound]
+   │  │  │     ├─ enchantment
+   │  │  │     │  [TAG_String]
+   │  │  │     │  An enchantment ID.
+   │  │  │     └─ levels
+   │  │  │        [TAG_Int, TAG_Compound]
+   │  │  │        The level of the enchantment.
+   │  │  │        ├─ max
+   │  │  │        │  [TAG_Int]
+   │  │  │        │  The maximum value.
+   │  │  │        └─ min
+   │  │  │           [TAG_Int]
+   │  │  │           The minimum value.
+   │  │  ├─ items
+   │  │  │  [TAG_List]
+   │  │  │  A list of item IDs.
+   │  │  ├─ nbt
+   │  │  │  [TAG_String]
+   │  │  │  An NBT string.
+   │  │  ├─ potion
+   │  │  │  [TAG_String]
+   │  │  │  A brewed potion ID.
+   │  │  └─ tag
+   │  │     [TAG_String]
+   │  │     An item data pack tag.
+   │  ├─ chest
+   │  │  [TAG_Compound]
+   │  │  ├─ count
+   │  │  │  [TAG_Int, TAG_Compound]
+   │  │  │  Amount of the item.
+   │  │  │  ├─ max
+   │  │  │  │  [TAG_Int]
+   │  │  │  │  The maximum value.
+   │  │  │  └─ min
+   │  │  │     [TAG_Int]
+   │  │  │     The minimum value.
+   │  │  ├─ durability
+   │  │  │  [TAG_Int, TAG_Compound]
+   │  │  │  The durability of the item.
+   │  │  │  ├─ max
+   │  │  │  │  [TAG_Int]
+   │  │  │  │  The maximum value.
+   │  │  │  └─ min
+   │  │  │     [TAG_Int]
+   │  │  │     The minimum value.
+   │  │  ├─ enchantments
+   │  │  │  [TAG_List]
+   │  │  │  List of enchantments.
+   │  │  │  └─ [TAG_Compound]
+   │  │  │     ├─ enchantment
+   │  │  │     │  [TAG_String]
+   │  │  │     │  An enchantment ID.
+   │  │  │     └─ levels
+   │  │  │        [TAG_Int, TAG_Compound]
+   │  │  │        The level of the enchantment.
+   │  │  │        ├─ max
+   │  │  │        │  [TAG_Int]
+   │  │  │        │  The maximum value.
+   │  │  │        └─ min
+   │  │  │           [TAG_Int]
+   │  │  │           The minimum value.
+   │  │  ├─ stored_enchantments
+   │  │  │  [TAG_List]
+   │  │  │  List of stored enchantments.
+   │  │  │  └─ [TAG_Compound]
+   │  │  │     ├─ enchantment
+   │  │  │     │  [TAG_String]
+   │  │  │     │  An enchantment ID.
+   │  │  │     └─ levels
+   │  │  │        [TAG_Int, TAG_Compound]
+   │  │  │        The level of the enchantment.
+   │  │  │        ├─ max
+   │  │  │        │  [TAG_Int]
+   │  │  │        │  The maximum value.
+   │  │  │        └─ min
+   │  │  │           [TAG_Int]
+   │  │  │           The minimum value.
+   │  │  ├─ items
+   │  │  │  [TAG_List]
+   │  │  │  A list of item IDs.
+   │  │  ├─ nbt
+   │  │  │  [TAG_String]
+   │  │  │  An NBT string.
+   │  │  ├─ potion
+   │  │  │  [TAG_String]
+   │  │  │  A brewed potion ID.
+   │  │  └─ tag
+   │  │     [TAG_String]
+   │  │     An item data pack tag.
+   │  ├─ legs
+   │  │  [TAG_Compound]
+   │  │  ├─ count
+   │  │  │  [TAG_Int, TAG_Compound]
+   │  │  │  Amount of the item.
+   │  │  │  ├─ max
+   │  │  │  │  [TAG_Int]
+   │  │  │  │  The maximum value.
+   │  │  │  └─ min
+   │  │  │     [TAG_Int]
+   │  │  │     The minimum value.
+   │  │  ├─ durability
+   │  │  │  [TAG_Int, TAG_Compound]
+   │  │  │  The durability of the item.
+   │  │  │  ├─ max
+   │  │  │  │  [TAG_Int]
+   │  │  │  │  The maximum value.
+   │  │  │  └─ min
+   │  │  │     [TAG_Int]
+   │  │  │     The minimum value.
+   │  │  ├─ enchantments
+   │  │  │  [TAG_List]
+   │  │  │  List of enchantments.
+   │  │  │  └─ [TAG_Compound]
+   │  │  │     ├─ enchantment
+   │  │  │     │  [TAG_String]
+   │  │  │     │  An enchantment ID.
+   │  │  │     └─ levels
+   │  │  │        [TAG_Int, TAG_Compound]
+   │  │  │        The level of the enchantment.
+   │  │  │        ├─ max
+   │  │  │        │  [TAG_Int]
+   │  │  │        │  The maximum value.
+   │  │  │        └─ min
+   │  │  │           [TAG_Int]
+   │  │  │           The minimum value.
+   │  │  ├─ stored_enchantments
+   │  │  │  [TAG_List]
+   │  │  │  List of stored enchantments.
+   │  │  │  └─ [TAG_Compound]
+   │  │  │     ├─ enchantment
+   │  │  │     │  [TAG_String]
+   │  │  │     │  An enchantment ID.
+   │  │  │     └─ levels
+   │  │  │        [TAG_Int, TAG_Compound]
+   │  │  │        The level of the enchantment.
+   │  │  │        ├─ max
+   │  │  │        │  [TAG_Int]
+   │  │  │        │  The maximum value.
+   │  │  │        └─ min
+   │  │  │           [TAG_Int]
+   │  │  │           The minimum value.
+   │  │  ├─ items
+   │  │  │  [TAG_List]
+   │  │  │  A list of item IDs.
+   │  │  ├─ nbt
+   │  │  │  [TAG_String]
+   │  │  │  An NBT string.
+   │  │  ├─ potion
+   │  │  │  [TAG_String]
+   │  │  │  A brewed potion ID.
+   │  │  └─ tag
+   │  │     [TAG_String]
+   │  │     An item data pack tag.
+   │  └─ feet
+   │     [TAG_Compound]
+   │     ├─ count
+   │     │  [TAG_Int, TAG_Compound]
+   │     │  Amount of the item.
+   │     │  ├─ max
+   │     │  │  [TAG_Int]
+   │     │  │  The maximum value.
+   │     │  └─ min
+   │     │     [TAG_Int]
+   │     │     The minimum value.
+   │     ├─ durability
+   │     │  [TAG_Int, TAG_Compound]
+   │     │  The durability of the item.
+   │     │  ├─ max
+   │     │  │  [TAG_Int]
+   │     │  │  The maximum value.
+   │     │  └─ min
+   │     │     [TAG_Int]
+   │     │     The minimum value.
+   │     ├─ enchantments
+   │     │  [TAG_List]
+   │     │  List of enchantments.
+   │     │  └─ [TAG_Compound]
+   │     │     ├─ enchantment
+   │     │     │  [TAG_String]
+   │     │     │  An enchantment ID.
+   │     │     └─ levels
+   │     │        [TAG_Int, TAG_Compound]
+   │     │        The level of the enchantment.
+   │     │        ├─ max
+   │     │        │  [TAG_Int]
+   │     │        │  The maximum value.
+   │     │        └─ min
+   │     │           [TAG_Int]
+   │     │           The minimum value.
+   │     ├─ stored_enchantments
+   │     │  [TAG_List]
+   │     │  List of stored enchantments.
+   │     │  └─ [TAG_Compound]
+   │     │     ├─ enchantment
+   │     │     │  [TAG_String]
+   │     │     │  An enchantment ID.
+   │     │     └─ levels
+   │     │        [TAG_Int, TAG_Compound]
+   │     │        The level of the enchantment.
+   │     │        ├─ max
+   │     │        │  [TAG_Int]
+   │     │        │  The maximum value.
+   │     │        └─ min
+   │     │           [TAG_Int]
+   │     │           The minimum value.
+   │     ├─ items
+   │     │  [TAG_List]
+   │     │  A list of item IDs.
+   │     ├─ nbt
+   │     │  [TAG_String]
+   │     │  An NBT string.
+   │     ├─ potion
+   │     │  [TAG_String]
+   │     │  A brewed potion ID.
+   │     └─ tag
+   │        [TAG_String]
+   │        An item data pack tag.
+   ├─ flags
+   │  [TAG_Compound]
+   │  Predicate Flags to be checked.
+   │  ├─ is_on_fire
+   │  │  [TAG_Boolean]
+   │  │  Test whether the entity is or is not on fire.
+   │  ├─ is_sneaking
+   │  │  [TAG_Boolean]
+   │  │  Test whether the entity is or is not sneaking.
+   │  ├─ is_sprinting
+   │  │  [TAG_Boolean]
+   │  │  Test whether the entity is or is not sprinting.
+   │  ├─ is_swimming
+   │  │  [TAG_Boolean]
+   │  │  Test whether the entity is or is not swimming.
+   │  └─ is_baby
+   │     [TAG_Boolean]
+   │     Test whether the entity is or is not a baby variant.
+   ├─ lightning_bolt
+   │  [TAG_Compound]
+   │  Lightning bolt properties to be checked. Fails when entity is not a
+   │  lightning bolt.
+   │  ├─ blocks_set_on_fire
+   │  │  [TAG_Int]
+   │  │  Number of blocks set on fire by this lightning bolt.
+   │  ├─ entity_struck
+   │  │  [TAG_Compound]
+   │  │  Entity properties of entities struck by this lightning bolt. If
+   │  │  present, this tag must match one or more entities.
+   │  ├─ distance
+   │  │  [TAG_Compound]
+   │  │  ├─ absolute
+   │  │  │  [TAG_Compound]
+   │  │  │  ├─ max
+   │  │  │  │  [TAG_Float]
+   │  │  │  │  The maximum value.
+   │  │  │  └─ min
+   │  │  │     [TAG_Float]
+   │  │  │     The minimum value.
+   │  │  ├─ horizontal
+   │  │  │  [TAG_Compound]
+   │  │  │  ├─ max
+   │  │  │  │  [TAG_Float]
+   │  │  │  │  The maximum value.
+   │  │  │  └─ min
+   │  │  │     [TAG_Float]
+   │  │  │     The minimum value.
+   │  │  ├─ x
+   │  │  │  [TAG_Compound]
+   │  │  │  ├─ max
+   │  │  │  │  [TAG_Float]
+   │  │  │  │  The maximum value.
+   │  │  │  └─ min
+   │  │  │     [TAG_Float]
+   │  │  │     The minimum value.
+   │  │  ├─ y
+   │  │  │  [TAG_Compound]
+   │  │  │  ├─ max
+   │  │  │  │  [TAG_Float]
+   │  │  │  │  The maximum value.
+   │  │  │  └─ min
+   │  │  │     [TAG_Float]
+   │  │  │     The minimum value.
+   │  │  └─ z
+   │  │     [TAG_Compound]
+   │  │     ├─ max
+   │  │     │  [TAG_Float]
+   │  │     │  The maximum value.
+   │  │     └─ min
+   │  │        [TAG_Float]
+   │  │        The minimum value.
+   │  ├─ effects
+   │  │  [TAG_Compound]
+   │  │  A list of status effects.
+   │  │  └─ <minecraft:effect_name>
+   │  │     [TAG_Compound]
+   │  │     A status effect with the key name being the status effect name.
+   │  │     ├─ ambient
+   │  │     │  [TAG_Boolean]
+   │  │     │  Whether the effect is from a beacon.
+   │  │     ├─ amplifier
+   │  │     │  [TAG_Int, TAG_Compound]
+   │  │     │  The effect amplifier.
+   │  │     │  ├─ max
+   │  │     │  │  [TAG_Int]
+   │  │     │  │  The maximum value.
+   │  │     │  └─ min
+   │  │     │     [TAG_Int]
+   │  │     │     The minimum value.
+   │  │     ├─ duration
+   │  │     │  [TAG_Int, TAG_Compound]
+   │  │     │  The effect duration in ticks.
+   │  │     │  ├─ max
+   │  │     │  │  [TAG_Int]
+   │  │     │  │  The maximum value.
+   │  │     │  └─ min
+   │  │     │     [TAG_Int]
+   │  │     │     The minimum value.
+   │  │     └─ visible
+   │  │        [TAG_Boolean]
+   │  │        Whether the effect has visible particles.
+   │  ├─ equipment
+   │  │  [TAG_Compound]
+   │  │  ├─ mainhand
+   │  │  │  [TAG_Compound]
+   │  │  │  ├─ count
+   │  │  │  │  [TAG_Int, TAG_Compound]
+   │  │  │  │  Amount of the item.
+   │  │  │  │  ├─ max
+   │  │  │  │  │  [TAG_Int]
+   │  │  │  │  │  The maximum value.
+   │  │  │  │  └─ min
+   │  │  │  │     [TAG_Int]
+   │  │  │  │     The minimum value.
+   │  │  │  ├─ durability
+   │  │  │  │  [TAG_Int, TAG_Compound]
+   │  │  │  │  The durability of the item.
+   │  │  │  │  ├─ max
+   │  │  │  │  │  [TAG_Int]
+   │  │  │  │  │  The maximum value.
+   │  │  │  │  └─ min
+   │  │  │  │     [TAG_Int]
+   │  │  │  │     The minimum value.
+   │  │  │  ├─ enchantments
+   │  │  │  │  [TAG_List]
+   │  │  │  │  List of enchantments.
+   │  │  │  │  └─ [TAG_Compound]
+   │  │  │  │     ├─ enchantment
+   │  │  │  │     │  [TAG_String]
+   │  │  │  │     │  An enchantment ID.
+   │  │  │  │     └─ levels
+   │  │  │  │        [TAG_Int, TAG_Compound]
+   │  │  │  │        The level of the enchantment.
+   │  │  │  │        ├─ max
+   │  │  │  │        │  [TAG_Int]
+   │  │  │  │        │  The maximum value.
+   │  │  │  │        └─ min
+   │  │  │  │           [TAG_Int]
+   │  │  │  │           The minimum value.
+   │  │  │  ├─ stored_enchantments
+   │  │  │  │  [TAG_List]
+   │  │  │  │  List of stored enchantments.
+   │  │  │  │  └─ [TAG_Compound]
+   │  │  │  │     ├─ enchantment
+   │  │  │  │     │  [TAG_String]
+   │  │  │  │     │  An enchantment ID.
+   │  │  │  │     └─ levels
+   │  │  │  │        [TAG_Int, TAG_Compound]
+   │  │  │  │        The level of the enchantment.
+   │  │  │  │        ├─ max
+   │  │  │  │        │  [TAG_Int]
+   │  │  │  │        │  The maximum value.
+   │  │  │  │        └─ min
+   │  │  │  │           [TAG_Int]
+   │  │  │  │           The minimum value.
+   │  │  │  ├─ items
+   │  │  │  │  [TAG_List]
+   │  │  │  │  A list of item IDs.
+   │  │  │  ├─ nbt
+   │  │  │  │  [TAG_String]
+   │  │  │  │  An NBT string.
+   │  │  │  ├─ potion
+   │  │  │  │  [TAG_String]
+   │  │  │  │  A brewed potion ID.
+   │  │  │  └─ tag
+   │  │  │     [TAG_String]
+   │  │  │     An item data pack tag.
+   │  │  ├─ offhand
+   │  │  │  [TAG_Compound]
+   │  │  │  ├─ count
+   │  │  │  │  [TAG_Int, TAG_Compound]
+   │  │  │  │  Amount of the item.
+   │  │  │  │  ├─ max
+   │  │  │  │  │  [TAG_Int]
+   │  │  │  │  │  The maximum value.
+   │  │  │  │  └─ min
+   │  │  │  │     [TAG_Int]
+   │  │  │  │     The minimum value.
+   │  │  │  ├─ durability
+   │  │  │  │  [TAG_Int, TAG_Compound]
+   │  │  │  │  The durability of the item.
+   │  │  │  │  ├─ max
+   │  │  │  │  │  [TAG_Int]
+   │  │  │  │  │  The maximum value.
+   │  │  │  │  └─ min
+   │  │  │  │     [TAG_Int]
+   │  │  │  │     The minimum value.
+   │  │  │  ├─ enchantments
+   │  │  │  │  [TAG_List]
+   │  │  │  │  List of enchantments.
+   │  │  │  │  └─ [TAG_Compound]
+   │  │  │  │     ├─ enchantment
+   │  │  │  │     │  [TAG_String]
+   │  │  │  │     │  An enchantment ID.
+   │  │  │  │     └─ levels
+   │  │  │  │        [TAG_Int, TAG_Compound]
+   │  │  │  │        The level of the enchantment.
+   │  │  │  │        ├─ max
+   │  │  │  │        │  [TAG_Int]
+   │  │  │  │        │  The maximum value.
+   │  │  │  │        └─ min
+   │  │  │  │           [TAG_Int]
+   │  │  │  │           The minimum value.
+   │  │  │  ├─ stored_enchantments
+   │  │  │  │  [TAG_List]
+   │  │  │  │  List of stored enchantments.
+   │  │  │  │  └─ [TAG_Compound]
+   │  │  │  │     ├─ enchantment
+   │  │  │  │     │  [TAG_String]
+   │  │  │  │     │  An enchantment ID.
+   │  │  │  │     └─ levels
+   │  │  │  │        [TAG_Int, TAG_Compound]
+   │  │  │  │        The level of the enchantment.
+   │  │  │  │        ├─ max
+   │  │  │  │        │  [TAG_Int]
+   │  │  │  │        │  The maximum value.
+   │  │  │  │        └─ min
+   │  │  │  │           [TAG_Int]
+   │  │  │  │           The minimum value.
+   │  │  │  ├─ items
+   │  │  │  │  [TAG_List]
+   │  │  │  │  A list of item IDs.
+   │  │  │  ├─ nbt
+   │  │  │  │  [TAG_String]
+   │  │  │  │  An NBT string.
+   │  │  │  ├─ potion
+   │  │  │  │  [TAG_String]
+   │  │  │  │  A brewed potion ID.
+   │  │  │  └─ tag
+   │  │  │     [TAG_String]
+   │  │  │     An item data pack tag.
+   │  │  ├─ head
+   │  │  │  [TAG_Compound]
+   │  │  │  ├─ count
+   │  │  │  │  [TAG_Int, TAG_Compound]
+   │  │  │  │  Amount of the item.
+   │  │  │  │  ├─ max
+   │  │  │  │  │  [TAG_Int]
+   │  │  │  │  │  The maximum value.
+   │  │  │  │  └─ min
+   │  │  │  │     [TAG_Int]
+   │  │  │  │     The minimum value.
+   │  │  │  ├─ durability
+   │  │  │  │  [TAG_Int, TAG_Compound]
+   │  │  │  │  The durability of the item.
+   │  │  │  │  ├─ max
+   │  │  │  │  │  [TAG_Int]
+   │  │  │  │  │  The maximum value.
+   │  │  │  │  └─ min
+   │  │  │  │     [TAG_Int]
+   │  │  │  │     The minimum value.
+   │  │  │  ├─ enchantments
+   │  │  │  │  [TAG_List]
+   │  │  │  │  List of enchantments.
+   │  │  │  │  └─ [TAG_Compound]
+   │  │  │  │     ├─ enchantment
+   │  │  │  │     │  [TAG_String]
+   │  │  │  │     │  An enchantment ID.
+   │  │  │  │     └─ levels
+   │  │  │  │        [TAG_Int, TAG_Compound]
+   │  │  │  │        The level of the enchantment.
+   │  │  │  │        ├─ max
+   │  │  │  │        │  [TAG_Int]
+   │  │  │  │        │  The maximum value.
+   │  │  │  │        └─ min
+   │  │  │  │           [TAG_Int]
+   │  │  │  │           The minimum value.
+   │  │  │  ├─ stored_enchantments
+   │  │  │  │  [TAG_List]
+   │  │  │  │  List of stored enchantments.
+   │  │  │  │  └─ [TAG_Compound]
+   │  │  │  │     ├─ enchantment
+   │  │  │  │     │  [TAG_String]
+   │  │  │  │     │  An enchantment ID.
+   │  │  │  │     └─ levels
+   │  │  │  │        [TAG_Int, TAG_Compound]
+   │  │  │  │        The level of the enchantment.
+   │  │  │  │        ├─ max
+   │  │  │  │        │  [TAG_Int]
+   │  │  │  │        │  The maximum value.
+   │  │  │  │        └─ min
+   │  │  │  │           [TAG_Int]
+   │  │  │  │           The minimum value.
+   │  │  │  ├─ items
+   │  │  │  │  [TAG_List]
+   │  │  │  │  A list of item IDs.
+   │  │  │  ├─ nbt
+   │  │  │  │  [TAG_String]
+   │  │  │  │  An NBT string.
+   │  │  │  ├─ potion
+   │  │  │  │  [TAG_String]
+   │  │  │  │  A brewed potion ID.
+   │  │  │  └─ tag
+   │  │  │     [TAG_String]
+   │  │  │     An item data pack tag.
+   │  │  ├─ chest
+   │  │  │  [TAG_Compound]
+   │  │  │  ├─ count
+   │  │  │  │  [TAG_Int, TAG_Compound]
+   │  │  │  │  Amount of the item.
+   │  │  │  │  ├─ max
+   │  │  │  │  │  [TAG_Int]
+   │  │  │  │  │  The maximum value.
+   │  │  │  │  └─ min
+   │  │  │  │     [TAG_Int]
+   │  │  │  │     The minimum value.
+   │  │  │  ├─ durability
+   │  │  │  │  [TAG_Int, TAG_Compound]
+   │  │  │  │  The durability of the item.
+   │  │  │  │  ├─ max
+   │  │  │  │  │  [TAG_Int]
+   │  │  │  │  │  The maximum value.
+   │  │  │  │  └─ min
+   │  │  │  │     [TAG_Int]
+   │  │  │  │     The minimum value.
+   │  │  │  ├─ enchantments
+   │  │  │  │  [TAG_List]
+   │  │  │  │  List of enchantments.
+   │  │  │  │  └─ [TAG_Compound]
+   │  │  │  │     ├─ enchantment
+   │  │  │  │     │  [TAG_String]
+   │  │  │  │     │  An enchantment ID.
+   │  │  │  │     └─ levels
+   │  │  │  │        [TAG_Int, TAG_Compound]
+   │  │  │  │        The level of the enchantment.
+   │  │  │  │        ├─ max
+   │  │  │  │        │  [TAG_Int]
+   │  │  │  │        │  The maximum value.
+   │  │  │  │        └─ min
+   │  │  │  │           [TAG_Int]
+   │  │  │  │           The minimum value.
+   │  │  │  ├─ stored_enchantments
+   │  │  │  │  [TAG_List]
+   │  │  │  │  List of stored enchantments.
+   │  │  │  │  └─ [TAG_Compound]
+   │  │  │  │     ├─ enchantment
+   │  │  │  │     │  [TAG_String]
+   │  │  │  │     │  An enchantment ID.
+   │  │  │  │     └─ levels
+   │  │  │  │        [TAG_Int, TAG_Compound]
+   │  │  │  │        The level of the enchantment.
+   │  │  │  │        ├─ max
+   │  │  │  │        │  [TAG_Int]
+   │  │  │  │        │  The maximum value.
+   │  │  │  │        └─ min
+   │  │  │  │           [TAG_Int]
+   │  │  │  │           The minimum value.
+   │  │  │  ├─ items
+   │  │  │  │  [TAG_List]
+   │  │  │  │  A list of item IDs.
+   │  │  │  ├─ nbt
+   │  │  │  │  [TAG_String]
+   │  │  │  │  An NBT string.
+   │  │  │  ├─ potion
+   │  │  │  │  [TAG_String]
+   │  │  │  │  A brewed potion ID.
+   │  │  │  └─ tag
+   │  │  │     [TAG_String]
+   │  │  │     An item data pack tag.
+   │  │  ├─ legs
+   │  │  │  [TAG_Compound]
+   │  │  │  ├─ count
+   │  │  │  │  [TAG_Int, TAG_Compound]
+   │  │  │  │  Amount of the item.
+   │  │  │  │  ├─ max
+   │  │  │  │  │  [TAG_Int]
+   │  │  │  │  │  The maximum value.
+   │  │  │  │  └─ min
+   │  │  │  │     [TAG_Int]
+   │  │  │  │     The minimum value.
+   │  │  │  ├─ durability
+   │  │  │  │  [TAG_Int, TAG_Compound]
+   │  │  │  │  The durability of the item.
+   │  │  │  │  ├─ max
+   │  │  │  │  │  [TAG_Int]
+   │  │  │  │  │  The maximum value.
+   │  │  │  │  └─ min
+   │  │  │  │     [TAG_Int]
+   │  │  │  │     The minimum value.
+   │  │  │  ├─ enchantments
+   │  │  │  │  [TAG_List]
+   │  │  │  │  List of enchantments.
+   │  │  │  │  └─ [TAG_Compound]
+   │  │  │  │     ├─ enchantment
+   │  │  │  │     │  [TAG_String]
+   │  │  │  │     │  An enchantment ID.
+   │  │  │  │     └─ levels
+   │  │  │  │        [TAG_Int, TAG_Compound]
+   │  │  │  │        The level of the enchantment.
+   │  │  │  │        ├─ max
+   │  │  │  │        │  [TAG_Int]
+   │  │  │  │        │  The maximum value.
+   │  │  │  │        └─ min
+   │  │  │  │           [TAG_Int]
+   │  │  │  │           The minimum value.
+   │  │  │  ├─ stored_enchantments
+   │  │  │  │  [TAG_List]
+   │  │  │  │  List of stored enchantments.
+   │  │  │  │  └─ [TAG_Compound]
+   │  │  │  │     ├─ enchantment
+   │  │  │  │     │  [TAG_String]
+   │  │  │  │     │  An enchantment ID.
+   │  │  │  │     └─ levels
+   │  │  │  │        [TAG_Int, TAG_Compound]
+   │  │  │  │        The level of the enchantment.
+   │  │  │  │        ├─ max
+   │  │  │  │        │  [TAG_Int]
+   │  │  │  │        │  The maximum value.
+   │  │  │  │        └─ min
+   │  │  │  │           [TAG_Int]
+   │  │  │  │           The minimum value.
+   │  │  │  ├─ items
+   │  │  │  │  [TAG_List]
+   │  │  │  │  A list of item IDs.
+   │  │  │  ├─ nbt
+   │  │  │  │  [TAG_String]
+   │  │  │  │  An NBT string.
+   │  │  │  ├─ potion
+   │  │  │  │  [TAG_String]
+   │  │  │  │  A brewed potion ID.
+   │  │  │  └─ tag
+   │  │  │     [TAG_String]
+   │  │  │     An item data pack tag.
+   │  │  └─ feet
+   │  │     [TAG_Compound]
+   │  │     ├─ count
+   │  │     │  [TAG_Int, TAG_Compound]
+   │  │     │  Amount of the item.
+   │  │     │  ├─ max
+   │  │     │  │  [TAG_Int]
+   │  │     │  │  The maximum value.
+   │  │     │  └─ min
+   │  │     │     [TAG_Int]
+   │  │     │     The minimum value.
+   │  │     ├─ durability
+   │  │     │  [TAG_Int, TAG_Compound]
+   │  │     │  The durability of the item.
+   │  │     │  ├─ max
+   │  │     │  │  [TAG_Int]
+   │  │     │  │  The maximum value.
+   │  │     │  └─ min
+   │  │     │     [TAG_Int]
+   │  │     │     The minimum value.
+   │  │     ├─ enchantments
+   │  │     │  [TAG_List]
+   │  │     │  List of enchantments.
+   │  │     │  └─ [TAG_Compound]
+   │  │     │     ├─ enchantment
+   │  │     │     │  [TAG_String]
+   │  │     │     │  An enchantment ID.
+   │  │     │     └─ levels
+   │  │     │        [TAG_Int, TAG_Compound]
+   │  │     │        The level of the enchantment.
+   │  │     │        ├─ max
+   │  │     │        │  [TAG_Int]
+   │  │     │        │  The maximum value.
+   │  │     │        └─ min
+   │  │     │           [TAG_Int]
+   │  │     │           The minimum value.
+   │  │     ├─ stored_enchantments
+   │  │     │  [TAG_List]
+   │  │     │  List of stored enchantments.
+   │  │     │  └─ [TAG_Compound]
+   │  │     │     ├─ enchantment
+   │  │     │     │  [TAG_String]
+   │  │     │     │  An enchantment ID.
+   │  │     │     └─ levels
+   │  │     │        [TAG_Int, TAG_Compound]
+   │  │     │        The level of the enchantment.
+   │  │     │        ├─ max
+   │  │     │        │  [TAG_Int]
+   │  │     │        │  The maximum value.
+   │  │     │        └─ min
+   │  │     │           [TAG_Int]
+   │  │     │           The minimum value.
+   │  │     ├─ items
+   │  │     │  [TAG_List]
+   │  │     │  A list of item IDs.
+   │  │     ├─ nbt
+   │  │     │  [TAG_String]
+   │  │     │  An NBT string.
+   │  │     ├─ potion
+   │  │     │  [TAG_String]
+   │  │     │  A brewed potion ID.
+   │  │     └─ tag
+   │  │        [TAG_String]
+   │  │        An item data pack tag.
+   │  ├─ flags
+   │  │  [TAG_Compound]
+   │  │  Predicate Flags to be checked.
+   │  │  ├─ is_on_fire
+   │  │  │  [TAG_Boolean]
+   │  │  │  Test whether the entity is or is not on fire.
+   │  │  ├─ is_sneaking
+   │  │  │  [TAG_Boolean]
+   │  │  │  Test whether the entity is or is not sneaking.
+   │  │  ├─ is_sprinting
+   │  │  │  [TAG_Boolean]
+   │  │  │  Test whether the entity is or is not sprinting.
+   │  │  ├─ is_swimming
+   │  │  │  [TAG_Boolean]
+   │  │  │  Test whether the entity is or is not swimming.
+   │  │  └─ is_baby
+   │  │     [TAG_Boolean]
+   │  │     Test whether the entity is or is not a baby variant.
+   │  ├─ lightning_bolt
+   │  │  [TAG_Compound]
+   │  │  Lightning bolt properties to be checked. Fails when entity is not a
+   │  │  lightning bolt.
+   │  │  └─ <...>
+   │  ├─ location
+   │  │  [TAG_Compound]
+   │  │  ├─ biome
+   │  │  │  [TAG_String]
+   │  │  │  The biome the entity is currently in. Accepts these 73 values (see
+   │  │  │  also Biome#Biome IDs).
+   │  │  ├─ block
+   │  │  │  [TAG_Compound]
+   │  │  │  The block at the location.
+   │  │  │  ├─ blocks
+   │  │  │  │  [TAG_List]
+   │  │  │  │  A list of block IDs.
+   │  │  │  ├─ tag
+   │  │  │  │  [TAG_String]
+   │  │  │  │  The block Tag.
+   │  │  │  ├─ nbt
+   │  │  │  │  [TAG_String]
+   │  │  │  │  The block NBT.
+   │  │  │  └─ state
+   │  │  │     [TAG_Compound]
+   │  │  │     A map of block property names to values. Test will fail if the block
+   │  │  │     doesn't match.
+   │  │  │     └─ key
+   │  │  │        [TAG_Boolean, TAG_Int, TAG_String, TAG_Compound]
+   │  │  │        Block property key and value pair.
+   │  │  │        ├─ max
+   │  │  │        │  [TAG_Int]
+   │  │  │        │  A maximum value.
+   │  │  │        └─ min
+   │  │  │           [TAG_Int]
+   │  │  │           A minimum value.
+   │  │  ├─ dimension
+   │  │  │  [TAG_String]
+   │  │  │  The dimension the entity is currently in.
+   │  │  ├─ feature
+   │  │  │  [TAG_String]
+   │  │  │  Name of a structure. Accepts these 15 values (see also
+   │  │  │  Commands/locate).
+   │  │  ├─ fluid
+   │  │  │  [TAG_Compound]
+   │  │  │  The fluid at the location.
+   │  │  │  ├─ fluid
+   │  │  │  │  [TAG_String]
+   │  │  │  │  The fluid ID.
+   │  │  │  ├─ tag
+   │  │  │  │  [TAG_String]
+   │  │  │  │  The fluid Tag.
+   │  │  │  └─ state
+   │  │  │     [TAG_Compound]
+   │  │  │     A map of fluid property names to values. Test will fail if the fluid
+   │  │  │     doesn't match.
+   │  │  │     └─ key
+   │  │  │        [TAG_Boolean, TAG_Int, TAG_String, TAG_Compound]
+   │  │  │        Fluid property key and value pair.
+   │  │  │        ├─ max
+   │  │  │        │  [TAG_Int]
+   │  │  │        │  A maximum value.
+   │  │  │        └─ min
+   │  │  │           [TAG_Int]
+   │  │  │           A minimum value.
+   │  │  ├─ light
+   │  │  │  [TAG_Compound]
+   │  │  │  The light at the location.
+   │  │  │  └─ light
+   │  │  │     [TAG_Int, TAG_Compound]
+   │  │  │     The light Level of visible light. Calculated using: (max(sky-
+   │  │  │     darkening,block)).
+   │  │  │     ├─ max
+   │  │  │     │  [TAG_Int]
+   │  │  │     │  A maximum value.
+   │  │  │     └─ min
+   │  │  │        [TAG_Int]
+   │  │  │        A minimum value.
+   │  │  ├─ position
+   │  │  │  [TAG_Compound]
+   │  │  │  ├─ x
+   │  │  │  │  [TAG_Double, TAG_Compound]
+   │  │  │  │  The x position.
+   │  │  │  │  ├─ max
+   │  │  │  │  │  [TAG_Double]
+   │  │  │  │  │  A maximum value.
+   │  │  │  │  └─ min
+   │  │  │  │     [TAG_Double]
+   │  │  │  │     A minimum value.
+   │  │  │  ├─ y
+   │  │  │  │  [TAG_Double, TAG_Compound]
+   │  │  │  │  The y position.
+   │  │  │  │  ├─ max
+   │  │  │  │  │  [TAG_Double]
+   │  │  │  │  │  A maximum value.
+   │  │  │  │  └─ min
+   │  │  │  │     [TAG_Double]
+   │  │  │  │     A minimum value.
+   │  │  │  └─ z
+   │  │  │     [TAG_Double, TAG_Compound]
+   │  │  │     The z position.
+   │  │  │     ├─ max
+   │  │  │     │  [TAG_Double]
+   │  │  │     │  A maximum value.
+   │  │  │     └─ min
+   │  │  │        [TAG_Double]
+   │  │  │        A minimum value.
+   │  │  └─ smokey
+   │  │     [TAG_Boolean]
+   │  │     True if the block is closely above a campfire or soul campfire.
+   │  ├─ nbt
+   │  │  [TAG_String]
+   │  │  An NBT string.
+   │  ├─ passenger
+   │  │  [TAG_Compound]
+   │  │  The entity directly riding this entity.
+   │  │  └─ <...>
+   │  ├─ player
+   │  │  [TAG_Compound]
+   │  │  Player properties to be checked. Fails when entity is not a player.
+   │  │  ├─ looking_at
+   │  │  │  [TAG_Compound]
+   │  │  │  The entity that the player is looking at, as long as it is visible and
+   │  │  │  within a radius of 100 blocks. Visibility is defined through the line
+   │  │  │  from the player's eyes to the entity's eyes, rather than the direction
+   │  │  │  that the player is looking in.
+   │  │  │  └─ <...>
+   │  │  ├─ advancements
+   │  │  │  [TAG_Compound]
+   │  │  │  A map of advancements to check.
+   │  │  │  └─ <advancement id>
+   │  │  │     [TAG_Boolean, TAG_Compound]
+   │  │  │     An advancement ID.
+   │  │  │     └─ <criteria id>
+   │  │  │        [TAG_Boolean]
+   │  │  │        A criteria ID of the advancement.
+   │  │  ├─ gamemode
+   │  │  │  [TAG_String]
+   │  │  │  The game mode of the player. Must be survival, adventure, creative or
+   │  │  │  spectator.
+   │  │  ├─ level
+   │  │  │  [TAG_Int, TAG_Compound]
+   │  │  │  The experience level of the player.
+   │  │  │  ├─ max
+   │  │  │  │  [TAG_Int]
+   │  │  │  │  The maximum value.
+   │  │  │  └─ min
+   │  │  │     [TAG_Int]
+   │  │  │     The minimum value.
+   │  │  ├─ recipes
+   │  │  │  [TAG_Compound]
+   │  │  │  A map of recipes to check.
+   │  │  │  └─ <recipe id>
+   │  │  │     [TAG_Boolean]
+   │  │  │     A recipe ID. True if the recipe is known to the player.
+   │  │  └─ stats
+   │  │     [TAG_List]
+   │  │     List of statistics to match.
+   │  │     └─ [TAG_Compound]
+   │  │        A statistic. Note that unlike when adding scoreboard objectives, the
+   │  │        base (for example, minecraft:custom) and the statistic (for example,
+   │  │        minecraft:sneak_time) are split and use proper namespaces instead of
+   │  │        the dot-notation (minecraft.custom:minecraft.sneak_time).
+   │  │        ├─ type
+   │  │        │  [TAG_String]
+   │  │        │  The statistic base. Possible values are minecraft:custom,
+   │  │        │  minecraft:crafted, minecraft:used, minecraft:broken, minecraft:mined,
+   │  │        │  minecraft:killed, minecraft:picked_up, minecraft:dropped and
+   │  │        │  minecraft:killed_by.
+   │  │        ├─ stat
+   │  │        │  [TAG_String]
+   │  │        │  The statistic ID. Mostly mimics the criteria used for defining
+   │  │        │  scoreboard objectives.
+   │  │        └─ value
+   │  │           [TAG_Int, TAG_Compound]
+   │  │           The value of the statistic.
+   │  │           ├─ max
+   │  │           │  [TAG_Int]
+   │  │           │  The maximum value.
+   │  │           └─ min
+   │  │              [TAG_Int]
+   │  │              The minimum value.
+   │  ├─ stepping_on
+   │  │  [TAG_Compound]
+   │  │  Location predicate for the block the entity is standing on.
+   │  │  ├─ biome
+   │  │  │  [TAG_String]
+   │  │  │  The biome the entity is currently in. Accepts these 73 values (see
+   │  │  │  also Biome#Biome IDs).
+   │  │  ├─ block
+   │  │  │  [TAG_Compound]
+   │  │  │  The block at the location.
+   │  │  │  ├─ blocks
+   │  │  │  │  [TAG_List]
+   │  │  │  │  A list of block IDs.
+   │  │  │  ├─ tag
+   │  │  │  │  [TAG_String]
+   │  │  │  │  The block Tag.
+   │  │  │  ├─ nbt
+   │  │  │  │  [TAG_String]
+   │  │  │  │  The block NBT.
+   │  │  │  └─ state
+   │  │  │     [TAG_Compound]
+   │  │  │     A map of block property names to values. Test will fail if the block
+   │  │  │     doesn't match.
+   │  │  │     └─ key
+   │  │  │        [TAG_Boolean, TAG_Int, TAG_String, TAG_Compound]
+   │  │  │        Block property key and value pair.
+   │  │  │        ├─ max
+   │  │  │        │  [TAG_Int]
+   │  │  │        │  A maximum value.
+   │  │  │        └─ min
+   │  │  │           [TAG_Int]
+   │  │  │           A minimum value.
+   │  │  ├─ dimension
+   │  │  │  [TAG_String]
+   │  │  │  The dimension the entity is currently in.
+   │  │  ├─ feature
+   │  │  │  [TAG_String]
+   │  │  │  Name of a structure. Accepts these 15 values (see also
+   │  │  │  Commands/locate).
+   │  │  ├─ fluid
+   │  │  │  [TAG_Compound]
+   │  │  │  The fluid at the location.
+   │  │  │  ├─ fluid
+   │  │  │  │  [TAG_String]
+   │  │  │  │  The fluid ID.
+   │  │  │  ├─ tag
+   │  │  │  │  [TAG_String]
+   │  │  │  │  The fluid Tag.
+   │  │  │  └─ state
+   │  │  │     [TAG_Compound]
+   │  │  │     A map of fluid property names to values. Test will fail if the fluid
+   │  │  │     doesn't match.
+   │  │  │     └─ key
+   │  │  │        [TAG_Boolean, TAG_Int, TAG_String, TAG_Compound]
+   │  │  │        Fluid property key and value pair.
+   │  │  │        ├─ max
+   │  │  │        │  [TAG_Int]
+   │  │  │        │  A maximum value.
+   │  │  │        └─ min
+   │  │  │           [TAG_Int]
+   │  │  │           A minimum value.
+   │  │  ├─ light
+   │  │  │  [TAG_Compound]
+   │  │  │  The light at the location.
+   │  │  │  └─ light
+   │  │  │     [TAG_Int, TAG_Compound]
+   │  │  │     The light Level of visible light. Calculated using: (max(sky-
+   │  │  │     darkening,block)).
+   │  │  │     ├─ max
+   │  │  │     │  [TAG_Int]
+   │  │  │     │  A maximum value.
+   │  │  │     └─ min
+   │  │  │        [TAG_Int]
+   │  │  │        A minimum value.
+   │  │  ├─ position
+   │  │  │  [TAG_Compound]
+   │  │  │  ├─ x
+   │  │  │  │  [TAG_Double, TAG_Compound]
+   │  │  │  │  The x position.
+   │  │  │  │  ├─ max
+   │  │  │  │  │  [TAG_Double]
+   │  │  │  │  │  A maximum value.
+   │  │  │  │  └─ min
+   │  │  │  │     [TAG_Double]
+   │  │  │  │     A minimum value.
+   │  │  │  ├─ y
+   │  │  │  │  [TAG_Double, TAG_Compound]
+   │  │  │  │  The y position.
+   │  │  │  │  ├─ max
+   │  │  │  │  │  [TAG_Double]
+   │  │  │  │  │  A maximum value.
+   │  │  │  │  └─ min
+   │  │  │  │     [TAG_Double]
+   │  │  │  │     A minimum value.
+   │  │  │  └─ z
+   │  │  │     [TAG_Double, TAG_Compound]
+   │  │  │     The z position.
+   │  │  │     ├─ max
+   │  │  │     │  [TAG_Double]
+   │  │  │     │  A maximum value.
+   │  │  │     └─ min
+   │  │  │        [TAG_Double]
+   │  │  │        A minimum value.
+   │  │  └─ smokey
+   │  │     [TAG_Boolean]
+   │  │     True if the block is closely above a campfire or soul campfire.
+   │  ├─ team
+   │  │  [TAG_String]
+   │  │  The team the entity belongs to.
+   │  ├─ type
+   │  │  [TAG_String]
+   │  │  An entity ID.
+   │  ├─ targeted_entity
+   │  │  [TAG_Compound]
+   │  │  The entity which this entity is targeting for attacks.
+   │  │  └─ <...>
+   │  └─ vehicle
+   │     [TAG_Compound]
+   │     The vehicle that the entity is riding on.
+   │     └─ <...>
+   ├─ location
+   │  [TAG_Compound]
+   │  ├─ biome
+   │  │  [TAG_String]
+   │  │  The biome the entity is currently in. Accepts these 73 values (see
+   │  │  also Biome#Biome IDs).
+   │  ├─ block
+   │  │  [TAG_Compound]
+   │  │  The block at the location.
+   │  │  ├─ blocks
+   │  │  │  [TAG_List]
+   │  │  │  A list of block IDs.
+   │  │  ├─ tag
+   │  │  │  [TAG_String]
+   │  │  │  The block Tag.
+   │  │  ├─ nbt
+   │  │  │  [TAG_String]
+   │  │  │  The block NBT.
+   │  │  └─ state
+   │  │     [TAG_Compound]
+   │  │     A map of block property names to values. Test will fail if the block
+   │  │     doesn't match.
+   │  │     └─ key
+   │  │        [TAG_Boolean, TAG_Int, TAG_String, TAG_Compound]
+   │  │        Block property key and value pair.
+   │  │        ├─ max
+   │  │        │  [TAG_Int]
+   │  │        │  A maximum value.
+   │  │        └─ min
+   │  │           [TAG_Int]
+   │  │           A minimum value.
+   │  ├─ dimension
+   │  │  [TAG_String]
+   │  │  The dimension the entity is currently in.
+   │  ├─ feature
+   │  │  [TAG_String]
+   │  │  Name of a structure. Accepts these 15 values (see also
+   │  │  Commands/locate).
+   │  ├─ fluid
+   │  │  [TAG_Compound]
+   │  │  The fluid at the location.
+   │  │  ├─ fluid
+   │  │  │  [TAG_String]
+   │  │  │  The fluid ID.
+   │  │  ├─ tag
+   │  │  │  [TAG_String]
+   │  │  │  The fluid Tag.
+   │  │  └─ state
+   │  │     [TAG_Compound]
+   │  │     A map of fluid property names to values. Test will fail if the fluid
+   │  │     doesn't match.
+   │  │     └─ key
+   │  │        [TAG_Boolean, TAG_Int, TAG_String, TAG_Compound]
+   │  │        Fluid property key and value pair.
+   │  │        ├─ max
+   │  │        │  [TAG_Int]
+   │  │        │  A maximum value.
+   │  │        └─ min
+   │  │           [TAG_Int]
+   │  │           A minimum value.
+   │  ├─ light
+   │  │  [TAG_Compound]
+   │  │  The light at the location.
+   │  │  └─ light
+   │  │     [TAG_Int, TAG_Compound]
+   │  │     The light Level of visible light. Calculated using: (max(sky-
+   │  │     darkening,block)).
+   │  │     ├─ max
+   │  │     │  [TAG_Int]
+   │  │     │  A maximum value.
+   │  │     └─ min
+   │  │        [TAG_Int]
+   │  │        A minimum value.
+   │  ├─ position
+   │  │  [TAG_Compound]
+   │  │  ├─ x
+   │  │  │  [TAG_Double, TAG_Compound]
+   │  │  │  The x position.
+   │  │  │  ├─ max
+   │  │  │  │  [TAG_Double]
+   │  │  │  │  A maximum value.
+   │  │  │  └─ min
+   │  │  │     [TAG_Double]
+   │  │  │     A minimum value.
+   │  │  ├─ y
+   │  │  │  [TAG_Double, TAG_Compound]
+   │  │  │  The y position.
+   │  │  │  ├─ max
+   │  │  │  │  [TAG_Double]
+   │  │  │  │  A maximum value.
+   │  │  │  └─ min
+   │  │  │     [TAG_Double]
+   │  │  │     A minimum value.
+   │  │  └─ z
+   │  │     [TAG_Double, TAG_Compound]
+   │  │     The z position.
+   │  │     ├─ max
+   │  │     │  [TAG_Double]
+   │  │     │  A maximum value.
+   │  │     └─ min
+   │  │        [TAG_Double]
+   │  │        A minimum value.
+   │  └─ smokey
+   │     [TAG_Boolean]
+   │     True if the block is closely above a campfire or soul campfire.
+   ├─ nbt
+   │  [TAG_String]
+   │  An NBT string.
+   ├─ passenger
+   │  [TAG_Compound]
+   │  The entity directly riding this entity.
+   │  └─ <...>
+   ├─ player
+   │  [TAG_Compound]
+   │  Player properties to be checked. Fails when entity is not a player.
+   │  ├─ looking_at
+   │  │  [TAG_Compound]
+   │  │  The entity that the player is looking at, as long as it is visible and
+   │  │  within a radius of 100 blocks. Visibility is defined through the line
+   │  │  from the player's eyes to the entity's eyes, rather than the direction
+   │  │  that the player is looking in.
+   │  │  └─ <...>
+   │  ├─ advancements
+   │  │  [TAG_Compound]
+   │  │  A map of advancements to check.
+   │  │  └─ <advancement id>
+   │  │     [TAG_Boolean, TAG_Compound]
+   │  │     An advancement ID.
+   │  │     └─ <criteria id>
+   │  │        [TAG_Boolean]
+   │  │        A criteria ID of the advancement.
+   │  ├─ gamemode
+   │  │  [TAG_String]
+   │  │  The game mode of the player. Must be survival, adventure, creative or
+   │  │  spectator.
+   │  ├─ level
+   │  │  [TAG_Int, TAG_Compound]
+   │  │  The experience level of the player.
+   │  │  ├─ max
+   │  │  │  [TAG_Int]
+   │  │  │  The maximum value.
+   │  │  └─ min
+   │  │     [TAG_Int]
+   │  │     The minimum value.
+   │  ├─ recipes
+   │  │  [TAG_Compound]
+   │  │  A map of recipes to check.
+   │  │  └─ <recipe id>
+   │  │     [TAG_Boolean]
+   │  │     A recipe ID. True if the recipe is known to the player.
+   │  └─ stats
+   │     [TAG_List]
+   │     List of statistics to match.
+   │     └─ [TAG_Compound]
+   │        A statistic. Note that unlike when adding scoreboard objectives, the
+   │        base (for example, minecraft:custom) and the statistic (for example,
+   │        minecraft:sneak_time) are split and use proper namespaces instead of
+   │        the dot-notation (minecraft.custom:minecraft.sneak_time).
+   │        ├─ type
+   │        │  [TAG_String]
+   │        │  The statistic base. Possible values are minecraft:custom,
+   │        │  minecraft:crafted, minecraft:used, minecraft:broken, minecraft:mined,
+   │        │  minecraft:killed, minecraft:picked_up, minecraft:dropped and
+   │        │  minecraft:killed_by.
+   │        ├─ stat
+   │        │  [TAG_String]
+   │        │  The statistic ID. Mostly mimics the criteria used for defining
+   │        │  scoreboard objectives.
+   │        └─ value
+   │           [TAG_Int, TAG_Compound]
+   │           The value of the statistic.
+   │           ├─ max
+   │           │  [TAG_Int]
+   │           │  The maximum value.
+   │           └─ min
+   │              [TAG_Int]
+   │              The minimum value.
+   ├─ stepping_on
+   │  [TAG_Compound]
+   │  Location predicate for the block the entity is standing on.
+   │  ├─ biome
+   │  │  [TAG_String]
+   │  │  The biome the entity is currently in. Accepts these 73 values (see
+   │  │  also Biome#Biome IDs).
+   │  ├─ block
+   │  │  [TAG_Compound]
+   │  │  The block at the location.
+   │  │  ├─ blocks
+   │  │  │  [TAG_List]
+   │  │  │  A list of block IDs.
+   │  │  ├─ tag
+   │  │  │  [TAG_String]
+   │  │  │  The block Tag.
+   │  │  ├─ nbt
+   │  │  │  [TAG_String]
+   │  │  │  The block NBT.
+   │  │  └─ state
+   │  │     [TAG_Compound]
+   │  │     A map of block property names to values. Test will fail if the block
+   │  │     doesn't match.
+   │  │     └─ key
+   │  │        [TAG_Boolean, TAG_Int, TAG_String, TAG_Compound]
+   │  │        Block property key and value pair.
+   │  │        ├─ max
+   │  │        │  [TAG_Int]
+   │  │        │  A maximum value.
+   │  │        └─ min
+   │  │           [TAG_Int]
+   │  │           A minimum value.
+   │  ├─ dimension
+   │  │  [TAG_String]
+   │  │  The dimension the entity is currently in.
+   │  ├─ feature
+   │  │  [TAG_String]
+   │  │  Name of a structure. Accepts these 15 values (see also
+   │  │  Commands/locate).
+   │  ├─ fluid
+   │  │  [TAG_Compound]
+   │  │  The fluid at the location.
+   │  │  ├─ fluid
+   │  │  │  [TAG_String]
+   │  │  │  The fluid ID.
+   │  │  ├─ tag
+   │  │  │  [TAG_String]
+   │  │  │  The fluid Tag.
+   │  │  └─ state
+   │  │     [TAG_Compound]
+   │  │     A map of fluid property names to values. Test will fail if the fluid
+   │  │     doesn't match.
+   │  │     └─ key
+   │  │        [TAG_Boolean, TAG_Int, TAG_String, TAG_Compound]
+   │  │        Fluid property key and value pair.
+   │  │        ├─ max
+   │  │        │  [TAG_Int]
+   │  │        │  A maximum value.
+   │  │        └─ min
+   │  │           [TAG_Int]
+   │  │           A minimum value.
+   │  ├─ light
+   │  │  [TAG_Compound]
+   │  │  The light at the location.
+   │  │  └─ light
+   │  │     [TAG_Int, TAG_Compound]
+   │  │     The light Level of visible light. Calculated using: (max(sky-
+   │  │     darkening,block)).
+   │  │     ├─ max
+   │  │     │  [TAG_Int]
+   │  │     │  A maximum value.
+   │  │     └─ min
+   │  │        [TAG_Int]
+   │  │        A minimum value.
+   │  ├─ position
+   │  │  [TAG_Compound]
+   │  │  ├─ x
+   │  │  │  [TAG_Double, TAG_Compound]
+   │  │  │  The x position.
+   │  │  │  ├─ max
+   │  │  │  │  [TAG_Double]
+   │  │  │  │  A maximum value.
+   │  │  │  └─ min
+   │  │  │     [TAG_Double]
+   │  │  │     A minimum value.
+   │  │  ├─ y
+   │  │  │  [TAG_Double, TAG_Compound]
+   │  │  │  The y position.
+   │  │  │  ├─ max
+   │  │  │  │  [TAG_Double]
+   │  │  │  │  A maximum value.
+   │  │  │  └─ min
+   │  │  │     [TAG_Double]
+   │  │  │     A minimum value.
+   │  │  └─ z
+   │  │     [TAG_Double, TAG_Compound]
+   │  │     The z position.
+   │  │     ├─ max
+   │  │     │  [TAG_Double]
+   │  │     │  A maximum value.
+   │  │     └─ min
+   │  │        [TAG_Double]
+   │  │        A minimum value.
+   │  └─ smokey
+   │     [TAG_Boolean]
+   │     True if the block is closely above a campfire or soul campfire.
+   ├─ team
+   │  [TAG_String]
+   │  The team the entity belongs to.
+   ├─ type
+   │  [TAG_String]
+   │  An entity ID.
+   ├─ targeted_entity
+   │  [TAG_Compound]
+   │  The entity which this entity is targeting for attacks.
+   │  └─ <...>
+   └─ vehicle
+      [TAG_Compound]
+      The vehicle that the entity is riding on.
+      └─ <...>
