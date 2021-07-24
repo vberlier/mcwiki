@@ -1,12 +1,11 @@
 # mcwiki
 
-[![Build Status](https://travis-ci.com/vberlier/mcwiki.svg?branch=main)](https://travis-ci.com/vberlier/mcwiki)
+[![GitHub Actions](https://github.com/vberlier/mcwiki/workflows/CI/badge.svg)](https://github.com/vberlier/mcwiki/actions)
 [![PyPI](https://img.shields.io/pypi/v/mcwiki.svg)](https://pypi.org/project/mcwiki/)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/mcwiki.svg)](https://pypi.org/project/mcwiki/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
-[![Checked with mypy](http://www.mypy-lang.org/static/mypy_badge.svg)](http://mypy-lang.org/)
 
-> A scraping library for the [Minecraft Wiki](https://minecraft.gamepedia.com/Minecraft_Wiki).
+> A scraping library for the [Minecraft Wiki](https://minecraft.fandom.com/wiki/Minecraft_Wiki).
 
 ```python
 import mcwiki
@@ -57,7 +56,7 @@ $ pip install mcwiki
 The `load` function allows you to load a page from the Minecraft Wiki. The page can be specified by providing a URL or simply the title of the page.
 
 ```python
-mcwiki.load("https://minecraft.gamepedia.com/Data_Pack")
+mcwiki.load("https://minecraft.fandom.com/wiki/Data_Pack")
 mcwiki.load("Data Pack")
 ```
 
@@ -71,7 +70,7 @@ mcwiki.from_markup("<!DOCTYPE html>\n<html ...")
 Page sections can then be manipulated like dictionaries. Keys are case-insensitive and are associated to subsections.
 
 ```python
-page = mcwiki.load("https://minecraft.gamepedia.com/Advancement/JSON_format")
+page = mcwiki.load("https://minecraft.fandom.com/wiki/Advancement/JSON_format")
 
 print(page["List of triggers"])
 ```
@@ -156,7 +155,7 @@ nodes = dict(tree.children)
 
 ## Contributing
 
-Contributions are welcome. Make sure to first open an issue discussing the problem or the new feature before creating a pull request. The project uses [`poetry`](https://python-poetry.org).
+Contributions are welcome. Make sure to first open an issue discussing the problem or the new feature before creating a pull request. The project uses [`poetry`](https://python-poetry.org/).
 
 ```bash
 $ poetry install
@@ -168,11 +167,11 @@ You can run the tests with `poetry run pytest`.
 $ poetry run pytest
 ```
 
-The project must type-check with [`mypy`](http://mypy-lang.org) and [`pylint`](https://www.pylint.org) shouldn't report any error.
+The project must type-check with [`pyright`](https://github.com/microsoft/pyright). If you're using VSCode the [`pylance`](https://marketplace.visualstudio.com/items?itemName=ms-python.vscode-pylance) extension should report diagnostics automatically. You can also install the type-checker locally with `npm install` and run it from the command-line.
 
 ```bash
-$ poetry run mypy
-$ poetry run pylint mcwiki tests
+$ npm run watch
+$ npm run check
 ```
 
 The code follows the [`black`](https://github.com/psf/black) code style. Import statements are sorted with [`isort`](https://pycqa.github.io/isort/).
@@ -185,4 +184,4 @@ $ poetry run black --check mcwiki tests
 
 ---
 
-License - [MIT](https://github.com/vberlier/mcwiki/blob/master/LICENSE)
+License - [MIT](https://github.com/vberlier/mcwiki/blob/main/LICENSE)

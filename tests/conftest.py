@@ -5,8 +5,8 @@ import requests
 
 
 @pytest.fixture
-def wiki_pages(request):
-    directory = Path(request.config.cache.makedir("wiki_pages"))
+def wiki_pages(request: pytest.FixtureRequest):
+    directory = Path(request.config.cache.makedir("wiki_pages"))  # type: ignore
     directory.mkdir(exist_ok=True)
 
     download = {
@@ -15,7 +15,7 @@ def wiki_pages(request):
         "loot_table.html": "https://minecraft.fandom.com/wiki/Loot_table",
         "predicate.html": "https://minecraft.fandom.com/wiki/Predicate",
         "tag.html": "https://minecraft.fandom.com/wiki/Tag",
-        "item_modifier.html": "https://minecraft.fandom.com/wiki/Item_modifier"
+        "item_modifier.html": "https://minecraft.fandom.com/wiki/Item_modifier",
     }
 
     for filename, url in download.items():

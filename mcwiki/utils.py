@@ -1,11 +1,20 @@
-__all__ = ["FileSystemPath", "normalize_string"]
+__all__ = [
+    "PathLike",
+    "FileSystemPath",
+    "normalize_string",
+]
 
 
-import os
 import unicodedata
-from typing import Union
+from typing import Protocol, Union
 
-FileSystemPath = Union[str, os.PathLike]
+
+class PathLike(Protocol):
+    def __fspath__(self) -> str:
+        ...
+
+
+FileSystemPath = Union[str, PathLike]
 
 
 def normalize_string(string: str) -> str:

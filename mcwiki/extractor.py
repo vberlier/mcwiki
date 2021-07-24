@@ -1,13 +1,16 @@
-__all__ = ["Extractor", "ScanResult"]
+__all__ = [
+    "Extractor",
+    "ScanResult",
+]
 
 
 from dataclasses import dataclass, field
-from typing import Generic, List, Sequence, TypeVar, Union, overload
+from typing import Any, Generic, List, Optional, Sequence, TypeVar, Union, overload
 
 from bs4 import BeautifulSoup, Tag
 
 T = TypeVar("T")
-ExtractorType = TypeVar("ExtractorType", bound="Extractor")
+ExtractorType = TypeVar("ExtractorType", bound="Extractor[Any]")
 
 
 @dataclass(frozen=True)
@@ -17,13 +20,13 @@ class ScanResult(Generic[ExtractorType, T], Sequence[T]):
 
     @overload
     def __getitem__(self, index: int) -> T:
-        pass
+        ...
 
     @overload
     def __getitem__(self, index: slice) -> Sequence[T]:
-        pass
+        ...
 
-    def __getitem__(self, index: Union[int, slice]) -> Union[T, Sequence[T]]:
+    def __getitem__(self, index: Union[int, slice]) -> Union[T, Sequence[T]]:  # type: ignore
         index_slice = (
             slice(index % len(self), (index % len(self)) + 1)
             if isinstance(index, int)
@@ -35,7 +38,7 @@ class ScanResult(Generic[ExtractorType, T], Sequence[T]):
             for item in self.elements[index_slice]
         ]
 
-        return self.elements[index]
+        return self.elements[index]  # type: ignore
 
     def __len__(self) -> int:
         return len(self.elements)
@@ -46,9 +49,13 @@ class Extractor(Generic[T]):
     selector: str
 
     def scan(
-        self: ExtractorType, html: BeautifulSoup, limit: int = None
+        self: ExtractorType,
+        html: BeautifulSoup,
+        limit: Optional[int] = None,
     ) -> ScanResult[ExtractorType, T]:
-        return ScanResult(self, html.select(self.selector, limit=limit))
+        return ScanResult[ExtractorType, T](
+            self, html.select(self.selector, limit=limit)  # type: ignore
+        )
 
     def process(self, element: Tag) -> T:
         raise NotImplementedError()

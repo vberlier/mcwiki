@@ -1,10 +1,25 @@
-__all__ = ["Tree", "TreeEntry", "TreeNode", "TreeExtractor"]
+__all__ = [
+    "Tree",
+    "TreeEntry",
+    "TreeNode",
+    "TreeExtractor",
+]
 
 
 import re
 import textwrap
 from dataclasses import dataclass, field
-from typing import Dict, Iterator, List, NamedTuple, Set, Tuple, TypeVar, Union
+from typing import (
+    Dict,
+    Iterator,
+    List,
+    NamedTuple,
+    Optional,
+    Set,
+    Tuple,
+    TypeVar,
+    Union,
+)
 
 from bs4 import Tag
 
@@ -34,7 +49,11 @@ class Tree(NamedTuple):
     def as_dict(self) -> Dict[str, "TreeNode"]:
         return dict(self.children)
 
-    def format(self, prefix: str = "", parents: Set["Tree"] = None) -> Iterator[str]:
+    def format(
+        self,
+        prefix: str = "",
+        parents: Optional[Set["Tree"]] = None,
+    ) -> Iterator[str]:
         parents = parents or set()
 
         if self in parents:

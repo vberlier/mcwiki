@@ -1,4 +1,10 @@
-__all__ = ["load", "load_file", "from_markup", "collect_elements", "PageSection"]
+__all__ = [
+    "load",
+    "load_file",
+    "from_markup",
+    "collect_elements",
+    "PageSection",
+]
 
 
 import re
@@ -12,7 +18,7 @@ from bs4 import BeautifulSoup, PageElement, Tag
 from .extractor import Extractor, ScanResult
 from .utils import FileSystemPath, normalize_string
 
-BASE_URL = "https://minecraft.gamepedia.com/"
+BASE_URL = "https://minecraft.fandom.com/wiki/"
 
 
 def load(page: str) -> "PageSection":
@@ -50,14 +56,14 @@ class PageSection(Mapping[str, "PageSection"]):
     html: BeautifulSoup
     subsections: Dict[str, Union[Tag, "PageSection"]]
 
-    def __init__(self, html: BeautifulSoup):
+    def __init__(self, html: BeautifulSoup) -> None:
         self.html = html
         self.subsections = {
             heading.text.lower(): heading.parent
             for heading in html.find_all("span", "mw-headline")
         }
 
-    def __getitem__(self, heading) -> "PageSection":
+    def __getitem__(self, heading: str) -> "PageSection":
         heading = heading.lower()
         section = self.subsections[heading]
 
@@ -80,7 +86,9 @@ class PageSection(Mapping[str, "PageSection"]):
         return normalize_string(self.html.text)
 
     def extract_all(
-        self, extractor: Extractor[T], limit: int = None
+        self,
+        extractor: Extractor[T],
+        limit: Optional[int] = None,
     ) -> ScanResult[Extractor[T], T]:
         return extractor.scan(self.html, limit=limit)
 

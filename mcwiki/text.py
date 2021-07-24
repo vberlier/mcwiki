@@ -1,4 +1,6 @@
-__all__ = ["TextExtractor"]
+__all__ = [
+    "TextExtractor",
+]
 
 
 from dataclasses import dataclass
