@@ -27,10 +27,10 @@ The root object.
    │  in the Create World screen.
    └─ pack_format
       [TAG_Int]
-      Pack version. If this number does not match the current required
+      Pack version: If this number does not match the current required
       number, the data pack displays a warning and requires additional
-      confirmation to load the pack. Requires 4 for 1.13–1.14.4, 5 for
-      1.15–1.16.1 and 6 for 1.16.2–1.16.3.
+      confirmation to load the pack. Requires 4 for 1.13–1.14.4. Requires 5
+      for 1.15–1.16.1. Requires 6 for 1.16.2–1.16.5. Requires 7 for 1.17.
 ```
 
 ## Introduction
@@ -81,13 +81,14 @@ print(page["List of triggers"])
 
 ## Extracting Data
 
-There are 3 built-in extractors. Extractors are instantiated with a CSS selector and define a `process` method that produces an item for each element returned by the selector.
+There are 4 built-in extractors. Extractors are instantiated with a CSS selector and define a `process` method that produces an item for each element returned by the selector.
 
-| Extractor    | Type                   | Extracted Item                                            |
-| ------------ | ---------------------- | --------------------------------------------------------- |
-| `PARAGRAPH`  | `TextExtractor("p")`   | String containing the text content of a paragraph         |
-| `CODE_BLOCK` | `TextExtractor("pre")` | String containing the text content of a code block        |
-| `TREE`       | `TreeExtractor()`      | An instance of `mcwiki.Tree` containing the treeview data |
+| Extractor    | Type                    | Extracted Item                                            |
+| ------------ | ----------------------- | --------------------------------------------------------- |
+| `PARAGRAPH`  | `TextExtractor("p")`    | String containing the text content of a paragraph         |
+| `CODE`       | `TextExtractor("code")` | String containing the text content of a code span         |
+| `CODE_BLOCK` | `TextExtractor("pre")`  | String containing the text content of a code block        |
+| `TREE`       | `TreeExtractor()`       | An instance of `mcwiki.Tree` containing the treeview data |
 
 Page sections can invoke extractors by using the `extract` and `extract_all` methods. The `extract` method will return the first item in the page section or `None` if the extractor couldn't extract anything.
 
