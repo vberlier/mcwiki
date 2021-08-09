@@ -194,7 +194,6 @@ python-versions = ">=3.6"
 
 [package.dependencies]
 gitdb = ">=4.0.1,<5"
-typing-extensions = {version = ">=3.7.4.3", markers = "python_version < \"3.10\""}
 
 [[package]]
 name = "idna"
@@ -413,7 +412,7 @@ yaml = ["PyYaml (>=5.2)"]
 
 [[package]]
 name = "python-semantic-release"
-version = "7.16.2"
+version = "7.17.0"
 description = "Automatic Semantic Versioning for Python projects"
 category = "dev"
 optional = false
@@ -625,14 +624,6 @@ rfc3986 = ">=1.4.0"
 tqdm = ">=4.14"
 
 [[package]]
-name = "typing-extensions"
-version = "3.7.4.3"
-description = "Backported and Experimental Type Hints for Python 3.5+"
-category = "dev"
-optional = false
-python-versions = "*"
-
-[[package]]
 name = "urllib3"
 version = "1.25.10"
 description = "HTTP library with thread-safe connection pooling, file post, and more."
@@ -676,7 +667,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "664f20bf59460997479afe5cbcf89549d64c5c68c64c85f8227f8b90155de5af"
+content-hash = "daad8f3d417b4f473a2adaed3a5f0cd2b460d904b354111ca82781bf0f9f71ad"
 
 [metadata.files]
 appdirs = [
@@ -781,8 +772,10 @@ cryptography = [
     {file = "cryptography-3.4.7-cp36-abi3-win_amd64.whl", hash = "sha256:de4e5f7f68220d92b7637fc99847475b59154b7a1b3868fb7385337af54ac9ca"},
     {file = "cryptography-3.4.7-pp36-pypy36_pp73-manylinux2010_x86_64.whl", hash = "sha256:26965837447f9c82f1855e0bc8bc4fb910240b6e0d16a664bb722df3b5b06873"},
     {file = "cryptography-3.4.7-pp36-pypy36_pp73-manylinux2014_x86_64.whl", hash = "sha256:eb8cc2afe8b05acbd84a43905832ec78e7b3873fb124ca190f574dca7389a87d"},
+    {file = "cryptography-3.4.7-pp37-pypy37_pp73-macosx_10_10_x86_64.whl", hash = "sha256:b01fd6f2737816cb1e08ed4807ae194404790eac7ad030b34f2ce72b332f5586"},
     {file = "cryptography-3.4.7-pp37-pypy37_pp73-manylinux2010_x86_64.whl", hash = "sha256:7ec5d3b029f5fa2b179325908b9cd93db28ab7b85bb6c1db56b10e0b54235177"},
     {file = "cryptography-3.4.7-pp37-pypy37_pp73-manylinux2014_x86_64.whl", hash = "sha256:ee77aa129f481be46f8d92a1a7db57269a2f23052d5f2433b4621bb457081cc9"},
+    {file = "cryptography-3.4.7-pp37-pypy37_pp73-win_amd64.whl", hash = "sha256:bf40af59ca2465b24e54f671b2de2c59257ddc4f7e5706dbd6930e26823668d3"},
     {file = "cryptography-3.4.7.tar.gz", hash = "sha256:3d10de8116d25649631977cb37da6cbdd2d6fa0e0281d014a5b7d337255ca713"},
 ]
 docutils = [
@@ -878,8 +871,8 @@ python-gitlab = [
     {file = "python_gitlab-2.9.0-py3-none-any.whl", hash = "sha256:956dfaf5d5f16c005fd064a7efd3059683dc348e9d46a1a555ddfac2e831e537"},
 ]
 python-semantic-release = [
-    {file = "python-semantic-release-7.16.2.tar.gz", hash = "sha256:b0679f5ca5ef860bcf07836949e0956bffa965197315b01c6e089467c144c674"},
-    {file = "python_semantic_release-7.16.2-py3-none-any.whl", hash = "sha256:c54aca1d2d5121608f5152975b6cbc4f3cfd1e5d9d64293ad44aa4b62acc670d"},
+    {file = "python-semantic-release-7.17.0.tar.gz", hash = "sha256:bd98cb6c757eb4454ae07a180339aa9d92b3509e7da9012a28fbe77263bc57dc"},
+    {file = "python_semantic_release-7.17.0-py3-none-any.whl", hash = "sha256:eacec481df52ad5e4aff43a5fc969652891eaea2303217aadb1c0dca68d46616"},
 ]
 pywin32-ctypes = [
     {file = "pywin32-ctypes-0.2.0.tar.gz", hash = "sha256:24ffc3b341d457d48e8922352130cf2644024a4ff09762a2261fd34c36ee5942"},
@@ -967,11 +960,6 @@ tqdm = [
 twine = [
     {file = "twine-3.4.2-py3-none-any.whl", hash = "sha256:087328e9bb405e7ce18527a2dca4042a84c7918658f951110b38bc135acab218"},
     {file = "twine-3.4.2.tar.gz", hash = "sha256:4caec0f1ed78dc4c9b83ad537e453d03ce485725f2aea57f1bb3fdde78dae936"},
-]
-typing-extensions = [
-    {file = "typing_extensions-3.7.4.3-py2-none-any.whl", hash = "sha256:dafc7639cde7f1b6e1acc0f457842a83e722ccca8eef5270af2d74792619a89f"},
-    {file = "typing_extensions-3.7.4.3-py3-none-any.whl", hash = "sha256:7cb407020f00f7bfc3cb3e7881628838e69d8f3fcab2f64742a5e76b2f841918"},
-    {file = "typing_extensions-3.7.4.3.tar.gz", hash = "sha256:99d4073b617d30288f569d3f13d2bd7548c3a7e4c8de87db09a9d29bb3a4a60c"},
 ]
 urllib3 = [
     {file = "urllib3-1.25.10-py2.py3-none-any.whl", hash = "sha256:e7983572181f5e1522d9c98453462384ee92a0be7fac5f1413a1e35c56cc0461"},
