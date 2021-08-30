@@ -16,7 +16,7 @@ import requests
 from bs4 import BeautifulSoup, PageElement, Tag
 
 from .extractor import Extractor, ScanResult
-from .utils import FileSystemPath, normalize_string
+from .utils import normalize_string
 
 BASE_URL = "https://minecraft.fandom.com/wiki/"
 
@@ -27,7 +27,7 @@ def load(page: str) -> "PageSection":
     return from_markup(requests.get(page).text)
 
 
-def load_file(filepath: FileSystemPath) -> "PageSection":
+def load_file(filepath: Union[str, Path]) -> "PageSection":
     return from_markup(Path(filepath).read_text())
 
 
