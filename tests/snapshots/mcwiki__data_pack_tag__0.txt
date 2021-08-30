@@ -4,8 +4,8 @@ The root object.
 │  [TAG_Boolean]
 │  Optional. Whether or not contents of this tag should completely
 │  replace tag contents from different lower priority data packs with the
-│  same namespaced ID. When false the tag's content is appended to the
-│  contents of the higher priority data packs, instead. Defaults to
+│  same resource location. When false the tag's content is appended to
+│  the contents of the higher priority data packs, instead. Defaults to
 │  false.
 └─ values
    [TAG_List]
@@ -13,9 +13,9 @@ The root object.
    recursive reference is possible, but a circular reference causes a
    loading failure.
    └─ [TAG_String, TAG_String, TAG_Compound]
-      An object's namespaced ID in the form (namespaced ID). ID of another
-      tag of the same type in the form #(namespaced ID). An entry with
-      additional options. (1.16.2+)
+      An object's resource location in the form (resource location). ID of
+      another tag of the same type in the form #(resource location). An
+      entry with additional options. (1.16.2+)
       ├─ id
       │  [TAG_String]
       │  A string in one of the string formats above.
