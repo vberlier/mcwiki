@@ -34,10 +34,6 @@ def load_file(filepath: FileSystemPath) -> "PageSection":
 def from_markup(markup: str) -> "PageSection":
     html = BeautifulSoup(markup, "html.parser")
     content = html.find("div", "mw-parser-output").extract()
-
-    for element in content.select("sup, sub"):
-        element.decompose()
-
     return PageSection(content)
 
 

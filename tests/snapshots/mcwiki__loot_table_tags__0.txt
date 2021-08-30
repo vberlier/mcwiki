@@ -145,7 +145,7 @@ The root tag
             │  [TAG_Int]
             │  Determines how often this entry is chosen out of all the entries in
             │  the pool. Entries with higher weights are used more often (chance is
-            │  ⁄).
+            │  this entry's weight⁄total of all considered entries' weights).
             └─ quality
                [TAG_Int]
                Modifies the entry's weight based on the killing/opening/fishing
