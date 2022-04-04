@@ -31,7 +31,7 @@ black = "^21.7b0"
 pytest = "^6.2.4"
 pytest-insta = "^0.1.10"
 isort = "^5.9.3"
-python-semantic-release = "^7.19.1"
+python-semantic-release = "^7.27.1"
 
 [tool.black]
 target-version = ["py38"]
