@@ -412,7 +412,7 @@ yaml = ["PyYaml (>=5.2)"]
 
 [[package]]
 name = "python-semantic-release"
-version = "7.19.1"
+version = "7.28.1"
 description = "Automatic Semantic Versioning for Python projects"
 category = "dev"
 optional = false
@@ -424,10 +424,10 @@ click-log = ">=0.3,<1"
 dotty-dict = ">=1.3.0,<2"
 gitpython = ">=3.0.8,<4"
 invoke = ">=1.4.1,<2"
-python-gitlab = ">=1.10,<3"
+python-gitlab = ">=2,<4"
 requests = ">=2.25,<3"
 semver = ">=2.10,<3"
-tomlkit = "0.7.0"
+tomlkit = ">=0.10.0,<0.11.0"
 twine = ">=3,<4"
 
 [package.extras]
@@ -582,11 +582,11 @@ python-versions = ">=3.6"
 
 [[package]]
 name = "tomlkit"
-version = "0.7.0"
+version = "0.10.1"
 description = "Style preserving TOML library"
 category = "dev"
 optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
+python-versions = ">=3.6,<4.0"
 
 [[package]]
 name = "tqdm"
@@ -667,7 +667,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "4c8ec925091fd3065ef8f3e252929d55e9e01c29ce500c673f4d56afc6b6e50c"
+content-hash = "88bad50ad61bd9ff80055ecef29d17836571ad2cc9715ba1f5b7986040a90aea"
 
 [metadata.files]
 appdirs = [
@@ -772,8 +772,10 @@ cryptography = [
     {file = "cryptography-3.4.7-cp36-abi3-win_amd64.whl", hash = "sha256:de4e5f7f68220d92b7637fc99847475b59154b7a1b3868fb7385337af54ac9ca"},
     {file = "cryptography-3.4.7-pp36-pypy36_pp73-manylinux2010_x86_64.whl", hash = "sha256:26965837447f9c82f1855e0bc8bc4fb910240b6e0d16a664bb722df3b5b06873"},
     {file = "cryptography-3.4.7-pp36-pypy36_pp73-manylinux2014_x86_64.whl", hash = "sha256:eb8cc2afe8b05acbd84a43905832ec78e7b3873fb124ca190f574dca7389a87d"},
+    {file = "cryptography-3.4.7-pp37-pypy37_pp73-macosx_10_10_x86_64.whl", hash = "sha256:b01fd6f2737816cb1e08ed4807ae194404790eac7ad030b34f2ce72b332f5586"},
     {file = "cryptography-3.4.7-pp37-pypy37_pp73-manylinux2010_x86_64.whl", hash = "sha256:7ec5d3b029f5fa2b179325908b9cd93db28ab7b85bb6c1db56b10e0b54235177"},
     {file = "cryptography-3.4.7-pp37-pypy37_pp73-manylinux2014_x86_64.whl", hash = "sha256:ee77aa129f481be46f8d92a1a7db57269a2f23052d5f2433b4621bb457081cc9"},
+    {file = "cryptography-3.4.7-pp37-pypy37_pp73-win_amd64.whl", hash = "sha256:bf40af59ca2465b24e54f671b2de2c59257ddc4f7e5706dbd6930e26823668d3"},
     {file = "cryptography-3.4.7.tar.gz", hash = "sha256:3d10de8116d25649631977cb37da6cbdd2d6fa0e0281d014a5b7d337255ca713"},
 ]
 docutils = [
@@ -869,8 +871,8 @@ python-gitlab = [
     {file = "python_gitlab-2.9.0-py3-none-any.whl", hash = "sha256:956dfaf5d5f16c005fd064a7efd3059683dc348e9d46a1a555ddfac2e831e537"},
 ]
 python-semantic-release = [
-    {file = "python-semantic-release-7.19.1.tar.gz", hash = "sha256:43f52f9a97677c029009063807f1fec9ffaabf049bd02f3fd898f0edf1ce5155"},
-    {file = "python_semantic_release-7.19.1-py3-none-any.whl", hash = "sha256:8f5bfe18e78d44dc296966376f2bae2177ea881b628473d685b46f09a75ea92b"},
+    {file = "python-semantic-release-7.28.1.tar.gz", hash = "sha256:d7f82b3d4c06b304d07689b8a1c7d0d448ff07c2ab81cd810c4f2f900f24c599"},
+    {file = "python_semantic_release-7.28.1-py3-none-any.whl", hash = "sha256:319c3e811d6e10bc3f0e967419eae0e5e9ba1e6745aa2fd94dd24e3995541ca2"},
 ]
 pywin32-ctypes = [
     {file = "pywin32-ctypes-0.2.0.tar.gz", hash = "sha256:24ffc3b341d457d48e8922352130cf2644024a4ff09762a2261fd34c36ee5942"},
@@ -948,8 +950,8 @@ tomli = [
     {file = "tomli-1.1.0.tar.gz", hash = "sha256:33d7984738f8bb699c9b0a816eb646a8178a69eaa792d258486776a5d21b8ca5"},
 ]
 tomlkit = [
-    {file = "tomlkit-0.7.0-py2.py3-none-any.whl", hash = "sha256:6babbd33b17d5c9691896b0e68159215a9387ebfa938aa3ac42f4a4beeb2b831"},
-    {file = "tomlkit-0.7.0.tar.gz", hash = "sha256:ac57f29693fab3e309ea789252fcce3061e19110085aa31af5446ca749325618"},
+    {file = "tomlkit-0.10.1-py3-none-any.whl", hash = "sha256:3eba517439dcb2f84cf39f4f85fd2c3398309823a3c75ac3e73003638daf7915"},
+    {file = "tomlkit-0.10.1.tar.gz", hash = "sha256:3c517894eadef53e9072d343d37e4427b8f0b6200a70b7c9a19b2ebd1f53b951"},
 ]
 tqdm = [
     {file = "tqdm-4.61.2-py2.py3-none-any.whl", hash = "sha256:5aa445ea0ad8b16d82b15ab342de6b195a722d75fc1ef9934a46bba6feafbc64"},
