@@ -5,7 +5,7 @@
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/mcwiki.svg)](https://pypi.org/project/mcwiki/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 
-> A scraping library for the [Minecraft Wiki](https://minecraft.fandom.com/wiki/Minecraft_Wiki).
+> A scraping library for the [Minecraft Wiki](https://minecraft.wiki/w/Minecraft_Wiki).
 
 ```python
 import mcwiki
@@ -56,7 +56,7 @@ $ pip install mcwiki
 The `load` function allows you to load a page from the Minecraft Wiki. The page can be specified by providing a URL or simply the title of the page.
 
 ```python
-mcwiki.load("https://minecraft.fandom.com/wiki/Data_Pack")
+mcwiki.load("https://minecraft.wiki/w/Data_Pack")
 mcwiki.load("Data Pack")
 ```
 
@@ -70,7 +70,7 @@ mcwiki.from_markup("<!DOCTYPE html>\n<html ...")
 Page sections can then be manipulated like dictionaries. Keys are case-insensitive and are associated to subsections.
 
 ```python
-page = mcwiki.load("https://minecraft.fandom.com/wiki/Advancement/JSON_format")
+page = mcwiki.load("https://minecraft.wiki/w/Advancement/JSON_format")
 
 print(page["List of triggers"])
 ```

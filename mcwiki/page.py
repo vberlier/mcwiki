@@ -18,7 +18,7 @@ from bs4 import BeautifulSoup, PageElement, Tag
 from .extractor import Extractor, ScanResult
 from .utils import normalize_string
 
-BASE_URL = "https://minecraft.fandom.com/wiki/"
+BASE_URL = "https://minecraft.wiki/w/"
 
 
 def load(page: str) -> "PageSection":
